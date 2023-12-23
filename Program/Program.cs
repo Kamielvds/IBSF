@@ -1,15 +1,17 @@
 ﻿using System;
-using System.Collections;
-using DataProcessing.commands;
 using static DataProcessing.commands.FilterCmd;
 
 namespace DataProcessing
 {
     internal class Program
     {
+        public static string[] Gender = { "m", "m", "m", "m", "v", "v", "v", "v", "m" };
+
         public static void Main(string[] args)
         {
-            while (RequestUserInput()){}
+            while (RequestUserInput())
+            {
+            }
         }
 
         private static bool RequestUserInput()
@@ -26,7 +28,7 @@ namespace DataProcessing
                 case "q":
                 case "quit":
                     return false;
-                default: 
+                default:
                     Console.WriteLine("Command not found.");
                     break;
             }
