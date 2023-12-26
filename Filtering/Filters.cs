@@ -43,29 +43,29 @@ namespace Filtering
          */
 
         // filter string
-        public static List<int> IndexFilterList(string[] unfiltredArray, string criteria)
+        public static List<int> IndexFilterList(List<string> unfiltredArray, string criteria)
         {
             var indexList = new List<int>();
-            for (var i = 0; i < unfiltredArray.Length; i++)
+            for (var i = 0; i < unfiltredArray.Count; i++)
                 if (unfiltredArray[i] == criteria)
                     indexList.Add(i);
             return indexList;
         }
 
         // filter int
-        public static List<int> IndexFilterList(int[] unfiltredArray, int criteria)
+        public static List<int> IndexFilterList(List<int> unfiltredArray, int criteria)
         {
             var indexList = new List<int>();
-            for (var i = 0; i < unfiltredArray.Length; i++)
+            for (var i = 0; i < unfiltredArray.Count; i++)
                 if (unfiltredArray[i] == criteria)
                     indexList.Add(i);
             return indexList;
         }
 
-        public static List<int> IndexFilterList(char[] unfiltredArray, char criteria)
+        public static List<int> IndexFilterList(List<char> unfiltredArray, char criteria)
         {
             var indexList = new List<int>();
-            for (var i = 0; i < unfiltredArray.Length; i++)
+            for (var i = 0; i < unfiltredArray.Count; i++)
                 if (unfiltredArray[i] == criteria)
                     indexList.Add(i);
             return indexList;
