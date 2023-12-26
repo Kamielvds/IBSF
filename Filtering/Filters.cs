@@ -13,22 +13,22 @@ namespace Filtering
          *      returns => List<t_var>
          */
 
-        public static List<string> FilterList(IEnumerable<string> unfiltredArray, string criteria)
+        public static List<string> FilterList(List<string> unfiltredArray, string criteria)
         {
             return unfiltredArray.Where(str => str == criteria).ToList();
         }
 
-        public static List<int> FilterList(IEnumerable<int> unfiltredArray, int criteria)
+        public static List<int> FilterList(List<int> unfiltredArray, int criteria)
         {
             return unfiltredArray.Where(i => i == criteria).ToList();
         }
 
-        public static List<double> FilterList(IEnumerable<double> unfiltredArray, int criteria)
+        public static List<double> FilterList(List<double> unfiltredArray, int criteria)
         {
             return unfiltredArray.Where(i => Math.Abs(i - criteria) < 0.00001)
                 .ToList(); // using tolerance of 5 digits  
         }
-        public static List<char> FilterList(IEnumerable<char> unfiltredArray, char criteria)
+        public static List<char> FilterList(List<char> unfiltredArray, char criteria)
         {
             return unfiltredArray.Where(i => i == criteria).ToList();
         }
