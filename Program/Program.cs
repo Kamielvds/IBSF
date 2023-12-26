@@ -1,11 +1,12 @@
 ﻿using System;
 using static DataProcessing.commands.FilterCmd;
+using System.Collections.Generic;
 
 namespace DataProcessing
 {
     internal class Program
     {
-        public static string[] Gender = { "m", "m", "m", "m", "v", "v", "v", "v", "m" };
+        public static List<char> Gender = new List<char>{ 'm', 'v', 'm', 'm', 'v', 'v', 'v', 'm', 'm' };
 
         public static void Main(string[] args)
         {
