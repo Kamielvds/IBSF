@@ -1,5 +1,8 @@
+using System;
+using Filtering;
 using static DataProcessing.Program;
-using Filters
+using static Filtering.Filters;
+using static DataProcessing.Program;
 
 namespace DataProcessing.commands
 {
@@ -11,9 +14,31 @@ namespace DataProcessing.commands
             {
                 case "gender":
                 case "--g":
-                    
+                    FilterByGender(command);
                     break;
             }
+        }
+
+        private static void FilterByGender(string[] command)
+        {
+            char targetGender;
+            try
+            {
+                targetGender = Convert.ToChar(command[2]);
+            }
+            catch
+            {
+                Console.WriteLine("Genders are supposed to be Char's");
+                return;
+            }
+            
+            var filteredList = FilterList(Gender,targetGender);
+
+            foreach (var gender in filteredList)
+            {
+                Console.WriteLine(gender);
+            }
+            
         }
     }
 }
