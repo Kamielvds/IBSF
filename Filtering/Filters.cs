@@ -28,6 +28,10 @@ namespace Filtering
             return unfiltredArray.Where(i => Math.Abs(i - criteria) < 0.00001)
                 .ToList(); // using tolerance of 5 digits  
         }
+        public static List<char> FilterList(IEnumerable<char> unfiltredArray, char criteria)
+        {
+            return unfiltredArray.Where(i => i == criteria).ToList();
+        }
 
         #endregion
 
@@ -58,6 +62,15 @@ namespace Filtering
             return indexList;
         }
 
+        public static List<int> IndexFilterList(char[] unfiltredArray, char criteria)
+        {
+            var indexList = new List<int>();
+            for (var i = 0; i < unfiltredArray.Length; i++)
+                if (unfiltredArray[i] == criteria)
+                    indexList.Add(i);
+            return indexList;
+        }
+        
         #endregion
 
         #region Compare
