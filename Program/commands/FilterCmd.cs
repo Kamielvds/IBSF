@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Filtering;
 using static DataProcessing.Program;
 using static Filtering.Filters;
-using static DataProcessing.Program;
 
 namespace DataProcessing.commands
 {
@@ -32,6 +30,36 @@ namespace DataProcessing.commands
                     break;
                 default:
                     Console.WriteLine("No valid command was given");
+                    break;
+                // show -> unusable in form
+                case "--s":
+                case "show":
+                    ShowFiltredList(command);
+                    break;
+            }
+        }
+
+        private static void ShowFiltredList(string[] command)
+        {
+            var option = command[2];
+            switch (option)
+            {
+                case null:
+                    //show all
+                    break;
+                case "--g":
+                case "gender":
+                    foreach (var i in filtred)
+                    {
+                        Console.WriteLine(Gender[i]);
+                    }
+                    break;
+                case "--n":
+                case "name":
+                    foreach (var i in filtred)
+                    {
+                        Console.WriteLine(Gender[i]);
+                    }
                     break;
             }
         }
