@@ -6,21 +6,10 @@ namespace DataProcessing
 {
     internal class Program
     {
-        public static List<char> Gender = new List<char>
-        {
-            'm',
-            'v',
-            'm',
-            'm',
-            'v',
-            'v',
-            'v',
-            'm',
-            'm'
-        };
-
-        public static List<string> Name = new List<string> { "piet", "jane", "piet", "piet" };
-        public static List<string> Time = new List<string> { "piet", "jane", "piet", "piet" };
+        public static List<string> Name = new List<string>();
+        public static List<char> Gender = new List<char> ();
+        public static List<double> Time = new List<double>();
+        public static List<string> Nationality = new List<string>();
 
         public static void Main(string[] args)
         {
@@ -63,7 +52,6 @@ namespace DataProcessing
             var tSize = Gender.Count;
             if (Name.Count != tSize) return false;
             if (Time.Count != tSize) return false;
-            
             return true;
         }
     }
