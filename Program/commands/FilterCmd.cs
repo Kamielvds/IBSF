@@ -7,7 +7,7 @@ namespace DataProcessing.commands
 {
     public static class FilterCmd
     {
-        public static List<int> filtred;
+        public static List<int> Filtred;
 
         public static void FilterCommand(string[] command)
         {
@@ -26,7 +26,7 @@ namespace DataProcessing.commands
                         break;
                     }
 
-                    filtred = IndexFilterList(Gender, targetGender);
+                    Filtred = IndexFilterList(Gender, targetGender);
                     break;
                 case "age":
                 case "--a":
@@ -41,7 +41,7 @@ namespace DataProcessing.commands
                         break;
                     }
 
-                    filtred = IndexFilterList(Age, targetAge);
+                    Filtred = IndexFilterList(Age, targetAge);
                     break;
                 case "nationality":
                     string targetNationality;
@@ -55,7 +55,7 @@ namespace DataProcessing.commands
                         break;
                     }
 
-                    filtred = IndexFilterList(Nationality, targetNationality);
+                    Filtred = IndexFilterList(Nationality, targetNationality);
                     break;
                 case "time":
                 case "--t":
@@ -70,7 +70,7 @@ namespace DataProcessing.commands
                         break;
                     }
 
-                    filtred = IndexFilterList(Time, targetTime);
+                    Filtred = IndexFilterList(Time, targetTime);
                     break;
                 case "name":
                 case "--n":
@@ -85,7 +85,7 @@ namespace DataProcessing.commands
                         break;
                     }
 
-                    filtred = IndexFilterList(Name, targetName);
+                    Filtred = IndexFilterList(Name, targetName);
                     break;
                 
                 // TODO show -> unusable in form rewrite for a listview
@@ -109,14 +109,14 @@ namespace DataProcessing.commands
                     break;
                 case "--g":
                 case "gender":
-                    foreach (var i in filtred)
+                    foreach (var i in Filtred)
                     {
                         Console.WriteLine(Gender[i]);
                     }
                     break;
                 case "--n":
                 case "name":
-                    foreach (var i in filtred)
+                    foreach (var i in Filtred)
                     {
                         Console.WriteLine(Gender[i]);
                     }
