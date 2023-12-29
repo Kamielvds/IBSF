@@ -70,6 +70,14 @@ namespace Filtering
                     indexList.Add(i);
             return indexList;
         }
+        public static List<int> IndexFilterList(List<double> unfiltredArray, double criteria)
+        {
+            var indexList = new List<int>();
+            for (var i = 0; i < unfiltredArray.Count; i++)
+                if (Math.Abs(unfiltredArray[i] - criteria) < 0.000001)
+                    indexList.Add(i);
+            return indexList;
+        }
         
         #endregion
 
