@@ -72,7 +72,23 @@ namespace DataProcessing.commands
 
                     filtred = IndexFilterList(Time, targetTime);
                     break;
-                // show -> unusable in form rewrite for a listview
+                case "name":
+                case "--n":
+                    string targetName;
+                    try
+                    {
+                        targetName = command[2];
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Nationalty should be a 2-character string.");
+                        break;
+                    }
+
+                    filtred = IndexFilterList(Name, targetName);
+                    break;
+                
+                // TODO show -> unusable in form rewrite for a listview
                 case "--s":
                 case "show":
                     ShowFiltredList(command);
