@@ -28,13 +28,57 @@ namespace DataProcessing.commands
 
                     filtred = IndexFilterList(Gender, targetGender);
                     break;
-                default:
-                    Console.WriteLine("No valid command was given");
+                case "age":
+                case "--a":
+                    byte targetAge;
+                    try
+                    {
+                        targetAge = Convert.ToByte(command[2]);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Age should be a string.");
+                        break;
+                    }
+
+                    filtred = IndexFilterList(Age, targetAge);
                     break;
-                // show -> unusable in form
+                case "nationality":
+                    string targetNationality;
+                    try
+                    {
+                        targetNationality = command[2];
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Nationalty should be a 2-character string.");
+                        break;
+                    }
+
+                    filtred = IndexFilterList(Nationality, targetNationality);
+                    break;
+                case "time":
+                case "--t":
+                    double targetTime;
+                    try
+                    {
+                        targetTime = Convert.ToDouble(command[2]);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Nationalty should be a 2-character string.");
+                        break;
+                    }
+
+                    filtred = IndexFilterList(Time, targetTime);
+                    break;
+                // show -> unusable in form rewrite for a listview
                 case "--s":
                 case "show":
                     ShowFiltredList(command);
+                    break;
+                default:
+                    Console.WriteLine("No valid command was given");
                     break;
             }
         }
