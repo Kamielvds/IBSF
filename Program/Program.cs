@@ -40,8 +40,8 @@ namespace DataProcessing
                 case "-f":
                     FilterCommand(userInput);
                     break;
-                case "q":
                 case "quit":
+                case "-q":
                     return false;
                 default:
                     Console.WriteLine("Command not found.");
