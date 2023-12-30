@@ -1,4 +1,5 @@
 using System;
+using System.Xml.Serialization;
 using System.Xml;
 
 namespace DataProcessing.commands
@@ -19,26 +20,21 @@ namespace DataProcessing.commands
 
         private static void UpdatePath(string xmlContent)
         {
-            // Create an XmlDocument object and load the XML string
             var xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(xmlContent);
+            xmlDoc.Load("UserSettings/UserSettings.xml"); 
 
-            // Find the <path> element
-            var pathNode = xmlDoc.SelectSingleNode("/path");
-            
-            if (pathNode != null)
+            var rootElement = xmlDoc.SelectSingleNode("/path");
+
+            if (rootElement != null)
             {
-                // Get user input for the new path
-                Console.Write("Enter the new path: ");
-                var newPath = Console.ReadLine();
-
-                // Update the content of the <path> element
-                if (newPath != null) pathNode.InnerText = newPath;
+                rootElement.InnerText = xmlContent;
+                xmlDoc.Save("UserSettings/UserSettings.xml"); 
+                Console.WriteLine("Path saved successfully");
             }
             else
             {
-                Console.WriteLine("<path> element not found in XML.");
-            }   
+                Console.WriteLine("Root element 'path' not found, check xml file.");
+            }
         }
     }
 }
