@@ -42,6 +42,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="commands\FilterCmd.cs" />
+        <Compile Include="commands\UserSettings.cs" />
         <Compile Include="Program.cs"/>
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
