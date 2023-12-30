@@ -1,8 +1,8 @@
 ﻿using System;
-using static DataProcessing.commands.FilterCmd;
 using System.Collections.Generic;
 using System.Data;
 using System.Xml;
+using DataProcessing.commands;
 
 namespace DataProcessing
 {
@@ -11,7 +11,7 @@ namespace DataProcessing
         private const string XmlPath = "UserSettings/UserSettings.xml";
         private static string Path;
 
-        // TODO when adding, update the Intgrity Check
+        // TODO when adding, update the integrity Check
         public static List<string> Name = new List<string>();
         public static List<char> Gender = new List<char>();
         public static List<double> Time = new List<double>();
@@ -35,10 +35,13 @@ namespace DataProcessing
             if (userInput == null) return true;
             switch (userInput[0])
             {
-                // filter
                 case "filter":
                 case "-f":
-                    FilterCommand(userInput);
+                    FilterCmd.FilterCommand(userInput);
+                    break;
+                case "settings":
+                case "-s":
+                    UserSettings.FilterCommand(userInput);
                     break;
                 case "quit":
                 case "-q":
@@ -61,6 +64,7 @@ namespace DataProcessing
                 Path = textReader.Value;
                 break;
             }
+            //TODO read values from a database
         }
 
         private static bool CheckIntregrity()
@@ -68,14 +72,14 @@ namespace DataProcessing
             var tSize = Gender.Count; // base the other values on the size of the gender List
             try
             {
-                if (Name.Count != tSize)          throw new DataException ("name");
-                if (Gender.Count != tSize)        throw new DataException ("gender");
-                if (Time.Count != tSize)          throw new DataException ("time");
-                if (Nationality.Count != tSize)   throw new DataException ("nationality");
-                if (Age.Count != tSize)           throw new DataException ("age");
+                if (Name.Count != tSize) throw new DataException("name");
+                if (Gender.Count != tSize) throw new DataException("gender");
+                if (Time.Count != tSize) throw new DataException("time");
+                if (Nationality.Count != tSize) throw new DataException("nationality");
+                if (Age.Count != tSize) throw new DataException("age");
                 return true;
             }
-            catch (DataException e)
+            catch (DataException e)     // wrong sizes
             {
                 switch (e.Message)
                 {
