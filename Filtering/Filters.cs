@@ -79,12 +79,18 @@ namespace Filtering
             return indexList;
         }
         
+        /*
+         * TODO Conditions:
+         * double/ int ><=
+         * 
+         */
+        
         #endregion
 
         #region Compare
 
         /*
-         * used for getting indexes of filtred lists, checks item in order, and only moves forward
+         * used for getting indexes of filtered lists, checks item in order, and only moves forward
          *      returns => List<int>
          */
 
