@@ -44,17 +44,12 @@ namespace DataProcessing.commands
                     Filtred = IndexFilterList(Age, targetAge);
                     break;
                 case "nationality":
-                    string targetNationality;
-                    try
+                    var targetNationality = command[2];
+                    if (targetNationality.Length != 2)
                     {
-                        targetNationality = command[2];
-                    }
-                    catch
-                    {
-                        Console.WriteLine("Nationalty should be a 2-character string.");
+                        Console.WriteLine("Nationality should be a 2-char string.");
                         break;
                     }
-
                     Filtred = IndexFilterList(Nationality, targetNationality);
                     break;
                 case "time":
@@ -66,7 +61,7 @@ namespace DataProcessing.commands
                     }
                     catch
                     {
-                        Console.WriteLine("Nationalty should be a 2-character string.");
+                        Console.WriteLine("Time should be a double.");
                         break;
                     }
 
@@ -74,17 +69,8 @@ namespace DataProcessing.commands
                     break;
                 case "name":
                 case "--n":
-                    string targetName;
-                    try
-                    {
-                        targetName = command[2];
-                    }
-                    catch
-                    {
-                        Console.WriteLine("Nationalty should be a 2-character string.");
-                        break;
-                    }
-
+                       var targetName = command[2];
+                    
                     Filtred = IndexFilterList(Name, targetName);
                     break;
                 
@@ -99,13 +85,21 @@ namespace DataProcessing.commands
             }
         }
 
+        // TODO implement all lists
         private static void ShowFiltredList(string[] command)
         {
             var option = command[2];
             switch (option)
             {
                 case null:
-                    //show all
+                    // TODO show all
+                    break;
+                case "--n":
+                case "name":
+                    foreach (var i in Filtred)
+                    {
+                        Console.WriteLine(Name[i]);
+                    }
                     break;
                 case "--g":
                 case "gender":
@@ -114,11 +108,25 @@ namespace DataProcessing.commands
                         Console.WriteLine(Gender[i]);
                     }
                     break;
-                case "--n":
-                case "name":
+                case "--t":
+                case "time":
                     foreach (var i in Filtred)
                     {
-                        Console.WriteLine(Gender[i]);
+                        Console.WriteLine(Time[i]);
+                    }
+                    break;
+                case "--na":
+                case "nationality":
+                    foreach (var i in Filtred)
+                    {
+                        Console.WriteLine(Nationality[i]);
+                    }
+                    break;
+                case "--a":
+                case "age":
+                    foreach (var i in Filtred)
+                    {
+                        Console.WriteLine(Age[i]);
                     }
                     break;
             }
