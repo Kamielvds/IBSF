@@ -13,24 +13,24 @@ namespace Filtering
          *      returns => List<t_var>
          */
 
-        public static List<string> FilterList(List<string> unfiltredArray, string criteria)
+        public static List<string> FilterList(List<string> unfilteredArray, string criteria)
         {
-            return unfiltredArray.Where(str => str == criteria).ToList();
+            return unfilteredArray.Where(str => str == criteria).ToList();
         }
 
-        public static List<int> FilterList(List<int> unfiltredArray, int criteria)
+        public static List<int> FilterList(List<int> unfilteredArray, int criteria)
         {
-            return unfiltredArray.Where(i => i == criteria).ToList();
+            return unfilteredArray.Where(i => i == criteria).ToList();
         }
 
-        public static List<double> FilterList(List<double> unfiltredArray, int criteria)
+        public static List<double> FilterList(List<double> unfilteredArray, int criteria)
         {
-            return unfiltredArray.Where(i => Math.Abs(i - criteria) < 0.00001)
+            return unfilteredArray.Where(i => Math.Abs(i - criteria) < 0.00001)
                 .ToList(); // using tolerance of 5 digits  
         }
-        public static List<char> FilterList(List<char> unfiltredArray, char criteria)
+        public static List<char> FilterList(List<char> unfilteredArray, char criteria)
         {
-            return unfiltredArray.Where(i => i == criteria).ToList();
+            return unfilteredArray.Where(i => i == criteria).ToList();
         }
 
         #endregion
@@ -43,45 +43,45 @@ namespace Filtering
          */
 
         // filter string
-        public static List<int> IndexFilterList(List<string> unfiltredArray, string criteria)
+        public static List<int> IndexFilterList(List<string> unfilteredArray, string criteria)
         {
             var indexList = new List<int>();
-            for (var i = 0; i < unfiltredArray.Count; i++)
-                if (unfiltredArray[i] == criteria)
+            for (var i = 0; i < unfilteredArray.Count; i++)
+                if (unfilteredArray[i] == criteria)
                     indexList.Add(i);
             return indexList;
         }
 
         // filter int
-        public static List<int> IndexFilterList(List<int> unfiltredArray, int criteria)
+        public static List<int> IndexFilterList(List<int> unfilteredArray, int criteria)
         {
             var indexList = new List<int>();
-            for (var i = 0; i < unfiltredArray.Count; i++)
-                if (unfiltredArray[i] == criteria)
+            for (var i = 0; i < unfilteredArray.Count; i++)
+                if (unfilteredArray[i] == criteria)
                     indexList.Add(i);
             return indexList;
         }
 
-        public static List<int> IndexFilterList(List<char> unfiltredArray, char criteria)
+        public static List<int> IndexFilterList(List<char> unfilteredArray, char criteria)
         {
             var indexList = new List<int>();
-            for (var i = 0; i < unfiltredArray.Count; i++)
-                if (unfiltredArray[i] == criteria)
+            for (var i = 0; i < unfilteredArray.Count; i++)
+                if (unfilteredArray[i] == criteria)
                     indexList.Add(i);
             return indexList;
         }
-        public static List<int> IndexFilterList(List<double> unfiltredArray, double criteria)
+        public static List<int> IndexFilterList(List<double> unfilteredArray, double criteria)
         {
             var indexList = new List<int>();
-            for (var i = 0; i < unfiltredArray.Count; i++)
-                if (Math.Abs(unfiltredArray[i] - criteria) < 0.000001)
+            for (var i = 0; i < unfilteredArray.Count; i++)
+                if (Math.Abs(unfilteredArray[i] - criteria) < 0.000001)
                     indexList.Add(i);
             return indexList;
         }
         
         /*
          * TODO Conditions:
-         * double/ int ><=
+         * double/ int <>
          * 
          */
         
@@ -94,13 +94,13 @@ namespace Filtering
          *      returns => List<int>
          */
 
-        public static List<int> Compare(string[] unfiltred, string[] filtred)
+        public static List<int> Compare(string[] unfiltered, string[] filtered)
         {
             var indexList = new List<int>();
             var item = 0;
-            for (var i = 0; i < unfiltred.Length; i++)
+            for (var i = 0; i < unfiltered.Length; i++)
             {
-                if (unfiltred[i] != filtred[item]) continue;
+                if (unfiltered[i] != filtered[item]) continue;
                 indexList.Add(i);
                 item++;
             }
@@ -108,13 +108,13 @@ namespace Filtering
             return indexList;
         }
 
-        public static List<int> Compare(int[] unfiltred, int[] filtred)
+        public static List<int> Compare(int[] unfiltered, int[] filtered)
         {
             var indexList = new List<int>();
             var item = 0;
-            for (var i = 0; i < unfiltred.Length; i++)
+            for (var i = 0; i < unfiltered.Length; i++)
             {
-                if (unfiltred[i] != filtred[item]) continue;
+                if (unfiltered[i] != filtered[item]) continue;
                 indexList.Add(i);
                 item++;
             }
