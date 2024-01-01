@@ -78,6 +78,14 @@ namespace Filtering
                     indexList.Add(i);
             return indexList;
         }
+        public static List<int> IndexFilterList(List<byte> unfilteredArray, byte criteria)
+        {
+            var indexList = new List<int>();
+            for (var i = 0; i < unfilteredArray.Count; i++)
+                if (unfilteredArray[i] == criteria)
+                    indexList.Add(i);
+            return indexList;
+        }
         
         /*
          * TODO Conditions:
