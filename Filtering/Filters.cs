@@ -131,5 +131,46 @@ namespace Filtering
         }
 
         #endregion
+
+        #region UniqueValues
+
+        public static List<string> UniqueValues(IEnumerable<string> list)
+        {
+            var result = new List<string>();
+            foreach (var value in list.Where(value => result.Contains(value)))
+                result.Add(value);
+            return result;
+        }
+        public static List<int> UniqueValues(IEnumerable<int> list)
+        {
+            var result = new List<int>();
+            foreach (var value in list.Where(value => result.Contains(value)))
+                result.Add(value);
+            return result;
+        }
+        public static List<double> UniqueValues(IEnumerable<double> list)
+        {
+            var result = new List<double>();
+            foreach (var value in list.Where(value => result.Contains(value)))
+                result.Add(value);
+            return result;
+        }
+        public static List<byte> UniqueValues(IEnumerable<byte> list)
+        {
+            var result = new List<byte>();
+            foreach (var value in list.Where(value => result.Contains(value)))
+                result.Add(value);
+            return result;
+        }
+        public static List<char> UniqueValues(IEnumerable<char> list)
+        {
+            var result = new List<char>();
+            foreach (var value in list.Where(value => result.Contains(value)))
+                result.Add(value);
+            return result;
+        }
+
+        #endregion
+        
     }
 }
