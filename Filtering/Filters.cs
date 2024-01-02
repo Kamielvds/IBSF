@@ -170,6 +170,33 @@ namespace Filtering
             return result;
         }
 
+        // With a filter index list
+        
+        public static List<char> UniqueValues(List<char> list, IEnumerable<int> filtered)
+        {
+            var targetList = filtered.Select(index => list[index]).ToList();
+            return UniqueValues(targetList);
+        }
+        public static List<int> UniqueValues(List<int> list, IEnumerable<int> filtered)
+        {
+            var targetList = filtered.Select(index => list[index]).ToList();
+            return UniqueValues(targetList);
+        }
+        public static List<string> UniqueValues(List<string> list, IEnumerable<int> filtered)
+        {
+            var targetList = filtered.Select(index => list[index]).ToList();
+            return UniqueValues(targetList);
+        }
+        public static List<double> UniqueValues(List<double> list, IEnumerable<int> filtered)
+        {
+            var targetList = filtered.Select(index => list[index]).ToList();
+            return UniqueValues(targetList);
+        }
+        public static List<byte> UniqueValues(List<byte> list, IEnumerable<int> filtered)
+        {
+            var targetList = filtered.Select(index => list[index]).ToList();
+            return UniqueValues(targetList);
+        }
         #endregion
         
     }
