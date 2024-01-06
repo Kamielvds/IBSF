@@ -28,6 +28,7 @@ namespace Filtering
             return unfilteredArray.Where(i => Math.Abs(i - criteria) < 0.00001)
                 .ToList(); // using tolerance of 5 digits  
         }
+
         public static List<char> FilterList(List<char> unfilteredArray, char criteria)
         {
             return unfilteredArray.Where(i => i == criteria).ToList();
@@ -70,6 +71,7 @@ namespace Filtering
                     indexList.Add(i);
             return indexList;
         }
+
         public static List<int> IndexFilterList(List<double> unfilteredArray, double criteria)
         {
             var indexList = new List<int>();
@@ -78,6 +80,7 @@ namespace Filtering
                     indexList.Add(i);
             return indexList;
         }
+
         public static List<int> IndexFilterList(List<byte> unfilteredArray, byte criteria)
         {
             var indexList = new List<int>();
@@ -86,13 +89,170 @@ namespace Filtering
                     indexList.Add(i);
             return indexList;
         }
-        
+
+        #region Conditions
+
         /*
-         * TODO Conditions:
-         * double/ int <>
+         * Returns an index list in which the condition is true
          * 
+         * Less Than
          */
+
+        public static List<int> LessThan(List<int> list, int condition, bool equal)
+        {
+            var result = new List<int>();
+            // check the equal early in case of large List's and reduce instructions
+            if (equal)
+                for (var i = 0; i < list.Count; i++)
+                {
+                    var value = list[i];
+                    if (value <= condition)
+                    {
+                        result.Add(i);
+                    }
+                }
+            else
+                for (var i = 0; i < list.Count; i++)
+                {
+                    var value = list[i];
+                    if (value < condition)
+                    {
+                        result.Add(i);
+                    }
+                }
+
+            return result;
+        }
+        public static List<int> LessThan(List<double> list, double condition, bool equal)
+        {
+            var result = new List<int>();
+            // check the equal early in case of large List's and reduce instructions
+            if (equal)
+                for (var i = 0; i < list.Count; i++)
+                {
+                    var value = list[i];
+                    if (value <= condition)
+                    {
+                        result.Add(i);
+                    }
+                }
+            else
+                for (var i = 0; i < list.Count; i++)
+                {
+                    var value = list[i];
+                    if (value < condition)
+                    {
+                        result.Add(i);
+                    }
+                }
+
+            return result;
+        }
+        public static List<int> LessThan(List<byte> list, byte condition, bool equal)
+        {
+            var result = new List<int>();
+            // check the equal early in case of large List's and reduce instructions
+            if (equal)
+                for (var i = 0; i < list.Count; i++)
+                {
+                    var value = list[i];
+                    if (value <= condition)
+                    {
+                        result.Add(i);
+                    }
+                }
+            else
+                for (var i = 0; i < list.Count; i++)
+                {
+                    var value = list[i];
+                    if (value < condition)
+                    {
+                        result.Add(i);
+                    }
+                }
+
+            return result;
+        }
+        // Larger than
+
+        public static List<int> LargerThan(List<int> list, int condition, bool equal)
+        {
+            var result = new List<int>();
+            // check the equal early in case of large List's and reduce instructions
+            if (equal)
+                for (var i = 0; i < list.Count; i++)
+                {
+                    var value = list[i];
+                    if (value >= condition)
+                    {
+                        result.Add(i);
+                    }
+                }
+            else
+                for (var i = 0; i < list.Count; i++)
+                {
+                    var value = list[i];
+                    if (value > condition)
+                    {
+                        result.Add(i);
+                    }
+                }
+
+            return result;
+        }
+        public static List<int> LargerThan(List<double> list, double condition, bool equal)
+        {
+            var result = new List<int>();
+            // check the equal early in case of large List's and reduce instructions
+            if (equal)
+                for (var i = 0; i < list.Count; i++)
+                {
+                    var value = list[i];
+                    if (value >= condition)
+                    {
+                        result.Add(i);
+                    }
+                }
+            else
+                for (var i = 0; i < list.Count; i++)
+                {
+                    var value = list[i];
+                    if (value > condition)
+                    {
+                        result.Add(i);
+                    }
+                }
+
+            return result;
+        }
+        public static List<int> LargerThan(List<byte> list, byte condition, bool equal)
+        {
+            var result = new List<int>();
+            // check the equal early in case of large List's and reduce instructions
+            if (equal)
+                for (var i = 0; i < list.Count; i++)
+                {
+                    var value = list[i];
+                    if (value >= condition)
+                    {
+                        result.Add(i);
+                    }
+                }
+            else
+                for (var i = 0; i < list.Count; i++)
+                {
+                    var value = list[i];
+                    if (value > condition)
+                    {
+                        result.Add(i);
+                    }
+                }
+
+            return result;
+        }
         
+        #endregion
+
         #endregion
 
         #region Compare
@@ -137,67 +297,70 @@ namespace Filtering
         public static List<string> UniqueValues(IEnumerable<string> list)
         {
             var result = new List<string>();
-            foreach (var value in list.Where(value => result.Contains(value)))
-                result.Add(value);
+            foreach (var value in list.Where(value => result.Contains(value))) result.Add(value);
             return result;
         }
+
         public static List<int> UniqueValues(IEnumerable<int> list)
         {
             var result = new List<int>();
-            foreach (var value in list.Where(value => result.Contains(value)))
-                result.Add(value);
+            foreach (var value in list.Where(value => result.Contains(value))) result.Add(value);
             return result;
         }
+
         public static List<double> UniqueValues(IEnumerable<double> list)
         {
             var result = new List<double>();
-            foreach (var value in list.Where(value => result.Contains(value)))
-                result.Add(value);
+            foreach (var value in list.Where(value => result.Contains(value))) result.Add(value);
             return result;
         }
+
         public static List<byte> UniqueValues(IEnumerable<byte> list)
         {
             var result = new List<byte>();
-            foreach (var value in list.Where(value => result.Contains(value)))
-                result.Add(value);
+            foreach (var value in list.Where(value => result.Contains(value))) result.Add(value);
             return result;
         }
+
         public static List<char> UniqueValues(IEnumerable<char> list)
         {
             var result = new List<char>();
-            foreach (var value in list.Where(value => result.Contains(value)))
-                result.Add(value);
+            foreach (var value in list.Where(value => result.Contains(value))) result.Add(value);
             return result;
         }
 
         // With a filter index list
-        
+
         public static List<char> UniqueValues(List<char> list, IEnumerable<int> filtered)
         {
             var targetList = filtered.Select(index => list[index]).ToList();
             return UniqueValues(targetList);
         }
+
         public static List<int> UniqueValues(List<int> list, IEnumerable<int> filtered)
         {
             var targetList = filtered.Select(index => list[index]).ToList();
             return UniqueValues(targetList);
         }
+
         public static List<string> UniqueValues(List<string> list, IEnumerable<int> filtered)
         {
             var targetList = filtered.Select(index => list[index]).ToList();
             return UniqueValues(targetList);
         }
+
         public static List<double> UniqueValues(List<double> list, IEnumerable<int> filtered)
         {
             var targetList = filtered.Select(index => list[index]).ToList();
             return UniqueValues(targetList);
         }
+
         public static List<byte> UniqueValues(List<byte> list, IEnumerable<int> filtered)
         {
             var targetList = filtered.Select(index => list[index]).ToList();
             return UniqueValues(targetList);
         }
+
         #endregion
-        
     }
 }
