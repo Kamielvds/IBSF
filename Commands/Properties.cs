@@ -4,10 +4,6 @@ namespace Commands
 {
     public class Properties
     {
-        public static List<string> Name = new List<string>();
-        public static List<char> Gender = new List<char>();
-        public static List<double> Time = new List<double>();
-        public static List<string> Nationality = new List<string>();
-        public static List<int> Age = new List<int>();
+        public static Dictionary<string, List<Dictionary<string, object>>> UserScores = new Dictionary<string, List<Dictionary<string, object>>>();
     }
 }
