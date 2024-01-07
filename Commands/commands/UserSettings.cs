@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using Commands;
 
 namespace DataProcessing.commands
 
@@ -77,7 +78,8 @@ namespace DataProcessing.commands
                 }
                 dictionary.Add(trackName, activities);
             }
-            
+
+            Properties.UserScores = dictionary;
         }
     }
 }
