@@ -43,6 +43,12 @@
         <Compile Include="Program.cs"/>
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Commands\Commands.csproj">
+        <Project>{fe0b0290-7550-45bf-bf07-a9e9ac971061}</Project>
+        <Name>Commands</Name>
+      </ProjectReference>
+    </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.
