@@ -16,8 +16,10 @@ namespace Commands.commands
             Console.WriteLine("EX: xml-nf");
         }
 
-        public static void LoadPath()
+        public static void LoadXml()
         {
+            if (xmlContent == null) return;
+            
             var xmlDoc = new XmlDocument();
             xmlDoc.Load(xmlContent);
             var root = xmlDoc.SelectSingleNode("/root");
