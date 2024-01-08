@@ -91,5 +91,19 @@ namespace Commands.commands
                 node.Value = value;
             }
         }
+
+        public static void RenameNode(string location, string targetNode, string name)
+        {
+            // load
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(xmlContent);
+            var nodes = xmlDoc.SelectNodes(location);
+            if (nodes == null) return;
+            foreach (XmlNode node in nodes)
+            {
+                if (node.Name != targetNode) return;
+                node.Value = name;
+            }
+        }
     }
 }
