@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
@@ -17,6 +18,9 @@ namespace Commands.commands
                 case "edit":
                 case "--e": // settings, --e, ex.xml, root/ac/ac-1, name, Jeff
                     EditElement(command[2], command[3], command[4], command[5]);
+                    break;
+                default:
+                    Console.WriteLine("EX: Filter-nf");
                     break;
             }
         }
