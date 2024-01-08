@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml;
 
@@ -7,17 +8,23 @@ namespace Commands.commands
 {
     public class UserSettings
     {
+        private static string xmlContent;
+
         public static void FilterCommand(string[] command)
         {
             switch (command[1])
             {
+                case "document":
+                case "--d":
+                    SetXmlPath(command[2]);
+                    break;
                 case "load":
                 case "--l":
-                    LoadPath(command[2]);
+                    LoadPath();
                     break;
                 case "edit":
                 case "--e": // settings, --e, ex.xml, root/ac/ac-1, name, Jeff
-                    EditElement(command[2], command[3], command[4], command[5]);
+                    EditElement(command[2], command[3], command[4]);
                     break;
                 default:
                     Console.WriteLine("EX: Filter-nf");
@@ -25,7 +32,13 @@ namespace Commands.commands
             }
         }
 
-        private static void LoadPath(string xmlContent)
+        private static void SetXmlPath(string path)
+        {
+            if (File.Exists(path)) xmlContent = path;
+            Console.WriteLine("EX: xml-nf");
+        }
+
+        private static void LoadPath()
         {
             var xmlDoc = new XmlDocument();
             xmlDoc.Load(xmlContent);
@@ -85,7 +98,7 @@ namespace Commands.commands
             Properties.UserScores = dictionary;
         }
 
-        private static void EditElement(string xmlContent, string location, string targetNode, string value)
+        private static void EditElement(string location, string targetNode, string value)
         {
             // load
             var xmlDoc = new XmlDocument();
