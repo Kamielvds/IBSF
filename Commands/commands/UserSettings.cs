@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace Commands.commands
 {
@@ -19,7 +20,7 @@ namespace Commands.commands
         public static void LoadXml()
         {
             if (xmlContent == null) return;
-            
+
             var xmlDoc = new XmlDocument();
             xmlDoc.Load(xmlContent);
             var root = xmlDoc.SelectSingleNode("/root");
@@ -92,6 +93,7 @@ namespace Commands.commands
             }
         }
 
+        // if you need to rename in different location, use this method in foreach.
         public static void RenameNode(string location, string targetNode, string name)
         {
             // load
@@ -104,6 +106,35 @@ namespace Commands.commands
                 if (node.Name != targetNode) return;
                 node.Value = name;
             }
+        }
+
+        public static void AddNodeAndValue(string location, string name, string value)
+        {
+            var xmlDoc = XDocument.Load(xmlContent);
+            var xElement = new XElement(name, value);
+            xmlDoc.Element(location)?.Add(xElement);
+            xmlDoc.Save(xmlContent);
+        }
+
+        public static void AddNodeAndValue(string location, string[] names, string[] values)
+        {
+            if (names == null) throw new ArgumentNullException(nameof(names));
+            var xmlDoc = XDocument.Load(xmlContent);
+            var i = 0;
+            foreach (var name in names)
+            {
+                xmlDoc.Element(location)?.Add(new XElement(name, values[i]));
+                i++;
+            }
+            xmlDoc.Save(xmlContent);
+        }
+
+        // used for creating a main node with sub-notes
+        public static void AddNodeAndValue(string location, string mainNode, string[] names, string[] values)
+        {
+            var xmlDoc = XDocument.Load(xmlContent);
+            xmlDoc.Element(location)?.Add(new XElement(mainNode));
+            AddNodeAndValue($"{location}/{mainNode}", names, values);
         }
     }
 }
