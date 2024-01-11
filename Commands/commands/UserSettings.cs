@@ -9,20 +9,26 @@ namespace Commands.commands
 {
     public class UserSettings
     {
-        public static string xmlContent;
+        public UserSettings(string path)
+        {
+            _xmlPath = path;
+        }
+
+        private static string _xmlPath;
+        public static string XmlPath => _xmlPath;
 
         public static void SetXmlPath(string path)
         {
-            if (File.Exists(path)) xmlContent = path;
+            if (File.Exists(path)) _xmlPath = path;
             Console.WriteLine("EX: xml-nf");
         }
 
         public static void LoadXml()
         {
-            if (xmlContent == null) return;
+            if (_xmlPath == null) return;
 
             var xmlDoc = new XmlDocument();
-            xmlDoc.Load(xmlContent);
+            xmlDoc.Load(_xmlPath);
             var root = xmlDoc.SelectSingleNode("/root");
             var tracksNode = root?.SelectSingleNode("tracks");
             var dictionary = new Dictionary<string, List<Dictionary<string, object>>>();
@@ -83,7 +89,7 @@ namespace Commands.commands
         {
             // load
             var xmlDoc = new XmlDocument();
-            xmlDoc.Load(xmlContent);
+            xmlDoc.Load(_xmlPath);
             var nodes = xmlDoc.SelectNodes(location);
             if (nodes == null) return;
             foreach (XmlNode node in nodes)
@@ -98,7 +104,7 @@ namespace Commands.commands
         {
             // load
             var xmlDoc = new XmlDocument();
-            xmlDoc.Load(xmlContent);
+            xmlDoc.Load(_xmlPath);
             var nodes = xmlDoc.SelectNodes(location);
             if (nodes == null) return;
             foreach (XmlNode node in nodes)
@@ -110,29 +116,29 @@ namespace Commands.commands
 
         public static void AddNodeAndValue(string location, string name, string value)
         {
-            var xmlDoc = XDocument.Load(xmlContent);
+            var xmlDoc = XDocument.Load(_xmlPath);
             var xElement = new XElement(name, value);
             xmlDoc.Element(location)?.Add(xElement);
-            xmlDoc.Save(xmlContent);
+            xmlDoc.Save(_xmlPath);
         }
 
         public static void AddNodeAndValue(string location, string[] names, string[] values)
         {
             if (names == null) throw new ArgumentNullException(nameof(names));
-            var xmlDoc = XDocument.Load(xmlContent);
+            var xmlDoc = XDocument.Load(_xmlPath);
             var i = 0;
             foreach (var name in names)
             {
                 xmlDoc.Element(location)?.Add(new XElement(name, values[i]));
                 i++;
             }
-            xmlDoc.Save(xmlContent);
+            xmlDoc.Save(_xmlPath);
         }
 
         // used for creating a main node with sub-notes
         public static void AddNodeAndValue(string location, string mainNode, string[] names, string[] values)
         {
-            var xmlDoc = XDocument.Load(xmlContent);
+            var xmlDoc = XDocument.Load(_xmlPath);
             xmlDoc.Element(location)?.Add(new XElement(mainNode));
             AddNodeAndValue($"{location}/{mainNode}", names, values);
         }
