@@ -17,7 +17,7 @@ namespace Commands.commands
         private string _xmlPath;
         public string XmlPath => _xmlPath;
 
-        public static void SetXmlPath(string path)
+        public void SetXmlPath(string path)
         {
             if (File.Exists(path)) _xmlPath = path;
             Console.WriteLine("EX: xml-nf");
