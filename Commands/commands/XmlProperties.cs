@@ -7,9 +7,9 @@ using System.Xml.Linq;
 
 namespace Commands.commands
 {
-    public class UserSettings
+    public class XmlProperties
     {
-        public UserSettings(string path)
+        public XmlProperties(string path)
         {
             _xmlPath = path;
         }
