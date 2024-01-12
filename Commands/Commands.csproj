@@ -43,7 +43,7 @@
         <Compile Include="commands\XmlParse.cs" />
         <Compile Include="Properties.cs" />
         <Compile Include="commands\FilterCmd.cs" />
-        <Compile Include="commands\UserSettings.cs" />
+        <Compile Include="commands\XmlProperties.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
     <ItemGroup>
