@@ -34,7 +34,7 @@ namespace Commands.commands
                     return Convert.ToDouble(doubleStr);
             }
 
-            return null;
+            return value;
         }
     }
 }
