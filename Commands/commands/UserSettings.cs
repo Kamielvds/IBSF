@@ -14,8 +14,8 @@ namespace Commands.commands
             _xmlPath = path;
         }
 
-        private static string _xmlPath;
-        public static string XmlPath => _xmlPath;
+        private string _xmlPath;
+        public string XmlPath => _xmlPath;
 
         public static void SetXmlPath(string path)
         {
@@ -23,7 +23,7 @@ namespace Commands.commands
             Console.WriteLine("EX: xml-nf");
         }
 
-        public static void LoadXml()
+        public void LoadXml()
         {
             if (_xmlPath == null) return;
 
@@ -85,7 +85,7 @@ namespace Commands.commands
             Properties.UserScores = dictionary;
         }
 
-        public static void EditElement(string location, string targetNode, string value)
+        public void EditElement(string location, string targetNode, string value)
         {
             // load
             var xmlDoc = new XmlDocument();
@@ -100,7 +100,7 @@ namespace Commands.commands
         }
 
         // if you need to rename in different location, use this method in foreach.
-        public static void RenameNode(string location, string targetNode, string name)
+        public void RenameNode(string location, string targetNode, string name)
         {
             // load
             var xmlDoc = new XmlDocument();
@@ -114,7 +114,7 @@ namespace Commands.commands
             }
         }
 
-        public static void AddNodeAndValue(string location, string name, string value)
+        public void AddNodeAndValue(string location, string name, string value)
         {
             var xmlDoc = XDocument.Load(_xmlPath);
             var xElement = new XElement(name, value);
@@ -122,7 +122,7 @@ namespace Commands.commands
             xmlDoc.Save(_xmlPath);
         }
 
-        public static void AddNodeAndValue(string location, string[] names, string[] values)
+        public void AddNodeAndValue(string location, string[] names, string[] values)
         {
             if (names == null) throw new ArgumentNullException(nameof(names));
             var xmlDoc = XDocument.Load(_xmlPath);
@@ -136,7 +136,7 @@ namespace Commands.commands
         }
 
         // used for creating a main node with sub-notes
-        public static void AddNodeAndValue(string location, string mainNode, string[] names, string[] values)
+        public void AddNodeAndValue(string location, string mainNode, string[] names, string[] values)
         {
             var xmlDoc = XDocument.Load(_xmlPath);
             xmlDoc.Element(location)?.Add(new XElement(mainNode));
