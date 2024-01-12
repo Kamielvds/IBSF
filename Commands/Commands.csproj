@@ -40,7 +40,7 @@
         <Reference Include="System.Xml.Linq" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="commands\XmlParse.cs" />
+        <Compile Include="commands\XmlParser.cs" />
         <Compile Include="Properties.cs" />
         <Compile Include="commands\FilterCmd.cs" />
         <Compile Include="commands\XmlProperties.cs" />

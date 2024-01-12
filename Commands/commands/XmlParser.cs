@@ -2,7 +2,7 @@ using System;
 
 namespace Commands.commands
 {
-    public class XmlParse
+    public class XmlParser
     {
         public object ParseXmlElement(string elementName, string value)
         {
