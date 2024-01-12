@@ -10,9 +10,9 @@ namespace Tests
         public static void Main(string[] args)
         {
             // creating Obj --> ok
-            var userSettings = new UserSettings(@"XML\XMLFiles\loading.xml");
+            var xmlProperties = new XmlProperties(@"XML\XMLFiles\loading.xml");
             // loading Xml --> ok
-            var userData = userSettings.LoadXml();
+            var userData = xmlProperties.LoadXml();
             // retrieving data xml --> ok, but should make a lib
             var item = userData.Keys.ElementAt(0);
 
