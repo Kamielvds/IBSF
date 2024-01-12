@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root activity='snowboarding'>
+    <tracks>
+        <SnowyMountain>
+            <activity-1>
+                <name>Kamiel Van der Straeten</name>
+                <age>16</age>
+                <gender>M</gender>
+                <nationality>BE</nationality>
+                <date>06-01-2024</date>
+                <submitted>True</submitted>
+                <splits>
+                    <split-1>
+                        <time>0:04:96</time>
+                        <distance>234.67</distance>
+                    </split-1>
+                </splits>
+            </activity-1>
+            <activity-2>
+
+            </activity-2>
+        </SnowyMountain>
+        <SnowyTracks>
+            <activity-1>
+                <name>Kamiel Van der Straeten</name>
+                <age>16</age>
+                <gender>M</gender>
+                <nationality>BE</nationality>
+                <date>06-01-2024</date>
+                <submitted>True</submitted>
+                <splits>
+                    <split-1>
+                        <time>0:04:96</time>
+                        <distance>234.67</distance>
+                    </split-1>
+                </splits>
+            </activity-1>
+            <activity-2>
+
+            </activity-2>
+        </SnowyTracks>
+    </tracks>
+</root>
