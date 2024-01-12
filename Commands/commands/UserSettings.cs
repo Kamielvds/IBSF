@@ -23,9 +23,9 @@ namespace Commands.commands
             Console.WriteLine("EX: xml-nf");
         }
 
-        public void LoadXml()
+        public Dictionary<string, List<Dictionary<string, object>>> LoadXml()
         {
-            if (_xmlPath == null) return;
+            if (_xmlPath == null) return null;
 
             var xmlDoc = new XmlDocument();
             xmlDoc.Load(_xmlPath);
@@ -34,7 +34,7 @@ namespace Commands.commands
             var dictionary = new Dictionary<string, List<Dictionary<string, object>>>();
 
             // check all different tracks
-            if (tracksNode == null) return;
+            if (tracksNode == null) return null;
             foreach (XmlNode trackNode in tracksNode.ChildNodes)
             {
                 // Get the track name
@@ -82,7 +82,7 @@ namespace Commands.commands
                 dictionary.Add(trackName, activities);
             }
 
-            Properties.UserScores = dictionary;
+            return dictionary;
         }
 
         public void EditElement(string location, string targetNode, string value)
