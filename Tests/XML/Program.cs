@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Commands.commands;
+using Commands;
+using Commands.DataProcessor;
 
 namespace Tests
 {
@@ -10,7 +11,8 @@ namespace Tests
         public static void Main(string[] args)
         {
             // creating Obj --> ok
-            var xmlProperties = new XmlProperties(@"XML\XMLFiles\loading.xml");
+            var properties = new Properties(@"XML\XMLFiles\loading.xml", "xml");
+            var xmlProperties = new XmlProperties(properties);
             // loading Xml --> ok
             var userData = xmlProperties.LoadXml();
             // retrieving data xml --> ok, but should make a lib
