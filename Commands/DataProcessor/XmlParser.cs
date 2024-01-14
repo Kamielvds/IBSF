@@ -1,6 +1,6 @@
 using System;
 
-namespace Commands.commands
+namespace Commands.DataProcessor
 {
     public class XmlParser
     {

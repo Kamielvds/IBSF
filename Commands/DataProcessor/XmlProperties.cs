@@ -5,23 +5,34 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace Commands.commands
+namespace Commands.DataProcessor
 {
     public class XmlProperties
     {
-        public XmlProperties(string path)
+        // constructor
+        public XmlProperties(Properties properties)
         {
-            _xmlPath = path;
+            _xmlPath = SetXmlPath(properties.FilePath);
         }
 
+        // private fields
         private string _xmlPath;
+
+        // public fields
         public string XmlPath => _xmlPath;
 
-        public void SetXmlPath(string path)
+        #region Private Methods
+
+        private string SetXmlPath(string path)
         {
-            if (File.Exists(path)) _xmlPath = path;
+            if (File.Exists(path)) return path;
             Console.WriteLine("EX: xml-nf");
+            return null;
         }
+
+        #endregion
+
+        #region Public Methods
 
         public Dictionary<string, List<Dictionary<string, object>>> LoadXml()
         {
@@ -132,6 +143,7 @@ namespace Commands.commands
                 xmlDoc.Element(location)?.Add(new XElement(name, values[i]));
                 i++;
             }
+
             xmlDoc.Save(_xmlPath);
         }
 
@@ -142,5 +154,7 @@ namespace Commands.commands
             xmlDoc.Element(location)?.Add(new XElement(mainNode));
             AddNodeAndValue($"{location}/{mainNode}", names, values);
         }
+
+        #endregion
     }
 }
