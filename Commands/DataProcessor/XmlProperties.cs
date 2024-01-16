@@ -12,7 +12,8 @@ namespace Commands.DataProcessor
         // constructor
         public XmlProperties(Properties properties)
         {
-            _xmlPath = SetXmlPath(properties.FilePath);
+            SetXmlPath(properties.FilePath);
+            properties.UserScores = LoadXml();
         }
 
         // private fields
@@ -23,11 +24,11 @@ namespace Commands.DataProcessor
 
         #region Private Methods
 
-        private string SetXmlPath(string path)
+        private void SetXmlPath(string path)
         {
-            if (File.Exists(path)) return path;
+            if (File.Exists(path) && path != null) {_xmlPath = path; return;}
             Console.WriteLine("EX: xml-nf");
-            return null;
+            _xmlPath = null;
         }
 
         #endregion
@@ -152,6 +153,7 @@ namespace Commands.DataProcessor
         {
             var xmlDoc = XDocument.Load(_xmlPath);
             xmlDoc.Element(location)?.Add(new XElement(mainNode));
+            xmlDoc.Save(_xmlPath);
             AddNodeAndValue($"{location}/{mainNode}", names, values);
         }
 
