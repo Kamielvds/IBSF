@@ -11,15 +11,13 @@ namespace Tests
         public static void Main(string[] args)
         {
             // creating Obj --> ok
-            var properties = new Properties(@"XML\XMLFiles\loading.xml", "xml");
+            var properties = new Properties("/Users/kamielvds/Desktop/RiderC#/IBSF-2/Tests/XML/XMLFiles/loading.xml", "xml");
             var xmlProperties = new XmlProperties(properties);
-            // loading Xml --> ok
-            var userData = xmlProperties.LoadXml();
             // retrieving data xml --> ok, but should make a lib
-            var item = userData.Keys.ElementAt(0);
+            var item = properties.UserScores.Keys.ElementAt(0);
 
-            if (!userData.ContainsKey(item)) return;
-            var listOfDictionaries = userData[item];
+            if (!properties.UserScores.ContainsKey(item)) return;
+            var listOfDictionaries = properties.UserScores[item];
 
             foreach (var dictionary in listOfDictionaries)
             {
@@ -27,8 +25,7 @@ namespace Tests
                 {
                     if (kvp.Key == "splits" && kvp.Value is List<Dictionary<string, string>> list)
                     {
-                        foreach (var split in list)     
-                            // splits numbers are deprecated in the loading, since they can be found with the index.
+                        foreach (var split in list)
                         {
                             foreach (var splitKvp in split)
                             {
@@ -44,8 +41,6 @@ namespace Tests
                 }
                 Console.WriteLine("-----");
             }
-
-
         }
     }
 }
