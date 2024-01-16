@@ -12,6 +12,9 @@ namespace Commands
 
         private string _filePath;
         private string _lang;
+
+        private Dictionary<string, List<Dictionary<string, object>>> _userScores 
+            = new Dictionary<string, List<Dictionary<string, object>>>();
         
         public string FilePath
         {
@@ -19,7 +22,10 @@ namespace Commands
             set => _filePath = value;
         }
         
-        public static Dictionary<string, List<Dictionary<string, object>>> UserScores 
-            = new Dictionary<string, List<Dictionary<string, object>>>();
+        public Dictionary<string, List<Dictionary<string, object>>> UserScores
+        {
+            get => _userScores;
+            set => _userScores = value;
+        }
     }
 }
