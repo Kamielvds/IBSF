@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static Filtering.Filters;
 
-namespace Commands.commands
+namespace Commands
 {
     public static class FilterCmd
     {
