@@ -13,7 +13,9 @@ namespace Tests
             // creating Obj --> ok
             var properties = new Properties("/Users/kamielvds/Desktop/RiderC#/IBSF-2/Tests/XML/XMLFiles/loading.xml", "xml");
             var xmlProperties = new XmlProperties(properties);
-            // retrieving data xml --> ok, but should make a lib
+            var dataRetriever = new DataRetriever(properties);
+            // retrieving data xml --> ok, but should make a lib => done 
+            /*
             var item = properties.UserScores.Keys.ElementAt(0);
 
             if (!properties.UserScores.ContainsKey(item)) return;
@@ -40,6 +42,13 @@ namespace Tests
                     }
                 }
                 Console.WriteLine("-----");
+            }
+            */
+            // data retriever -> ok
+            var differentTracks = dataRetriever.DifferentTracks();
+            foreach (var track in differentTracks)
+            {
+                Console.WriteLine(track);
             }
         }
     }
