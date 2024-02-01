@@ -40,11 +40,11 @@
         <Reference Include="System.Xml.Linq" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="DataProcessor\DataRetriever.cs" />
         <Compile Include="DataProcessor\XmlParser.cs" />
+        <Compile Include="DataProcessor\XML\XmlReader.cs" />
+        <Compile Include="DataProcessor\XML\XmlWriter.cs" />
         <Compile Include="FilterCmd.cs" />
         <Compile Include="Properties.cs" />
-        <Compile Include="DataProcessor\XmlProperties.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
     <ItemGroup>
