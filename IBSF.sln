@@ -2,11 +2,13 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filtering", "Filtering\Filtering.csproj", "{4AF70572-B3A0-4265-B19C-13A3EDD796B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commands", "Commands\Commands.csproj", "{FE0B0290-7550-45BF-BF07-A9E9AC971061}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSaving", "DataSaving\DataSaving.csproj", "{FE0B0290-7550-45BF-BF07-A9E9AC971061}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication", "ConsoleApplication\ConsoleApplication.csproj", "{4B52E56B-4DAA-4C05-A3AF-2F577CE8ACC8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{1D33DC6F-B373-45C8-9B04-8B78730CDDD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scores", "Scores\Scores.csproj", "{B68EE9EE-F6D2-43F8-A9DC-AA440F2B5E9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +32,9 @@ Global
 		{1D33DC6F-B373-45C8-9B04-8B78730CDDD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D33DC6F-B373-45C8-9B04-8B78730CDDD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D33DC6F-B373-45C8-9B04-8B78730CDDD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B68EE9EE-F6D2-43F8-A9DC-AA440F2B5E9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B68EE9EE-F6D2-43F8-A9DC-AA440F2B5E9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B68EE9EE-F6D2-43F8-A9DC-AA440F2B5E9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B68EE9EE-F6D2-43F8-A9DC-AA440F2B5E9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
