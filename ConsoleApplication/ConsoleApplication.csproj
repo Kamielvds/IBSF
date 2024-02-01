@@ -44,9 +44,9 @@
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Commands\Commands.csproj">
+      <ProjectReference Include="..\DataSaving\DataSaving.csproj">
         <Project>{fe0b0290-7550-45bf-bf07-a9e9ac971061}</Project>
-        <Name>Commands</Name>
+        <Name>DataSaving</Name>
       </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
