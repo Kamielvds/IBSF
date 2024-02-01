@@ -9,9 +9,9 @@ namespace Commands.DataProcessor
 {
     public class Xml
     {
-        public Xml(string xmlPath)
+        public Xml(Properties properties)
         {
-            SetXmlPath(xmlPath);
+            SetXmlPath(properties.FilePath);
         }
         
         private Properties _properties;
