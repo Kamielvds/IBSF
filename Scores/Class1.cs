@@ -30,11 +30,25 @@ namespace Scores
             set => _times = value;
         }
 
+        /// <summary>
+        /// Adds a split to the time and distance list
+        /// </summary>
+        /// <param name="time"></param>
+        /// the time to be added
+        /// <param name="distance"></param>
+        /// the distance to be added
         public void AddSplit(double time, double distance)
         {
             _distances.Add(distance);
             _times.Add(time);
         }
+        /// <summary>
+        /// Adds a list of splits to the end of the time and distance list
+        /// </summary>
+        /// <param name="times"></param>
+        /// the times to be added
+        /// <param name="distances"></param>
+        /// the distance to be added
         public void AddSplit(List<double> times, List<double> distances)
         {
             foreach (var time in times)
@@ -47,5 +61,43 @@ namespace Scores
                 _distances.Add(distance);
             }
         }
+
+        /// <summary>
+        /// edits the value of the time in the split
+        /// </summary>
+        /// <param name="index"></param>
+        /// the index of the item to be edited
+        /// <param name="time"></param>
+        /// the new value of the time
+        public void EditSplitTime(int index, double time)
+        {
+            _times[index] = time;
+        } 
+        /// <summary>
+        /// edits the value of the distance in the split
+        /// </summary>
+        /// <param name="index"></param>
+        /// the index of the item to be edited
+        /// <param name="distance"></param>
+        /// the new value of the distance
+        public void EditSplitDistance(int index, double distance)
+        {
+            _distances[index] = distance;
+        }
+        /// <summary>
+        /// edits the value of the time in the split
+        /// </summary>
+        /// <param name="index"></param>
+        /// the index of the item to be edited
+        /// <param name="distance"></param>
+        /// the new value of the distance
+        /// <param name="time"></param>
+        /// the new value of the time
+        public void EditSplit(int index, double distance, double time)
+        {
+            _times[index] = time;
+            _distances[index] = distance;
+        }
+
     }
 }
