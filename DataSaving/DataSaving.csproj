@@ -50,9 +50,9 @@
         <Project>{4af70572-b3a0-4265-b19c-13a3edd796b5}</Project>
         <Name>Filtering</Name>
       </ProjectReference>
-      <ProjectReference Include="..\Scores\Scores.csproj">
+      <ProjectReference Include="..\ScoreHandeling\ScoreHandeling.csproj">
         <Project>{b68ee9ee-f6d2-43f8-a9dc-aa440f2b5e9e}</Project>
-        <Name>Scores</Name>
+        <Name>ScoreHandeling</Name>
       </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
