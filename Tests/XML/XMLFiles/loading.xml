@@ -17,9 +17,6 @@
                     </split-1>
                 </splits>
             </activity-1>
-            <activity-2>
-
-            </activity-2>
         </SnowyMountain>
         <SnowyTracks>
             <activity-1>
@@ -40,9 +37,6 @@
                     </split-2>
                 </splits>
             </activity-1>
-            <activity-2>
-
-            </activity-2>
         </SnowyTracks>
     </tracks>
 </root>
