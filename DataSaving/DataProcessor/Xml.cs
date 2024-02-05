@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
+using ScoreHandeling;
 
 namespace Commands.DataProcessor
 {
@@ -12,6 +13,7 @@ namespace Commands.DataProcessor
         public Xml(Properties properties)
         {
             SetXmlPath(properties.FilePath);
+            Properties = properties;
         }
         
         private Properties _properties;
@@ -41,7 +43,7 @@ namespace Commands.DataProcessor
         public XmlReader(Xml xml)
         {
             Xml = xml;
-            
+            XmlPath = xml.XmlPath;
         }
 
         private Xml _xml;
@@ -61,7 +63,7 @@ namespace Commands.DataProcessor
         
         #region Public Methods
 
-        public Dictionary<string, List<Dictionary<string, object>>> LoadXml()
+        public AllScores LoadXml()
         {
             if (_xmlPath == null) return null;
 
@@ -69,58 +71,51 @@ namespace Commands.DataProcessor
             xmlDoc.Load(_xmlPath);
             var root = xmlDoc.SelectSingleNode("/root");
             var tracksNode = root?.SelectSingleNode("tracks");
-            var dictionary = new Dictionary<string, List<Dictionary<string, object>>>();
-
-            // check all different tracks
-            if (tracksNode == null) return null;
-            foreach (XmlNode trackNode in tracksNode.ChildNodes)
+            var allScores = new AllScores();
+            if (tracksNode == null) return allScores;
+            foreach (XmlNode location in tracksNode)
             {
-                // Get the track name
-                var trackName = trackNode.Name;
-                var activities = new List<Dictionary<string, object>>();
-                var activityProperties = new Dictionary<string, object>();
-                // check all the activity's under the track
-                foreach (XmlNode activityNode in trackNode.ChildNodes)
+                // add location
+                var newLocation = new Location(location.Name);
+                allScores.AddLocation(newLocation);
+
+                var newScores = new Scores();
+                foreach (XmlNode scores in location.ChildNodes)
                 {
-                    // check if the node is an activity (other nodes mess up structure)
-                    if (!activityNode.Name.StartsWith("activity-")) continue;
-
-                    // check all the nodes in activity
-                    foreach (XmlNode propertyNode in activityNode.ChildNodes)
+                    foreach (XmlNode score in scores.ChildNodes)
                     {
-                        // check if the node is "splits"
-                        if (propertyNode.Name == "splits")
+                        var newScore = new Score();
+                        foreach (XmlNode element in score.ChildNodes)
                         {
-                            var splitsList = new List<Dictionary<string, string>>();
-
-                            // check all children of the split
-                            for (var i = 0; i < propertyNode.ChildNodes.Count; i++)
+                            switch (element.Name)
                             {
-                                var splitNode = propertyNode.ChildNodes[i];
-                                // check if the node is a split (based on the node name(other nodes mess up structure))
-                                if (!splitNode.Name.StartsWith("split-")) continue;
-                                // dictionary to store properties of the split (LINQ)(no idea how this works but it does (: )
-                                var splitProperties = splitNode.ChildNodes.Cast<XmlNode>()
-                                    .ToDictionary(splitPropertyNode => splitPropertyNode.Name,
-                                        splitPropertyNode => splitPropertyNode.InnerText);
-                                splitsList.Add(splitProperties);
+                                case"note":
+                                    newScore.Note = element.InnerText;
+                                    break;
+                                case "nationality":
+                                    newScore.Nationality = element.InnerText;
+                                    break;
+                                case "date":
+                                    newScore.Date = Convert.ToDateTime(element.InnerText);
+                                    break;
+                                case "gender":
+                                    newScore.Gender = Convert.ToChar(element.InnerText);
+                                    break;
+                                case "age":
+                                    newScore.Age = Convert.ToInt32(element.InnerText);
+                                    break;
+                                case "submitted":
+                                    newScore.Submitted = Convert.ToBoolean(element.InnerText);
+                                    break;
                             }
-
-                            activityProperties.Add(propertyNode.Name, splitsList);
                         }
-                        else
-                        {
-                            activityProperties.Add(propertyNode.Name, propertyNode.InnerText);
-                        }
+                        newScores.AddScore(newScore);
                     }
-
-                    activities.Add(activityProperties);
+                    newLocation.AddScores(newScores);
                 }
-
-                dictionary.Add(trackName, activities);
             }
 
-            return dictionary;
+            return allScores;
         }
         #endregion
     }
