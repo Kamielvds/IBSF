@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Scores
+namespace ScoreHandeling
 {
     public class AllScores
     {
+        public AllScores()
+        {
+            _locations = new List<Location>();
+        }
         private List<Location> _locations;
 
         public List<Location> Locations
@@ -33,6 +37,11 @@ namespace Scores
             get => _scoreList;
             set => _scoreList = value;
         }
+
+        public void AddScore(Score score)
+        {
+            _scoreList.Add(score);
+        }
     }
 
     public class Score
@@ -42,7 +51,7 @@ namespace Scores
         private DateTime _date;
         private char _gender;
         private int _age;
-        private bool _valid;
+        private bool _submitted;
         
 
         public string Note
@@ -75,10 +84,10 @@ namespace Scores
             set => _age = value;
         }
 
-        public bool Valid
+        public bool Submitted
         {
-            get => _valid;
-            set => _valid = value;
+            get => _submitted;
+            set => _submitted = value;
         }
         
         
@@ -202,7 +211,7 @@ namespace Scores
             set => _scores = value;
         }
 
-        public void AddScore(Scores scores)
+        public void AddScores(Scores scores)
         {
             _scores.Add(scores);
         }

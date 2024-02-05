@@ -9,7 +9,7 @@
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>Scores</RootNamespace>
-        <AssemblyName>Scores</AssemblyName>
+        <AssemblyName>ScoreHandeling</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
