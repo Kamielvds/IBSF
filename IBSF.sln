@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication", "Conso
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{1D33DC6F-B373-45C8-9B04-8B78730CDDD4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scores", "Scores\Scores.csproj", "{B68EE9EE-F6D2-43F8-A9DC-AA440F2B5E9E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScoreHandeling", "ScoreHandeling\ScoreHandeling.csproj", "{B68EE9EE-F6D2-43F8-A9DC-AA440F2B5E9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
