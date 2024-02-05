@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Scores
 {
@@ -10,6 +11,11 @@ namespace Scores
         {
             get => _locations;
             set => _locations = value;
+        }
+
+        public void AddLocation(Location location)
+        {
+            _locations.Add(location);
         }
     }
 
@@ -31,6 +37,52 @@ namespace Scores
 
     public class Score
     {
+        private string _note;
+        private string _nationality;
+        private DateTime _date;
+        private char _gender;
+        private int _age;
+        private bool _valid;
+        
+
+        public string Note
+        {
+            get => _note;
+            set => _note = value;
+        }
+
+        public string Nationality
+        {
+            get => _nationality;
+            set => _nationality = value;
+        }
+
+        public DateTime Date
+        {
+            get => _date;
+            set => _date = value;
+        }
+
+        public char Gender
+        {
+            get => _gender;
+            set => _gender = value;
+        }
+
+        public int Age
+        {
+            get => _age;
+            set => _age = value;
+        }
+
+        public bool Valid
+        {
+            get => _valid;
+            set => _valid = value;
+        }
+        
+        
+        
         public class Split
         {
             public Split(List<double> times = null, List<double> distances = null)
@@ -130,6 +182,29 @@ namespace Scores
 
     public class Location
     {
-        private Dictionary<string, Scores> _scores;
+        public Location(string name, List<Scores> scores = null)
+        {
+            Name = name;
+            if (scores != null) Scores = scores;
+        }
+        private List<Scores> _scores;
+        private string _name;
+
+        public string Name
+        {
+            get => _name;
+            set => _name = value;
+        }
+
+        public List<Scores> Scores
+        {
+            get => _scores;
+            set => _scores = value;
+        }
+
+        public void AddScore(Scores scores)
+        {
+            _scores.Add(scores);
+        }
     }
 }
