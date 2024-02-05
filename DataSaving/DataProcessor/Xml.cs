@@ -15,29 +15,35 @@ namespace Commands.DataProcessor
             SetXmlPath(properties.FilePath);
             Properties = properties;
         }
-        
+
         private Properties _properties;
         private string _xmlPath;
 
-        public  string XmlPath
+        public string XmlPath
         {
             get => _xmlPath;
             set => _xmlPath = value;
         }
 
-        public  Properties Properties
+        public Properties Properties
         {
             get => _properties;
             set => _properties = value;
         }
 
-        private  void SetXmlPath(string path)
+        private void SetXmlPath(string path)
         {
-            if (File.Exists(path) && path != null) {_xmlPath = path; return;}
+            if (File.Exists(path) && path != null)
+            {
+                _xmlPath = path;
+                return;
+            }
+
             Console.WriteLine("EX: xml-nf");
             _xmlPath = null;
         }
     }
+
     public class XmlReader
     {
         public XmlReader(Xml xml)
@@ -60,7 +66,7 @@ namespace Commands.DataProcessor
             get => _xmlPath;
             set => _xmlPath = value;
         }
-        
+
         #region Public Methods
 
         public AllScores LoadXml()
@@ -79,46 +85,48 @@ namespace Commands.DataProcessor
                 var newLocation = new Location(location.Name);
                 allScores.AddLocation(newLocation);
 
-                var newScores = new Scores();
-                foreach (XmlNode scores in location.ChildNodes)
+                var newScores = new List<Score>();
+                foreach (XmlNode score in location.ChildNodes)
                 {
-                    foreach (XmlNode score in scores.ChildNodes)
+                    var newScore = new Score();
+                    foreach (XmlNode element in score.ChildNodes)
                     {
-                        var newScore = new Score();
-                        foreach (XmlNode element in score.ChildNodes)
+                        switch (element.Name)
                         {
-                            switch (element.Name)
-                            {
-                                case"note":
-                                    newScore.Note = element.InnerText;
-                                    break;
-                                case "nationality":
-                                    newScore.Nationality = element.InnerText;
-                                    break;
-                                case "date":
-                                    newScore.Date = Convert.ToDateTime(element.InnerText);
-                                    break;
-                                case "gender":
-                                    newScore.Gender = Convert.ToChar(element.InnerText);
-                                    break;
-                                case "age":
-                                    newScore.Age = Convert.ToInt32(element.InnerText);
-                                    break;
-                                case "submitted":
-                                    newScore.Submitted = Convert.ToBoolean(element.InnerText);
-                                    break;
-                            }
+                            case "note":
+                                newScore.Note = element.InnerText;
+                                break;
+                            case "nationality":
+                                newScore.Nationality = element.InnerText;
+                                break;
+                            case "name":
+                                newScore.Name = element.InnerText;
+                                break;
+                            case "date":
+                                newScore.Date = Convert.ToDateTime(element.InnerText);
+                                break;
+                            case "gender":
+                                newScore.Gender = Convert.ToChar(element.InnerText);
+                                break;
+                            case "age":
+                                newScore.Age = Convert.ToInt32(element.InnerText);
+                                break;
+                            case "submitted":
+                                newScore.Submitted = Convert.ToBoolean(element.InnerText);
+                                break;
                         }
-                        newScores.AddScore(newScore);
                     }
-                    newLocation.AddScores(newScores);
+                    newScores.Add(newScore);
                 }
+                newLocation.AddScores(newScores);
             }
 
             return allScores;
         }
+
         #endregion
     }
+
     public class XmlWriter
     {
         public XmlWriter(Xml xml)
@@ -127,7 +135,6 @@ namespace Commands.DataProcessor
         }
 
         private string _xmlPath;
-
 
         public string XmlPath
         {
@@ -156,8 +163,7 @@ namespace Commands.DataProcessor
             XmlNode targetLocation = root?.SelectSingleNode(location);
             if (targetLocation == null) return;
             foreach (var book in targetLocation.Cast<XmlNode>()
-                         .Where(item =>
-                             item.Attributes == null || item.Attributes[attribute].Value == attributeValue))
+                         .Where(item => item.Attributes == null || item.Attributes[attribute].Value == attributeValue))
             {
                 foreach (var item in book.Cast<XmlNode>().Where(subItem => subItem.Name == targetNode))
                 {
@@ -165,9 +171,10 @@ namespace Commands.DataProcessor
                     break;
                 }
             }
+
             xmlDoc.Save(_xmlPath);
         }
-        
+
         /// <summary>
         /// Adds a Node, followed by more nodes and InnerText to an xml document
         /// </summary>
@@ -192,7 +199,9 @@ namespace Commands.DataProcessor
                 if (names[i] == "id")
                 {
                     mainNodeElement.Add(new XAttribute("id", values[i]));
-                }else mainNodeElement.Add(new XElement(names[i], values[i]));
+                }
+                else
+                    mainNodeElement.Add(new XElement(names[i], values[i]));
             }
 
             xmlDoc.Save(_xmlPath);
