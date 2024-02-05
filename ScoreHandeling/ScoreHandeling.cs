@@ -5,11 +5,7 @@ namespace ScoreHandeling
 {
     public class AllScores
     {
-        public AllScores()
-        {
-            _locations = new List<Location>();
-        }
-        private List<Location> _locations;
+        private List<Location> _locations = new List<Location>();
 
         public List<Location> Locations
         {
@@ -22,37 +18,16 @@ namespace ScoreHandeling
             _locations.Add(location);
         }
     }
-
-    public class Scores
-    {
-        public Scores(List<Score> scores = null)
-        {
-            ScoreList = scores;
-        }
-
-        private List<Score> _scoreList;
-
-        public List<Score> ScoreList
-        {
-            get => _scoreList;
-            set => _scoreList = value;
-        }
-
-        public void AddScore(Score score)
-        {
-            _scoreList.Add(score);
-        }
-    }
-
+    
     public class Score
     {
         private string _note;
         private string _nationality;
+        private string _name;
         private DateTime _date;
         private char _gender;
         private int _age;
         private bool _submitted;
-        
 
         public string Note
         {
@@ -64,6 +39,12 @@ namespace ScoreHandeling
         {
             get => _nationality;
             set => _nationality = value;
+        }
+
+        public string Name
+        {
+            get => _name;
+            set => _name = value;
         }
 
         public DateTime Date
@@ -191,12 +172,17 @@ namespace ScoreHandeling
 
     public class Location
     {
-        public Location(string name, List<Scores> scores = null)
+        public Location(string name, List<Score> scores = null)
         {
             Name = name;
-            if (scores != null) Scores = scores;
+            if (scores == null) return;
+            foreach (var score in scores)
+            {
+                _scores.Add(score);
+            }
         }
-        private List<Scores> _scores;
+
+        private List<Score> _scores = new List<Score>();
         private string _name;
 
         public string Name
@@ -205,15 +191,23 @@ namespace ScoreHandeling
             set => _name = value;
         }
 
-        public List<Scores> Scores
+        public List<Score> Scores
         {
             get => _scores;
             set => _scores = value;
         }
 
-        public void AddScores(Scores scores)
+        public void AddScore(Score score)
         {
-            _scores.Add(scores);
+            _scores.Add(score);
+        }
+
+        public void AddScores(List<Score> scoresList)
+        {
+            foreach (var score in scoresList)
+            {
+                _scores.Add(score);
+            }
         }
     }
 }
