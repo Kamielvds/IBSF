@@ -84,14 +84,14 @@ namespace ScoreHandeling
             {
             }
 
-            public Split(int time, double distance)
+            public Split(long time, double distance)
             {
                 Time = time;
                 Distance = distance;
             }
 
             private double _distance;
-            private int _time;
+            private long _time;
 
             public double Distance
             {
@@ -99,7 +99,7 @@ namespace ScoreHandeling
                 set => _distance = value;
             }
 
-            public int Time
+            public long Time
             {
                 get => _time;
                 set => _time = value;
