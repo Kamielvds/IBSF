@@ -114,10 +114,35 @@ namespace Commands.DataProcessor
                             case "submitted":
                                 newScore.Submitted = Convert.ToBoolean(element.InnerText);
                                 break;
+                            case "splits":
+                                var newSplits = new List<Score.Split>();
+                                foreach (XmlNode split in element.ChildNodes)
+                                {
+                                    var newSplit = new Score.Split();
+                                    foreach (XmlNode splitElement in split)
+                                    {
+                                        switch (splitElement.Name)
+                                        {
+                                            case "time":
+                                                newSplit.Time = Convert.ToDouble(splitElement.InnerText);
+                                                break;
+                                            case "distance":
+                                                newSplit.Distance = Convert.ToDouble(splitElement.InnerText);
+                                                break;
+                                        }
+                                    }
+
+                                    newSplits.Add(newSplit);
+                                }
+
+                                newScore.Splits = newSplits;
+                                break;
                         }
                     }
+
                     newScores.Add(newScore);
                 }
+
                 newLocation.AddScores(newScores);
             }
 
