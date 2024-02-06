@@ -10,8 +10,13 @@ namespace Commands.DataProcessor
 {
     public class Xml
     {
+        /// <summary>
+        /// default constructor for Xml
+        /// </summary>
+        /// <param name="properties">instance of properties class </param>
         public Xml(Properties properties)
         {
+            if (properties == null) return;
             SetXmlPath(properties.FilePath);
             Properties = properties;
         }
@@ -31,6 +36,10 @@ namespace Commands.DataProcessor
             set => _properties = value;
         }
 
+        /// <summary>
+        /// sets the xml path used by the xml reader and writer
+        /// </summary>
+        /// <param name="path">the path of the xml</param>
         private void SetXmlPath(string path)
         {
             if (File.Exists(path) && path != null)
@@ -43,11 +52,16 @@ namespace Commands.DataProcessor
             _xmlPath = null;
         }
     }
-
+    
     public class XmlReader
     {
+        /// <summary>
+        /// default constructor XmlReader
+        /// </summary>
+        /// <param name="xml">instance of the XML class</param>
         public XmlReader(Xml xml)
         {
+            if (xml == null) return;
             Xml = xml;
             XmlPath = xml.XmlPath;
         }
@@ -69,6 +83,10 @@ namespace Commands.DataProcessor
 
         #region Public Methods
 
+        /// <summary>
+        /// Load the xml to the AllScores class
+        /// </summary>
+        /// <returns>The class, containing all the scores</returns>
         public AllScores LoadXml()
         {
             if (_xmlPath == null) return null;
@@ -154,16 +172,29 @@ namespace Commands.DataProcessor
 
     public class XmlWriter
     {
+        /// <summary>
+        /// default constructor XmlWriter
+        /// </summary>
+        /// <param name="xml">a instance of the xml class</param>
         public XmlWriter(Xml xml)
         {
+            if (xml== null) return;
             XmlPath = xml.XmlPath;
+            Xml = xml;
         }
 
         private string _xmlPath;
+        private Xml _xml;
 
         public string XmlPath
         {
             set => _xmlPath = value;
+        }
+
+        public Xml Xml
+        {
+            get => _xml;
+            set => _xml = value;
         }
 
         /// <summary>
