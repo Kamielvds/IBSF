@@ -62,6 +62,7 @@
     <ItemGroup>
         <Compile Include="Main.cs"/>
         <Compile Include="AppDelegate.cs"/>
+        <InterfaceDefinition Include="MainScreen.storyboard" />
         <None Include="Info.plist"/>
         <Compile Include="Properties\AssemblyInfo.cs"/>
         <Content Include="Entitlements.plist"/>
