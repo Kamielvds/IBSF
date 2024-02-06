@@ -124,7 +124,7 @@ namespace Commands.DataProcessor
                                         switch (splitElement.Name)
                                         {
                                             case "time":
-                                                newSplit.Time = Convert.ToDouble(splitElement.InnerText);
+                                                newSplit.Time = Convert.ToDateTime(splitElement.InnerText);
                                                 break;
                                             case "distance":
                                                 newSplit.Distance = Convert.ToDouble(splitElement.InnerText);
