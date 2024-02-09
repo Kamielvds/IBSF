@@ -362,5 +362,44 @@ namespace Filtering
         }
 
         #endregion
+
+        #region Sort
+
+        public static void SortDescending(ref List<int> list)
+        {
+            for (var i = 0; i < list.Count; i++)
+            {
+                int lowestvalue = list[i];
+                int index = i;
+                for (var j = i; j < list.Count; j++)
+                {
+                    if (list[j] >= lowestvalue) continue;
+                    lowestvalue = list[j];
+                    index = j;
+                }
+                if (index == i) continue;
+                list[index] = list[i];
+                list[i] = lowestvalue;
+            }
+        }
+        public static void SortAscending(ref List<int> list)
+        {
+            for (var i = 0; i < list.Count; i++)
+            {
+                int lowestvalue = list[i];
+                int index = i;
+                for (var j = i; j < list.Count; j++)
+                {
+                    if (list[j] <= lowestvalue) continue;
+                    lowestvalue = list[j];
+                    index = j;
+                }
+                if (index == i) continue;
+                list[index] = list[i];
+                list[i] = lowestvalue;
+            }
+        }
+
+        #endregion
     }
 }
