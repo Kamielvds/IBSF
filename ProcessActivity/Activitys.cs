@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Commands;
 using Commands.DataProcessor;
@@ -12,11 +13,19 @@ namespace ProcessActivity
         {
             Path = XmlLocation;
             Propeties = new Properties(Path, "xml");
+            Scores = new AllScores();
         }
 
         private string _path;
         private Properties _properties;
-        private AllScores _scores = new AllScores();
+        private AllScores _scores;
+
+        /// <summary>
+        /// a buffer for current scores
+        /// </summary>
+        private List<Score> _localScores;
+
+        private Location _localLocation;
 
         public AllScores Scores
         {
@@ -44,6 +53,45 @@ namespace ProcessActivity
             _scores = xmlReader.LoadScores();
         }
 
+        public Location CreateLocation(bool returnValue, string name, List<Score> scores = null)
+        {
+            if (scores != null)
+                if (returnValue)
+                    return new Location(name, scores);
+                else
+                    CreateLocation(string name, List < Score > scores);
+            if (!returnValue)
+            {
+                CreateLocation();
+                return null;
+            }
+
+            var location = new Location(name, _localScores);
+            // clear buffer so user can add new activity's
+            ClearScoresBuffer();
+            return location;
+        }
+
+        private void ClearScoresBuffer()
+        {
+            _localScores = new List<Score>();
+        }
+
+        public void CreateLocation(string name, List<Score> scores)
+        {
+            _localLocation = new Location(name, scores);
+        }
+
+        public void CreateLocation(string name)
+        {
+            _localLocation = new Location(name, _localScores);
+        }
+
+        public void ClearScores()
+        {
+            _localScores = new List<Score>();
+        }
+
         public void AddActivity(Location location)
         {
             if (!Scores.LocationExists(location))
@@ -53,7 +101,9 @@ namespace ProcessActivity
                          where scoresLocation.Name == location.Name
                          from score in location.Scores
                          select scoresLocation)
+                {
                     scoresLocation.AddScores(location.Scores);
+                }
         }
 
         public void Dispose()
