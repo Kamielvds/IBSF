@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Linq;
 using Commands;
 using Commands.DataProcessor;
 using ScoreHandeling;
@@ -16,7 +17,6 @@ namespace ProcessActivity
         private string _path;
         private Properties _properties;
         private AllScores _scores = new AllScores();
-        
 
         public AllScores Scores
         {
@@ -29,6 +29,7 @@ namespace ProcessActivity
             get => _path;
             set => _path = value;
         }
+
         public Properties Propeties
         {
             get => _properties;
@@ -42,7 +43,22 @@ namespace ProcessActivity
             var xmlReader = new XmlReader(xml);
             _scores = xmlReader.LoadScores();
         }
-        
-        
+
+        public void AddActivity(Location location)
+        {
+            if (!Scores.LocationExists(location))
+                _scores.AddLocation(location);
+            else
+                foreach (var scoresLocation in from scoresLocation in _scores.Locations
+                         where scoresLocation.Name == location.Name
+                         from score in location.Scores
+                         select scoresLocation)
+                    scoresLocation.AddScores(location.Scores);
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+        }
     }
 }
