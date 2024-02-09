@@ -87,7 +87,13 @@ namespace Commands.DataProcessor
         /// Load the xml to the AllScores class
         /// </summary>
         /// <returns>The class, containing all the scores</returns>
-        public AllScores LoadXml()
+        public AllScores LoadScores()
+        {
+            if (_xml.Properties.Lang == "xml")return LoadXml();
+            return null;
+        }
+        
+        private AllScores LoadXml()
         {
             if (_xmlPath == null) return null;
 
