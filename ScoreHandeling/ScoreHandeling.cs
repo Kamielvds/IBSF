@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ScoreHandeling
 {
@@ -11,6 +12,11 @@ namespace ScoreHandeling
         {
             get => _locations;
             set => _locations = value;
+        }
+
+        public bool LocationExists(Location location)
+        {
+            return _locations.Any(loc => location.Name == loc.Name);
         }
 
         public void AddLocation(Location location)
