@@ -15,7 +15,7 @@ namespace Tests
             var xml = new Xml(properties);
             var xmlReader = new XmlReader(xml);
 
-            var scores = xmlReader.LoadXml();
+            var scores = xmlReader.LoadScores();
         }
     }
 }
