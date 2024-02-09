@@ -27,5 +27,11 @@ namespace Commands
             get => _userScores;
             set => _userScores = value;
         }
+
+        public string Lang
+        {
+            get => _lang;
+            set => _lang = value;
+        }
     }
 }
