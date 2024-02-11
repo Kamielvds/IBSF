@@ -52,6 +52,10 @@
         <Project>{4af70572-b3a0-4265-b19c-13a3edd796b5}</Project>
         <Name>Filtering</Name>
       </ProjectReference>
+      <ProjectReference Include="..\ProcessActivity\ProcessActivity.csproj">
+        <Project>{2dfe9672-3311-41d0-9ef1-e0bb5bb481f9}</Project>
+        <Name>ProcessActivity</Name>
+      </ProjectReference>
       <ProjectReference Include="..\ScoreHandeling\ScoreHandeling.csproj">
         <Project>{b68ee9ee-f6d2-43f8-a9dc-aa440f2b5e9e}</Project>
         <Name>ScoreHandeling</Name>
@@ -59,7 +63,7 @@
     </ItemGroup>
     <ItemGroup>
       <Content Include="XML\XMLFiles\loading.xml">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
