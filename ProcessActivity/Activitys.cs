@@ -9,10 +9,10 @@ namespace ProcessActivity
 {
     public class Activitys
     {
-        public Activitys(string XmlLocation)
+        public Activitys(string xmlLocation)
         {
-            Path = XmlLocation;
-            Propeties = new Properties(Path, "xml");
+            Path = xmlLocation;
+            Propeties = new Properties(Path, "xml");    // wml only
             Scores = new AllScores();
         }
 
@@ -59,27 +59,21 @@ namespace ProcessActivity
                 if (returnValue)
                     return new Location(name, scores);
                 else
-                    CreateLocation(string name, List < Score > scores);
+                    CreateLocation( name, scores);
             if (!returnValue)
             {
-                CreateLocation();
+                CreateLocation(name);
                 return null;
             }
 
             var location = new Location(name, _localScores);
-            // clear buffer so user can add new activity's
-            ClearScoresBuffer();
             return location;
-        }
-
-        private void ClearScoresBuffer()
-        {
-            _localScores = new List<Score>();
         }
 
         public void CreateLocation(string name, List<Score> scores)
         {
             _localLocation = new Location(name, scores);
+            
         }
 
         public void CreateLocation(string name)
@@ -104,6 +98,11 @@ namespace ProcessActivity
                 {
                     scoresLocation.AddScores(location.Scores);
                 }
+        }
+
+        public void AddScore(Score score)
+        {
+            _localScores.Add(score);
         }
 
         public void Dispose()
