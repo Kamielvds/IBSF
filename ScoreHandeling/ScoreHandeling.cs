@@ -111,6 +111,15 @@ namespace ScoreHandeling
                 set => _time = value;
             }
         }
+
+        public bool CheckValid()
+        {
+            if (!(_gender == 'M' || _gender == 'F')) return false;
+            if (_age < 13 || _age >= 99) return false;
+            if (_name == null) return false;
+            if (_splits == null) return false;
+            return true;
+        }
     }
 
     public class Location
