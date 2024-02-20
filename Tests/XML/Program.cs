@@ -12,7 +12,8 @@ namespace Tests
     {
         public static void Main(string[] args)
         {
-            var activitys = new Activitys("/XMLFiles/loading.xml");
+            var activitys = new Activitys("XML//XMLFiles/loading.xml");
+            activitys.SaveToXml();
         }
     }
 }
