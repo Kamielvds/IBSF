@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using Commands;
 using Commands.DataProcessor;
 using ScoreHandeling;
@@ -15,6 +14,7 @@ namespace ProcessActivity
             Path = xmlLocation;
             Propeties = new Properties(Path, "xml"); // xml only
             Scores = new AllScores();
+            LoadAll();
         }
 
         private string _path;
@@ -33,7 +33,7 @@ namespace ProcessActivity
             set => _scores = value;
         }
 
-        public string Path
+        private string Path
         {
             get => _path;
             set => _path = value;
@@ -45,7 +45,7 @@ namespace ProcessActivity
             set => _properties = value;
         }
 
-        public void AppendScore(Score score = null)
+        private void AppendScore(Score score = null)
         {
             if (score != null)
                 _localScores.Add(score);
@@ -56,30 +56,24 @@ namespace ProcessActivity
             }
         }
 
-        // i don't even like this
-        public Score CreateScore(string name, int age, string nationality, bool submitted, DateTime dateTime,
-            char gender, string note, List<Score.Split> splits = null, bool append = true)
+        public void CreateLocation(string name)
         {
-            if (append)
+            _localLocation = new Location(name, _localScores);
+            foreach (var location in _scores.Locations.Where(location => location.Name == name))
             {
-                ClearLocalScore();
-                _localScore.Splits = splits ?? _localSplits;
-                _localScore.Name = name;
-                _localScore.Age = age;
-                _localScore.Nationality = nationality;
-                _localScore.Submitted = submitted;
-                _localScore.Date = dateTime;
-                _localScore.Gender = gender;
-                _localScore.Note = note;
-                if (_localScore.CheckValid())
-                    AppendScore();
-                else
-                    goto argumentException;
-                return null;
+                location.AddScore(_localScores);
+                return;
             }
-            var localScore = new Score();
-            if (splits == null) goto argumentException;
-            _localScore.Splits = splits;
+
+            // if no match was found make new location
+            _scores.AddLocation(_localLocation);
+        }
+
+        public void CreateScore(string name, int age, string nationality, bool submitted, DateTime dateTime,
+            char gender, string note, List<Score.Split> splits = null)
+        {
+            ClearLocalScore();
+            _localScore.Splits = splits ?? _localSplits;    // null check 
             _localScore.Name = name;
             _localScore.Age = age;
             _localScore.Nationality = nationality;
@@ -87,19 +81,22 @@ namespace ProcessActivity
             _localScore.Date = dateTime;
             _localScore.Gender = gender;
             _localScore.Note = note;
-            if (_localScore.CheckValid()) return localScore;
+            if (_localScore.CheckValid())
+                AppendScore();
+            else
+                goto argumentException;
+            return;
 
             argumentException:
             throw new ArgumentException("Not all fields entred correctly.");
         }
 
-        public Score.Split CreateSplit(long time, double distance, bool append = true)
-        {
-            if (!append) return new Score.Split(time, distance);
+        public void CreateSplit(long time, double distance)
+        { 
             _localSplit.Time = time;
             _localSplit.Distance = distance;
             _localSplits.Add(_localSplit);
-            return null;
+            ClearLocalSplit();
         }
 
         public void ClearLocalLocation()
@@ -112,7 +109,7 @@ namespace ProcessActivity
             _localScores = new List<Score>();
         }
 
-        public void ClearLocalScore()
+        private void ClearLocalScore()
         {
             _localScore = new Score();
         }
@@ -122,7 +119,7 @@ namespace ProcessActivity
             _localSplits = new List<Score.Split>();
         }
 
-        public void ClearLocalSplit()
+        private void ClearLocalSplit()
         {
             _localSplit = new Score.Split();
         }
@@ -136,11 +133,21 @@ namespace ProcessActivity
             _localSplit = new Score.Split();
         }
 
-        public void LoadAll()
+        public void RemoveScore(int index)
+        {
+            _localScores.RemoveAt(index);
+        }
+
+        public void SaveToXml()
+        {
+            var reader = new XmlWriter(new Xml(_properties));
+            reader.RewriteXml(_scores);
+        }
+
+        private void LoadAll()
         {
             if (_properties == null) return;
-            var xml = new Xml(_properties);
-            var xmlReader = new XmlReader(xml);
+            var xmlReader = new XmlReader(new Xml(_properties));
             _scores = xmlReader.LoadScores();
         }
     }
