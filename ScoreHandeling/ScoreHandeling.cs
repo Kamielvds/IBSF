@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace ScoreHandeling
@@ -35,6 +36,22 @@ namespace ScoreHandeling
         private int _age;
         private bool _submitted;
         private List<Split> _splits;
+
+        public Dictionary<string, object> AllObjects
+        {
+            get =>
+                new Dictionary<string, object>
+                {
+                    { "note", _note },
+                    { "nationality", _nationality },
+                    { "name", _name },
+                    { "date", _date.ToString(CultureInfo.CurrentCulture) },
+                    { "gender", _gender.ToString() },
+                    { "age", _age.ToString() },
+                    { "submitted", _submitted.ToString() },
+                    { "splits", _splits }
+                };
+        }
 
         public string Note
         {
@@ -154,7 +171,7 @@ namespace ScoreHandeling
             _scores.Add(score);
         }
 
-        public void AddScores(List<Score> scoresList)
+        public void AddScore(List<Score> scoresList)
         {
             foreach (var score in scoresList)
             {
