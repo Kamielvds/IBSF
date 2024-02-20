@@ -52,7 +52,7 @@ namespace Commands.DataProcessor
             _xmlPath = null;
         }
     }
-    
+
     public class XmlReader
     {
         /// <summary>
@@ -89,10 +89,10 @@ namespace Commands.DataProcessor
         /// <returns>The class, containing all the scores</returns>
         public AllScores LoadScores()
         {
-            if (_xml.Properties.Lang == "xml")return LoadXml();
+            if (_xml.Properties.Lang == "xml") return LoadXml();
             return null;
         }
-        
+
         private AllScores LoadXml()
         {
             if (_xmlPath == null) return null;
@@ -167,7 +167,7 @@ namespace Commands.DataProcessor
                     newScores.Add(newScore);
                 }
 
-                newLocation.AddScores(newScores);
+                newLocation.AddScore(newScores);
             }
 
             return allScores;
@@ -184,9 +184,9 @@ namespace Commands.DataProcessor
         /// <param name="xml">a instance of the xml class</param>
         public XmlWriter(Xml xml)
         {
-            if (xml== null) return;
-            XmlPath = xml.XmlPath;
-            Xml = xml;
+            if (xml == null) return;
+            _xmlPath = xml.XmlPath;
+            _xml = xml;
         }
 
         private string _xmlPath;
@@ -267,6 +267,55 @@ namespace Commands.DataProcessor
             }
 
             xmlDoc.Save(_xmlPath);
+        }
+
+        // slow, but easiest
+        public void RewriteXml(AllScores allScores)
+        {
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(_xmlPath);
+            xmlDoc.RemoveAll();
+
+            // create xml declaration
+            var xdoc = new XDocument { Declaration = new XDeclaration("1.0", "UTF-8", "true") };
+            xdoc.Add(new XElement("root", null));
+            xdoc.Save(_xmlPath);
+
+            var root = xmlDoc.SelectSingleNode("/root");
+            foreach (var location in allScores.Locations)
+            {
+                var locationContainer = new XElement(location.Name, null);
+                for (var j = 0; j < location.Scores.Count; j++)
+                {
+                    var score = location.Scores[j];
+                    var scoreContainer = new XElement("activity-" + j);
+                    foreach (var item in score.AllObjects)
+                    {
+                        XElement itemContainer = new XElement(item.Key);
+                        if (item.Value == null) continue;
+                        if (item.Value.GetType() != typeof(string))
+                        {
+                            for (var i = 0; i < ((List<Score.Split>)item.Value).Count; i++)
+                            {
+                                var splitContainer = new XElement("split-" + i);
+                                var split = ((List<Score.Split>)item.Value)[i];
+                                splitContainer.Add(new XElement("distance", split.Distance));
+                                splitContainer.Add(new XElement("time", split.Time));
+                                itemContainer.Add(splitContainer);
+                            }
+                        }
+                        else
+                            itemContainer = new XElement(item.Key, item.Value);
+                        scoreContainer.Add(itemContainer);
+                    }
+
+                    locationContainer.Add(scoreContainer);
+                }
+
+                xdoc.Root?.Add(locationContainer);
+            }
+
+            xdoc.Save(_xmlPath);
         }
     }
 }
