@@ -1,7 +1,6 @@
 using System;
-using ConsoleApplication.Problems;
 
-namespace IBSF.Problems
+namespace ConsoleApplication.Problems
 {
     public abstract class Warnings
     {
