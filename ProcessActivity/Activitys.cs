@@ -9,10 +9,10 @@ namespace ProcessActivity
 {
     public class Activitys
     {
-        public Activitys(string xmlLocation)
+        public Activitys(string xmlLocation, string lang = "xml")
         {
             Path = xmlLocation;
-            Propeties = new Properties(Path, "xml"); // xml only
+            Propeties = new Properties(Path, lang); // xml default
             Scores = new AllScores();
             LoadAll();
         }
