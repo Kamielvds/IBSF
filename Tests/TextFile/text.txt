@@ -1,0 +1,17 @@
+sport:Ski
+track:SnowyMountain
+name:Kamiel Van der Straeten
+age:16
+gender:M
+nationality:BE
+date:06-01-2024
+submitted:True
+splits::*
+split:-
+time:496
+distance234.67
+split:-
+time:496
+distance:234.67
+split::*
+act::endl
