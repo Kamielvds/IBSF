@@ -62,6 +62,7 @@
       </ProjectReference>
     </ItemGroup>
     <ItemGroup>
+      <Content Include="TextFile\text.txt" />
       <Content Include="XML\XMLFiles\loading.xml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
