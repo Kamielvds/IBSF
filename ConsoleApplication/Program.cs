@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using ConsoleApplication.Problems;
-using IBSF.Problems;
 using ProcessActivity;
 
 namespace ConsoleApplication
