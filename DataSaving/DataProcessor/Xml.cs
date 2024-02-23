@@ -291,7 +291,7 @@ namespace Commands.DataProcessor
                     var scoreContainer = new XElement("activity-" + j);
                     foreach (var item in score.AllObjects)
                     {
-                        XElement itemContainer = new XElement(item.Key);
+                        var itemContainer = new XElement(item.Key);
                         if (item.Value == null) continue;
                         if (item.Value.GetType() != typeof(string))
                         {

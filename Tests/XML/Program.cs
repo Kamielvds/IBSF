@@ -14,6 +14,8 @@ namespace Tests
         {
             var activitys = new Activitys("XML//XMLFiles/loading.xml");
             activitys.SaveToXml();
+
+            var act = new Activitys("TextFile/text.txt","txt");
         }
     }
 }
