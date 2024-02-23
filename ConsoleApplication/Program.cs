@@ -10,34 +10,41 @@ namespace ConsoleApplication
         private static bool _running = true;
         private static string _xmlPath;
         private static Activitys _activitys;
+        private static string[] _userInputSplit;
+        private static int InputLength => _userInputSplit.Length;
+
 
         public static void Main(string[] args)
         {
-            //TODO Make xml settings file and read it here
+            LoadUserSettings();
             while (_running)
             {
                 RequestUserInput();
             }
         }
 
+        private static void LoadUserSettings()
+        {
+            // TODO make reader 
+        }
+
         private static void RequestUserInput()
         {
             string userInput = Console.ReadLine();
             if (userInput == null) return;
-            string[] userInputSplit = userInput.Split();
             try
             {
-                switch (userInputSplit[0].ToLower())
+                switch (_userInputSplit[0].ToLower())
                 {
                     case "load":
-                        LoadXmlFile(userInputSplit);
+                        LoadXmlFile();
                         break;
                     case "save":
                         SaveXmlFile();
                         break;
                     case "setting":
                     case "--s":
-                        ProcessSettingCommand(userInputSplit);
+                        ProcessSettingCommand();
                         break;
                     default:
                         Console.WriteLine("Invalid Command.");
@@ -54,12 +61,12 @@ namespace ConsoleApplication
             }
         }
 
-        private static void LoadXmlFile(string[] userInputSplit)
+        private static void LoadXmlFile()
         {
-            var path = userInputSplit[1];
+            var path = _userInputSplit[1];
             if (path == null) throw new InvalidDataException();
             if (File.Exists(path))
-                _activitys = new Activitys(userInputSplit[1]);
+                _activitys = new Activitys(_userInputSplit[1]);
             else
                 Warnings.FileNotFound(path);
         }
@@ -75,25 +82,25 @@ namespace ConsoleApplication
             _activitys.SaveToXml();
         }
 
-        private static void ProcessSettingCommand(string[] userInputSplit)
+        private static void ProcessSettingCommand()
         {
-            string task = userInputSplit[1];
+            string task = _userInputSplit[1];
             switch (task)
             {
                 case "edit":
                 case "-e":
-                    EditSetting(userInputSplit);
+                    EditSetting();
                     break;
                 case "list":
                 case "-l":
-                    ListSetting(userInputSplit);
+                    ListSetting();
                     break;
             }
         }
 
-        private static void ListSetting(string[] userInputSplit)
+        private static void ListSetting()
         {
-            var setting = userInputSplit[2];
+            var setting = _userInputSplit[2];
             switch (setting)
             {
                 case "*":
@@ -109,22 +116,22 @@ namespace ConsoleApplication
             }
         }
 
-        private static void EditSetting(string[] userInputSplit)
+        private static void EditSetting()
         {
-            var setting = userInputSplit[2];
+            var setting = _userInputSplit[2];
             switch (setting)
             {
                 case "ShowWarnings":
-                    UserSettings.ShowWarnings = Convert.ToBoolean(userInputSplit[3]);
+                    UserSettings.ShowWarnings = Convert.ToBoolean(_userInputSplit[3]);
                     break;
                 case "ShowErrors":
-                    UserSettings.ShowErrors = Convert.ToBoolean(userInputSplit[3]);
+                    UserSettings.ShowErrors = Convert.ToBoolean(_userInputSplit[3]);
                     break;
                 case "LinesBeforeUser":
-                    UserSettings.LinesBeforeUser = Convert.ToInt32(userInputSplit[3]);
+                    UserSettings.LinesBeforeUser = Convert.ToInt32(_userInputSplit[3]);
                     break;
                 case "LinesAfterUser":
-                    UserSettings.LinesBeforeUser = Convert.ToInt32(userInputSplit[3]);
+                    UserSettings.LinesBeforeUser = Convert.ToInt32(_userInputSplit[3]);
                     break;
                 default:
                     Warnings.SettingNotValid(setting);
