@@ -147,8 +147,17 @@ namespace ProcessActivity
         private void LoadAll()
         {
             if (_properties == null) return;
-            var xmlReader = new XmlReader(new Xml(_properties));
-            _scores = xmlReader.LoadScores();
+            switch (_properties.Lang)
+            {
+                case "xml":
+                    var xmlReader = new XmlReader(new Xml(_properties));
+                    _scores = xmlReader.LoadScores();
+                    break;
+                case "txt":
+                    var textReader = new TextReader(_properties);
+                    _scores = textReader.ReadFile();
+                    break;
+            }
         }
     }
 }
