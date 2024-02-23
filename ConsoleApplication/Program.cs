@@ -13,7 +13,6 @@ namespace ConsoleApplication
         private static string[] _userInputSplit;
         private static int InputLength => _userInputSplit.Length;
 
-
         public static void Main(string[] args)
         {
             LoadUserSettings();
@@ -49,6 +48,12 @@ namespace ConsoleApplication
                     default:
                         Console.WriteLine("Invalid Command.");
                         break;
+                    case "quit":
+                    case "q":
+                        _running = false;
+                        break;
+                    default:
+                        Warnings.
                 }
             }
             catch (IndexOutOfRangeException)
@@ -109,6 +114,7 @@ namespace ConsoleApplication
                     {
                         Console.WriteLine($"{kvp.Key}: {kvp.Value}");
                     }
+
                     break;
                 default:
                     Console.WriteLine(UserSettings.Settings[setting]);
