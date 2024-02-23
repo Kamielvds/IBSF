@@ -7,22 +7,21 @@ namespace ScoreHandeling
 {
     public class AllScores
     {
-        private List<Location> _locations = new List<Location>();
-
-        public List<Location> Locations
-        {
-            get => _locations;
-            set => _locations = value;
-        }
+        public List<Location> Locations { get; set; } = new List<Location>();
 
         public bool LocationExists(Location location)
         {
-            return _locations.Any(loc => location.Name == loc.Name);
+            return Locations.Any(loc => location.Name == loc.Name);
+        }
+
+        public bool LocationExists(string location)
+        {
+            return Locations.Any(loc => loc.Name == location);
         }
 
         public void AddLocation(Location location)
         {
-            _locations.Add(location);
+            Locations.Add(location);
         }
     }
 
