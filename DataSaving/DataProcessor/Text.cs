@@ -11,20 +11,29 @@ namespace Commands.DataProcessor
     /// </summary>
     public class TextReader : Properties
     {
-        public TextReader(string filePath) : base(filePath,"txt")
+        public TextReader(string filePath) : base(filePath, "txt")
         {
-            CheckPath();
+            if (CheckPath()) FilePath = filePath;
         }
+
+        // used for getting the Command and it's value
         private string[] LineSplit => _line.Split(':');
 
+        // shorter notation 
         private string Command => LineSplit[0];
-
         private string Value => LineSplit[1];
 
-        // could make a property to readline whenever called, but needs a field for reader, which could cause issues with disposing 
+        // could make a property to readline whenever called, but needs a field for reader, which could cause issues
+        // with disposing and thus resource management would be poor 
         private string _line;
-        
 
+        /// <summary>
+        /// Retrieves all the data from the text file.
+        /// </summary>
+        /// <returns>
+        /// returns the data in the AllScores class, for more info on how data is stored, check documentation
+        /// </returns>
+        //TODO Fix reader
         public AllScores ReadFile()
         {
             if (ValidPath == false) return new AllScores();
@@ -61,10 +70,16 @@ namespace Commands.DataProcessor
                                             break;
                                     }
                                 }
+
+                                score.Splits.Add(split);
                             }
                         }
 
                         break;
+                    case "name":
+                        score.Name = Value;
+                        break;
+                    //TODO Incapsulate all Types
                 }
             }
 
@@ -72,11 +87,22 @@ namespace Commands.DataProcessor
         }
     }
 
+    /// <summary>
+    /// used for writing scores to the text file.
+    /// </summary>
     public class TextWriter : Properties
     {
-        public TextWriter(string filePath) : base(filePath,"txt")
+        public TextWriter(string filePath) : base(filePath, "txt")
         {
             CheckPath();
+        }
+
+        /// <summary>
+        /// used to backup userdata
+        /// </summary>
+        public void CopyFile()
+        {
+            File.Copy(FilePath, FilePath + "Copy");
         }
     }
 }
