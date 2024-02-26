@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace ScoreHandeling
+namespace Scores
 {
     public class AllScores
     {
@@ -27,30 +27,27 @@ namespace ScoreHandeling
 
     public class Score
     {
-        private string _note;
-        private string _nationality;
-        private string _name;
-        private DateTime _date;
-        private char _gender;
-        private int _age;
-        private bool _submitted;
+        private string      _note;
+        private string      _nationality;
+        private string      _name;
+        private DateTime    _date;
+        private char        _gender;
+        private int         _age;
+        private bool        _submitted;
         private List<Split> _splits;
 
-        public Dictionary<string, object> AllObjects
-        {
-            get =>
-                new Dictionary<string, object>
-                {
-                    { "note", _note },
-                    { "nationality", _nationality },
-                    { "name", _name },
-                    { "date", _date.ToString(CultureInfo.CurrentCulture) },
-                    { "gender", _gender.ToString() },
-                    { "age", _age.ToString() },
-                    { "submitted", _submitted.ToString() },
-                    { "splits", _splits }
-                };
-        }
+        public Dictionary<string, object> AllObjects =>
+            new Dictionary<string, object>
+            {
+                { "note", _note },
+                { "nationality", _nationality },
+                { "name", _name },
+                { "date", _date.ToString(CultureInfo.CurrentCulture) },
+                { "gender", _gender.ToString() },
+                { "age", _age.ToString() },
+                { "submitted", _submitted.ToString() },
+                { "splits", _splits }
+            };
 
         public string Note
         {
