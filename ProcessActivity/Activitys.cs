@@ -3,29 +3,41 @@ using System.Collections.Generic;
 using System.Linq;
 using Commands;
 using Commands.DataProcessor;
-using ScoreHandeling;
+using Scores;
 
 namespace ProcessActivity
 {
     public class Activitys
     {
-        public Activitys(string xmlLocation, string lang = "xml")
+        /// <summary>
+        /// sets the location of the file, aswe"ll as loads all the scores
+        /// </summary>
+        /// <param name="fileLocation">
+        /// the location fo th
+        /// </param>
+        /// <param name="lang">
+        /// the language of the file, check documentation for all the supported filetypes
+        ///     <default value="xml">
+        ///     The default value is xml
+        ///     </default>
+        /// </param>
+        public Activitys(string fileLocation, string lang = "xml")
         {
-            Path = xmlLocation;
+            Path = fileLocation;
             Propeties = new Properties(Path, lang); // xml default
             Scores = new AllScores();
             LoadAll();
         }
 
-        private string _path;
-        private Properties _properties;
-        private AllScores _scores;
+        private string      _path;
+        private Properties  _properties;
+        private AllScores   _scores;
 
-        private Location _localLocation;
-        private List<Score> _localScores;
-        private Score _localScore;
-        private List<Score.Split> _localSplits;
-        private Score.Split _localSplit;
+        private Location            _localLocation;
+        private List<Score>         _localScores;
+        private Score               _localScore;
+        private List<Score.Split>   _localSplits;
+        private Score.Split         _localSplit;
 
         public AllScores Scores
         {
@@ -73,14 +85,14 @@ namespace ProcessActivity
             char gender, string note, List<Score.Split> splits = null)
         {
             ClearLocalScore();
-            _localScore.Splits = splits ?? _localSplits;    // null check 
-            _localScore.Name = name;
-            _localScore.Age = age;
+            _localScore.Splits      = splits ?? _localSplits;    // null check 
+            _localScore.Name        = name;
+            _localScore.Age         = age;
             _localScore.Nationality = nationality;
-            _localScore.Submitted = submitted;
-            _localScore.Date = dateTime;
-            _localScore.Gender = gender;
-            _localScore.Note = note;
+            _localScore.Submitted   = submitted;
+            _localScore.Date        = dateTime;
+            _localScore.Gender      = gender;
+            _localScore.Note        = note;
             if (_localScore.CheckValid())
                 AppendScore();
             else
@@ -92,7 +104,7 @@ namespace ProcessActivity
         }
 
         public void CreateSplit(long time, double distance)
-        { 
+        {
             _localSplit.Time = time;
             _localSplit.Distance = distance;
             _localSplits.Add(_localSplit);
@@ -126,11 +138,11 @@ namespace ProcessActivity
 
         public void ClearAllLocal()
         {
-            _localLocation = new Location(null);
-            _localScores = new List<Score>();
-            _localScore = new Score();
-            _localSplits = new List<Score.Split>();
-            _localSplit = new Score.Split();
+            _localLocation  = new Location(null);
+            _localScores    = new List<Score>();
+            _localScore     = new Score();
+            _localSplits    = new List<Score.Split>();
+            _localSplit     = new Score.Split();
         }
 
         public void RemoveScore(int index)
@@ -138,12 +150,32 @@ namespace ProcessActivity
             _localScores.RemoveAt(index);
         }
 
-        public void SaveToXml()
+        public void SaveFile()
+        {
+            switch (Propeties.Lang)
+            {
+                case "xml":
+                    SaveToXml();
+                    break;
+                case "txt":
+                    SaveToTxt();
+                    break;
+            }
+        }
+
+        private void SaveToTxt()
+        {
+        }
+
+        private void SaveToXml()
         {
             var reader = new XmlWriter(new Xml(_properties));
             reader.RewriteXml(_scores);
         }
 
+        /// <summary>
+        /// Loads all the scores using the properties file
+        /// </summary>
         private void LoadAll()
         {
             if (_properties == null) return;
