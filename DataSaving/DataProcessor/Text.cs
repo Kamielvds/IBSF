@@ -96,13 +96,5 @@ namespace Commands.DataProcessor
         {
             SetFilePath(filePath);
         }
-
-        /// <summary>
-        /// used to backup userdata
-        /// </summary>
-        public void CopyFile()
-        {
-            File.Copy(FilePath, FilePath + "Copy");
-        }
     }
 }
