@@ -24,7 +24,6 @@ namespace ProcessActivity
         public Activitys(string fileLocation, string lang = "xml")
         {
             Path = fileLocation;
-            Propeties = new Properties(Path, lang); // xml default
             Scores = new AllScores();
             LoadAll();
         }
@@ -169,7 +168,7 @@ namespace ProcessActivity
 
         private void SaveToXml()
         {
-            var reader = new XmlWriter(new Xml(_properties));
+            var reader = new XmlWriter(_path);
             reader.RewriteXml(_scores);
         }
 
@@ -182,11 +181,11 @@ namespace ProcessActivity
             switch (_properties.Lang)
             {
                 case "xml":
-                    var xmlReader = new XmlReader(new Xml(_properties));
-                    _scores = xmlReader.LoadScores();
+                    var xmlReader = new XmlReader(_path);
+                    _scores = xmlReader.LoadXml();
                     break;
                 case "txt":
-                    var textReader = new TextReader(_properties);
+                    var textReader = new TextReader(_path);
                     _scores = textReader.ReadFile();
                     break;
             }
