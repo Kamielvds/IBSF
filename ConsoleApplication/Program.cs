@@ -2,16 +2,19 @@
 using System.IO;
 using ConsoleApplication.Problems;
 using ProcessActivity;
+using static System.String;
 
 namespace ConsoleApplication
 {
     internal class Program
     {
         private static bool _running = true;
+        private static string userInput;
         private static string _xmlPath;
         private static Activitys _activitys;
-        private static string[] _userInputSplit;
-        private static int InputLength => _userInputSplit.Length;
+        private static string[] UserInputSplit => userInput.Split(' ');
+
+        private static int InputLength => UserInputSplit.Length;
 
         public static void Main(string[] args)
         {
@@ -27,56 +30,67 @@ namespace ConsoleApplication
             // TODO make reader 
         }
 
+        /// <summary>
+        /// This is the Main cylce of the program, this will be fired everytime a operation completes.
+        /// </summary>
         private static void RequestUserInput()
         {
-            string userInput = Console.ReadLine();
+            userInput = Console.ReadLine();
             if (userInput == null) return;
             try
             {
-                switch (_userInputSplit[0].ToLower())
+                switch (UserInputSplit[0].ToLower())
                 {
                     case "load":
-                        LoadXmlFile();
+                        LoadFile();
                         break;
                     case "save":
-                        SaveXmlFile();
+                        SaveFile();
                         break;
                     case "setting":
                     case "--s":
                         ProcessSettingCommand();
-                        break;
-                    default:
-                        Console.WriteLine("Invalid Command.");
                         break;
                     case "quit":
                     case "q":
                         _running = false;
                         break;
                     default:
-                        Warnings.
+                        Warnings.CommandNotFound();
+                        break;
                 }
             }
             catch (IndexOutOfRangeException)
             {
-                Console.WriteLine("not enough arguments");
+                Errors.NotEnoughArguments();
             }
             catch (InvalidDataException)
             {
-                Console.WriteLine("the given data type was incorrect.");
+                Errors.InvalidDatatype();
             }
         }
 
-        private static void LoadXmlFile()
+        /// <summary>
+        /// Loading the sports file, and saving it to _activity's
+        /// </summary>
+        /// <exception cref="InvalidDataException">
+        /// thrown whenever no path is given
+        /// </exception>
+        private static void LoadFile()
         {
-            var path = _userInputSplit[1];
+            string path = null;
+            if (InputLength > 1) path = UserInputSplit[1];
             if (path == null) throw new InvalidDataException();
+            var lang = Empty;
             if (File.Exists(path))
-                _activitys = new Activitys(_userInputSplit[1]);
+            {
+                _activitys = InputLength > 2 ? new Activitys(path, UserInputSplit[2]) : new Activitys(path);
+            }
             else
                 Warnings.FileNotFound(path);
         }
 
-        private static void SaveXmlFile()
+        private static void SaveFile()
         {
             if (_xmlPath == null)
             {
@@ -84,12 +98,12 @@ namespace ConsoleApplication
                 return;
             }
 
-            _activitys.SaveToXml();
+            _activitys.SaveFile();
         }
 
         private static void ProcessSettingCommand()
         {
-            string task = _userInputSplit[1];
+            string task = UserInputSplit[1];
             switch (task)
             {
                 case "edit":
@@ -105,7 +119,7 @@ namespace ConsoleApplication
 
         private static void ListSetting()
         {
-            var setting = _userInputSplit[2];
+            var setting = UserInputSplit[2];
             switch (setting)
             {
                 case "*":
@@ -124,20 +138,20 @@ namespace ConsoleApplication
 
         private static void EditSetting()
         {
-            var setting = _userInputSplit[2];
+            var setting = UserInputSplit[2];
             switch (setting)
             {
                 case "ShowWarnings":
-                    UserSettings.ShowWarnings = Convert.ToBoolean(_userInputSplit[3]);
+                    UserSettings.ShowWarnings = Convert.ToBoolean(UserInputSplit[3]);
                     break;
                 case "ShowErrors":
-                    UserSettings.ShowErrors = Convert.ToBoolean(_userInputSplit[3]);
+                    UserSettings.ShowErrors = Convert.ToBoolean(UserInputSplit[3]);
                     break;
                 case "LinesBeforeUser":
-                    UserSettings.LinesBeforeUser = Convert.ToInt32(_userInputSplit[3]);
+                    UserSettings.LinesBeforeUser = Convert.ToInt32(UserInputSplit[3]);
                     break;
                 case "LinesAfterUser":
-                    UserSettings.LinesBeforeUser = Convert.ToInt32(_userInputSplit[3]);
+                    UserSettings.LinesBeforeUser = Convert.ToInt32(UserInputSplit[3]);
                     break;
                 default:
                     Warnings.SettingNotValid(setting);
