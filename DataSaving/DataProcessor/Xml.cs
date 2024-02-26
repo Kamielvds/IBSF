@@ -24,19 +24,26 @@ namespace Commands.DataProcessor
         }
         
         /// <summary>
-        /// 
+        /// loads all the scores
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// returns the data in the AllScores class, for more info on how data is stored, check documentation
+        /// </returns>
         public AllScores LoadXml()
         {
-            if (FilePath == null) return null;
+            if (!ValidPath) return null;
 
             var xmlDoc = new XmlDocument();
             xmlDoc.Load(FilePath);
+            
+            // tries to find rootnode and move to track node if not null
             var root = xmlDoc.SelectSingleNode("/root");
             var tracksNode = root?.SelectSingleNode("tracks");
+            if (tracksNode == null) return null;
+            
+            // create object of AllScores
             var allScores = new AllScores();
-            if (tracksNode == null) return allScores;
+            
             foreach (XmlNode location in tracksNode)
             {
                 // add location
@@ -120,11 +127,6 @@ namespace Commands.DataProcessor
         {
             SetFilePath(filePath);
         }
-        
-        public string XmlPath
-        {
-            set => FilePath = value;
-        }
 
         /// <summary>
         /// Changes the Innertext of a given node, when the attribute from the given location is the same
@@ -193,9 +195,22 @@ namespace Commands.DataProcessor
         }
 
         // slow, but easiest
+        /// <summary>
+        /// deletes all the scoers from the file, and then tries to rewrite the whole document
+        /// </summary>
+        /// <param name="allScores">
+        /// the value's from this class will be written to the xml document
+        /// </param>
+        /// <exception cref="DataException">
+        /// if the file wasn't found or none is loaded
+        /// </exception>
         public void RewriteXml(AllScores allScores)
         {
-            if (ValidPath == false) throw new DataException("The given path was wrong or not found.");
+            // makes a backup copy just in case.
+            CopyFile();
+            
+            // clear document
+            if (!ValidPath) throw new DataException("The given path was wrong or not found.");
             var xmlDoc = new XmlDocument();
             xmlDoc.Load(FilePath);
             xmlDoc.RemoveAll();
