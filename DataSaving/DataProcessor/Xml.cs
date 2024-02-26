@@ -1,104 +1,37 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Data;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
-using ScoreHandeling;
+using Scores;
 
 namespace Commands.DataProcessor
 {
-    public class Xml
-    {
-        /// <summary>
-        /// default constructor for Xml
-        /// </summary>
-        /// <param name="properties">instance of properties class </param>
-        public Xml(Properties properties)
-        {
-            if (properties == null) return;
-            SetXmlPath(properties.FilePath);
-            Properties = properties;
-        }
+    
 
-        private Properties _properties;
-        private string _xmlPath;
-
-        public string XmlPath
-        {
-            get => _xmlPath;
-            set => _xmlPath = value;
-        }
-
-        public Properties Properties
-        {
-            get => _properties;
-            set => _properties = value;
-        }
-
-        /// <summary>
-        /// sets the xml path used by the xml reader and writer
-        /// </summary>
-        /// <param name="path">the path of the xml</param>
-        private void SetXmlPath(string path)
-        {
-            if (File.Exists(path) && path != null)
-            {
-                _xmlPath = path;
-                return;
-            }
-
-            Console.WriteLine("EX: xml-nf");
-            _xmlPath = null;
-        }
-    }
-
-    public class XmlReader
+    public class XmlReader : Properties
     {
         /// <summary>
         /// default constructor XmlReader
         /// </summary>
-        /// <param name="xml">instance of the XML class</param>
-        public XmlReader(Xml xml)
+        /// <param name="filePath">
+        /// the path of the file
+        /// </param>
+        public XmlReader(string filePath):base(filePath,"xml")
         {
-            if (xml == null) return;
-            Xml = xml;
-            XmlPath = xml.XmlPath;
-        }
-
-        private Xml _xml;
-        private string _xmlPath;
-
-        public Xml Xml
-        {
-            get => _xml;
-            set => _xml = value;
-        }
-
-        public string XmlPath
-        {
-            get => _xmlPath;
-            set => _xmlPath = value;
+            if (filePath == null) return;
+            if (CheckPath())
+                FilePath = filePath;
         }
 
         #region Public Methods
-
-        /// <summary>
-        /// Load the xml to the AllScores class
-        /// </summary>
-        /// <returns>The class, containing all the scores</returns>
-        public AllScores LoadScores()
-        {
-            if (_xml.Properties.Lang == "xml") return LoadXml();
-            return null;
-        }
-
         private AllScores LoadXml()
         {
-            if (_xmlPath == null) return null;
+            if (FilePath == null) return null;
 
             var xmlDoc = new XmlDocument();
-            xmlDoc.Load(_xmlPath);
+            xmlDoc.Load(FilePath);
             var root = xmlDoc.SelectSingleNode("/root");
             var tracksNode = root?.SelectSingleNode("tracks");
             var allScores = new AllScores();
@@ -176,31 +109,24 @@ namespace Commands.DataProcessor
         #endregion
     }
 
-    public class XmlWriter
+    public class XmlWriter : Properties
     {
         /// <summary>
         /// default constructor XmlWriter
         /// </summary>
-        /// <param name="xml">a instance of the xml class</param>
-        public XmlWriter(Xml xml)
+        /// <param name="filePath">
+        ///
+        /// </param>
+        public XmlWriter(string filePath):base(filePath,"xml")
         {
-            if (xml == null) return;
-            _xmlPath = xml.XmlPath;
-            _xml = xml;
+            if (filePath == null) return;
+            if (CheckPath())
+                FilePath = filePath;
         }
-
-        private string _xmlPath;
-        private Xml _xml;
-
+        
         public string XmlPath
         {
-            set => _xmlPath = value;
-        }
-
-        public Xml Xml
-        {
-            get => _xml;
-            set => _xml = value;
+            set => FilePath = value;
         }
 
         /// <summary>
@@ -220,7 +146,7 @@ namespace Commands.DataProcessor
             string targetNode, string targetValue)
         {
             var xmlDoc = new XmlDocument();
-            xmlDoc.Load(_xmlPath);
+            xmlDoc.Load(FilePath);
             XmlNode root = xmlDoc.SelectSingleNode("/root");
             XmlNode targetLocation = root?.SelectSingleNode(location);
             if (targetLocation == null) return;
@@ -234,7 +160,7 @@ namespace Commands.DataProcessor
                 }
             }
 
-            xmlDoc.Save(_xmlPath);
+            xmlDoc.Save(FilePath);
         }
 
         /// <summary>
@@ -246,7 +172,7 @@ namespace Commands.DataProcessor
         /// <param name="values">All the InnerText to be added to the subnodes</param>
         public void AddNodeAndValue(string location, string mainNode, List<string> names, List<string> values)
         {
-            var xmlDoc = XDocument.Load(_xmlPath);
+            var xmlDoc = XDocument.Load(FilePath);
             XElement element = xmlDoc.Root?.Element(location);
             if (element == null)
             {
@@ -266,22 +192,22 @@ namespace Commands.DataProcessor
                     mainNodeElement.Add(new XElement(names[i], values[i]));
             }
 
-            xmlDoc.Save(_xmlPath);
+            xmlDoc.Save(FilePath);
         }
 
         // slow, but easiest
         public void RewriteXml(AllScores allScores)
         {
+            if (ValidPath == false) throw new DataException("The given path was wrong or not found.");
             var xmlDoc = new XmlDocument();
-            xmlDoc.Load(_xmlPath);
+            xmlDoc.Load(FilePath);
             xmlDoc.RemoveAll();
 
             // create xml declaration
             var xdoc = new XDocument { Declaration = new XDeclaration("1.0", "UTF-8", "true") };
             xdoc.Add(new XElement("root", null));
-            xdoc.Save(_xmlPath);
+            xdoc.Save(FilePath);
 
-            var root = xmlDoc.SelectSingleNode("/root");
             foreach (var location in allScores.Locations)
             {
                 var locationContainer = new XElement(location.Name, null);
@@ -315,7 +241,7 @@ namespace Commands.DataProcessor
                 xdoc.Root?.Add(locationContainer);
             }
 
-            xdoc.Save(_xmlPath);
+            xdoc.Save(FilePath);
         }
     }
 }
