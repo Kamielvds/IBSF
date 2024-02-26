@@ -20,12 +20,13 @@ namespace Commands.DataProcessor
         /// </param>
         public XmlReader(string filePath):base(filePath,"xml")
         {
-            if (filePath == null) return;
-            if (CheckPath())
-                FilePath = filePath;
+            SetFilePath(filePath);
         }
-
-        #region Public Methods
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public AllScores LoadXml()
         {
             if (FilePath == null) return null;
@@ -105,8 +106,6 @@ namespace Commands.DataProcessor
 
             return allScores;
         }
-
-        #endregion
     }
 
     public class XmlWriter : Properties
@@ -115,13 +114,11 @@ namespace Commands.DataProcessor
         /// default constructor XmlWriter
         /// </summary>
         /// <param name="filePath">
-        ///
+        /// the path of the file
         /// </param>
         public XmlWriter(string filePath):base(filePath,"xml")
         {
-            if (filePath == null) return;
-            if (CheckPath())
-                FilePath = filePath;
+            SetFilePath(filePath);
         }
         
         public string XmlPath

@@ -15,22 +15,22 @@ namespace Commands
             Lang = lang;
         }
 
-        public string FilePath { get; set; }
+        protected string FilePath { get; set; }
 
         public string Lang { get; set; }
 
         public bool ValidPath { get; private set; }
         
-        private bool CheckPath(string path)
+        private bool CheckPath()
         {
-            if (path == null || !File.Exists(path)) return false;
+            if (FilePath == null || !File.Exists(FilePath)) return false;
             ValidPath = true;
             return true;
         }
 
         public void SetPath(string path)
         {
-            if (CheckPath(path))
+            if (SetFilePath(path))
             {
                 FilePath = path;
                 ValidPath = true;
@@ -43,11 +43,12 @@ namespace Commands
         /// check if the file exists and path isn't null
         /// </summary>
         /// <returns></returns>
-        protected bool CheckPath()
+        protected bool SetFilePath(string filePath)
         {
-            if (FilePath == null || !File.Exists(FilePath))
+            if (FilePath == null || !File.Exists(filePath))
             {
                 ValidPath = false;
+                FilePath = filePath;
                 return false;
             }
 

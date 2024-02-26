@@ -13,7 +13,7 @@ namespace Commands.DataProcessor
     {
         public TextReader(string filePath) : base(filePath, "txt")
         {
-            if (CheckPath()) FilePath = filePath;
+            SetFilePath(filePath);
         }
 
         // used for getting the Command and it's value
@@ -94,7 +94,7 @@ namespace Commands.DataProcessor
     {
         public TextWriter(string filePath) : base(filePath, "txt")
         {
-            CheckPath();
+            SetFilePath(filePath);
         }
 
         /// <summary>
