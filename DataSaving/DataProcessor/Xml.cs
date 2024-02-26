@@ -26,7 +26,7 @@ namespace Commands.DataProcessor
         }
 
         #region Public Methods
-        private AllScores LoadXml()
+        public AllScores LoadXml()
         {
             if (FilePath == null) return null;
 
