@@ -28,33 +28,17 @@ namespace ProcessActivity
             LoadAll();
         }
 
-        private string      _path;
-        private Properties  _properties;
-        private AllScores   _scores;
-
         private Location            _localLocation;
         private List<Score>         _localScores;
         private Score               _localScore;
         private List<Score.Split>   _localSplits;
         private Score.Split         _localSplit;
 
-        public AllScores Scores
-        {
-            get => _scores;
-            set => _scores = value;
-        }
+        public AllScores Scores { get; set; }
 
-        private string Path
-        {
-            get => _path;
-            set => _path = value;
-        }
+        private string Path { get; set; }
 
-        public Properties Propeties
-        {
-            get => _properties;
-            set => _properties = value;
-        }
+        public Properties Propeties { get; set; }
 
         private void AppendScore(Score score = null)
         {
@@ -70,14 +54,14 @@ namespace ProcessActivity
         public void CreateLocation(string name)
         {
             _localLocation = new Location(name, _localScores);
-            foreach (var location in _scores.Locations.Where(location => location.Name == name))
+            foreach (var location in Scores.Locations.Where(location => location.Name == name))
             {
                 location.AddScore(_localScores);
                 return;
             }
 
             // if no match was found make new location
-            _scores.AddLocation(_localLocation);
+            Scores.AddLocation(_localLocation);
         }
 
         public void CreateScore(string name, int age, string nationality, bool submitted, DateTime dateTime,
@@ -168,8 +152,8 @@ namespace ProcessActivity
 
         private void SaveToXml()
         {
-            var reader = new XmlWriter(_path);
-            reader.RewriteXml(_scores);
+            var reader = new XmlWriter(Path);
+            reader.RewriteXml(Scores);
         }
 
         /// <summary>
@@ -177,16 +161,16 @@ namespace ProcessActivity
         /// </summary>
         private void LoadAll()
         {
-            if (_properties == null) return;
-            switch (_properties.Lang)
+            if (Propeties == null) return;
+            switch (Propeties.Lang)
             {
                 case "xml":
-                    var xmlReader = new XmlReader(_path);
-                    _scores = xmlReader.LoadXml();
+                    var xmlReader = new XmlReader(Path);
+                    Scores = xmlReader.LoadXml();
                     break;
                 case "txt":
-                    var textReader = new TextReader(_path);
-                    _scores = textReader.ReadFile();
+                    var textReader = new TextReader(Path);
+                    Scores = textReader.ReadFile();
                     break;
             }
         }

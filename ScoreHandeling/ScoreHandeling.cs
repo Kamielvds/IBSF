@@ -27,45 +27,26 @@ namespace Scores
 
     public class Score
     {
-        private string      _note;
-        private string      _nationality;
-        private string      _name;
         private DateTime    _date;
-        private char        _gender;
-        private int         _age;
-        private bool        _submitted;
-        private List<Split> _splits;
 
         public Dictionary<string, object> AllObjects =>
             new Dictionary<string, object>
             {
-                { "note", _note },
-                { "nationality", _nationality },
-                { "name", _name },
+                { "note", Note },
+                { "nationality", Nationality },
+                { "name", Name },
                 { "date", _date.ToString(CultureInfo.CurrentCulture) },
-                { "gender", _gender.ToString() },
-                { "age", _age.ToString() },
-                { "submitted", _submitted.ToString() },
-                { "splits", _splits }
+                { "gender", Gender.ToString() },
+                { "age", Age.ToString() },
+                { "submitted", Submitted.ToString() },
+                { "splits", Splits }
             };
 
-        public string Note
-        {
-            get => _note;
-            set => _note = value;
-        }
+        public string Note { get; set; }
 
-        public string Nationality
-        {
-            get => _nationality;
-            set => _nationality = value;
-        }
+        public string Nationality { get; set; }
 
-        public string Name
-        {
-            get => _name;
-            set => _name = value;
-        }
+        public string Name { get; set; }
 
         public DateTime Date
         {
@@ -73,29 +54,13 @@ namespace Scores
             set => _date = value;
         }
 
-        public char Gender
-        {
-            get => _gender;
-            set => _gender = value;
-        }
+        public char Gender { get; set; }
 
-        public int Age
-        {
-            get => _age;
-            set => _age = value;
-        }
+        public int Age { get; set; }
 
-        public bool Submitted
-        {
-            get => _submitted;
-            set => _submitted = value;
-        }
+        public bool Submitted { get; set; }
 
-        public List<Split> Splits
-        {
-            get => _splits;
-            set => _splits = value;
-        }
+        public List<Split> Splits { get; set; }
 
         public class Split
         {
@@ -109,28 +74,17 @@ namespace Scores
                 Distance = distance;
             }
 
-            private double _distance;
-            private long _time;
+            public double Distance { get; set; }
 
-            public double Distance
-            {
-                get => _distance;
-                set => _distance = value;
-            }
-
-            public long Time
-            {
-                get => _time;
-                set => _time = value;
-            }
+            public long Time { get; set; }
         }
 
         public bool CheckValid()
         {
-            if (!(_gender == 'M' || _gender == 'F')) return false;
-            if (_age < 13 || _age >= 99) return false;
-            if (_name == null) return false;
-            if (_splits == null) return false;
+            if (!(Gender == 'M' || Gender == 'F')) return false;
+            if (Age < 13 || Age >= 99) return false;
+            if (Name == null) return false;
+            if (Splits == null) return false;
             return true;
         }
     }
@@ -143,35 +97,24 @@ namespace Scores
             if (scores == null) return;
             foreach (var score in scores)
             {
-                _scores.Add(score);
+                Scores.Add(score);
             }
         }
 
-        private List<Score> _scores = new List<Score>();
-        private string _name;
+        public string Name { get; set; }
 
-        public string Name
-        {
-            get => _name;
-            set => _name = value;
-        }
-
-        public List<Score> Scores
-        {
-            get => _scores;
-            set => _scores = value;
-        }
+        public List<Score> Scores { get; set; } = new List<Score>();
 
         public void AddScore(Score score)
         {
-            _scores.Add(score);
+            Scores.Add(score);
         }
 
         public void AddScore(List<Score> scoresList)
         {
             foreach (var score in scoresList)
             {
-                _scores.Add(score);
+                Scores.Add(score);
             }
         }
     }

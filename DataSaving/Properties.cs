@@ -11,24 +11,14 @@ namespace Commands
     {
         protected Properties(string filePath, string lang)
         {
-            _filePath = filePath;
-            _lang = lang;
+            FilePath = filePath;
+            Lang = lang;
         }
 
-        private string _filePath;
-        private string _lang;
-        
-        public string FilePath
-        {
-            get => _filePath;
-            set => _filePath = value;
-        }
-        public string Lang
-        {
-            get => _lang;
-            set => _lang = value;
-        }
-        
+        public string FilePath { get; set; }
+
+        public string Lang { get; set; }
+
         public bool ValidPath { get; private set; }
         
         private bool CheckPath(string path)
