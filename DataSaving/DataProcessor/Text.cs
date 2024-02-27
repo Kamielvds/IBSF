@@ -13,7 +13,7 @@ namespace Commands.DataProcessor
     {
         public TextReader(string filePath) : base(filePath, "txt")
         {
-            SetFilePath(filePath);
+            SetPath(filePath);
         }
 
         // used for getting the Command and it's value
@@ -76,11 +76,30 @@ namespace Commands.DataProcessor
                         }
 
                         break;
+                    case "age":
+                        score.Age = Convert.ToInt32(Value);
+                        break;
+                    case "gender":
+                        score.Gender = Convert.ToChar(Value);
+                        break;
+                    case "nationality":
+                        score.Nationality = Value;
+                        break;
+                    case "date":
+                        score.Date = Convert.ToDateTime(Value);
+                        break;
+                    case "submitted":
+                        score.Submitted = Convert.ToBoolean(Value);
+                        break;
                     case "name":
                         score.Name = Value;
                         break;
-                    //TODO Incapsulate all Types
+                    case "track":
+                        locationName = Value;
+                        break;
+                    
                 }
+                allScores.AddLocation(new Location(locationName,scores));
             }
 
             return allScores;
@@ -94,7 +113,7 @@ namespace Commands.DataProcessor
     {
         public TextWriter(string filePath) : base(filePath, "txt")
         {
-            SetFilePath(filePath);
+            SetPath(filePath);
         }
     }
 }
