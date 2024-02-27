@@ -20,7 +20,7 @@ namespace Commands.DataProcessor
         /// </param>
         public XmlReader(string filePath):base(filePath,"xml")
         {
-            SetFilePath(filePath);
+            SetPath(filePath);
         }
         
         /// <summary>
@@ -125,7 +125,7 @@ namespace Commands.DataProcessor
         /// </param>
         public XmlWriter(string filePath):base(filePath,"xml")
         {
-            SetFilePath(filePath);
+            SetPath(filePath);
         }
 
         /// <summary>
