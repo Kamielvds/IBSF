@@ -25,6 +25,7 @@ namespace ProcessActivity
         {
             Path = fileLocation;
             Scores = new AllScores();
+            Lang = lang;
             LoadAll();
         }
 
@@ -38,7 +39,7 @@ namespace ProcessActivity
 
         private string Path { get; set; }
 
-        public Properties Propeties { get; set; }
+        public string Lang { get; private set; }
 
         private void AppendScore(Score score = null)
         {
@@ -135,7 +136,7 @@ namespace ProcessActivity
 
         public void SaveFile()
         {
-            switch (Propeties.Lang)
+            switch (Lang)
             {
                 case "xml":
                     SaveToXml();
@@ -161,8 +162,8 @@ namespace ProcessActivity
         /// </summary>
         private void LoadAll()
         {
-            if (Propeties == null) return;
-            switch (Propeties.Lang)
+            if (Path == null) return;
+            switch (Lang)
             {
                 case "xml":
                     var xmlReader = new XmlReader(Path);
