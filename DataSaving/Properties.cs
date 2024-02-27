@@ -15,7 +15,7 @@ namespace Commands
             Lang = lang;
         }
 
-        protected string FilePath { get; set; }
+        protected string FilePath { get; private set; }
 
         public string Lang { get; set; }
 
@@ -28,6 +28,12 @@ namespace Commands
             return true;
         }
 
+        /// <summary>
+        /// used to change the path of the properties
+        /// </summary>
+        /// <param name="path">
+        /// the path of the file
+        /// </param>
         public void SetPath(string path)
         {
             if (SetFilePath(path))
@@ -43,7 +49,7 @@ namespace Commands
         /// check if the file exists and path isn't null
         /// </summary>
         /// <returns></returns>
-        protected bool SetFilePath(string filePath)
+        private bool SetFilePath(string filePath)
         {
             if (FilePath == null || !File.Exists(filePath))
             {
@@ -61,6 +67,8 @@ namespace Commands
         /// </summary>
         public void CopyFile()
         {
+            if(File.Exists(FilePath+"Copy"))
+                File.Delete(FilePath+"Copy");
             File.Copy(FilePath, FilePath + "Copy");
         }
     }
