@@ -9,7 +9,7 @@ submitted:True
 splits:*
 split:-
 time:496
-distance234.67
+distance:234.67
 split:-
 time:496
 distance:234.67
