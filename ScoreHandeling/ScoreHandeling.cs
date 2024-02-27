@@ -9,19 +9,24 @@ namespace Scores
     {
         public List<Location> Locations { get; set; } = new List<Location>();
 
-        public bool LocationExists(Location location)
-        {
-            return Locations.Any(loc => location.Name == loc.Name);
-        }
-
-        public bool LocationExists(string location)
+        private bool LocationExists(string location)
         {
             return Locations.Any(loc => loc.Name == location);
         }
 
         public void AddLocation(Location location)
         {
-            Locations.Add(location);
+            if(LocationExists(location.Name))
+            {
+                // ckeck if location exists
+                foreach (var loc in Locations.Where(loc => loc.Name == location.Name))
+                {
+                    loc.AddScore(location.Scores);
+                    return;
+                }
+            }
+            else
+                Locations.Add(location);
         }
     }
 
@@ -60,7 +65,7 @@ namespace Scores
 
         public bool Submitted { get; set; }
 
-        public List<Split> Splits { get; set; }
+        public List<Split> Splits { get; set; } = new List<Split>();
 
         public class Split
         {
