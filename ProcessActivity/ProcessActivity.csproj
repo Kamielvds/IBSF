@@ -47,6 +47,10 @@
         <Project>{fe0b0290-7550-45bf-bf07-a9e9ac971061}</Project>
         <Name>DataSaving</Name>
       </ProjectReference>
+      <ProjectReference Include="..\Exceptions\Exceptions.csproj">
+        <Project>{dfcd9049-9a01-408e-92e5-eeb873a50800}</Project>
+        <Name>Exceptions</Name>
+      </ProjectReference>
       <ProjectReference Include="..\Filtering\Filtering.csproj">
         <Project>{4af70572-b3a0-4265-b19c-13a3edd796b5}</Project>
         <Name>Filtering</Name>
