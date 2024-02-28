@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using Commands;
 using Commands.DataProcessor;
+using Exceptions;
 using Scores;
 
 namespace ProcessActivity
@@ -13,7 +16,7 @@ namespace ProcessActivity
         /// sets the location of the file, aswe"ll as loads all the scores
         /// </summary>
         /// <param name="fileLocation">
-        /// the location fo th
+        /// the location of the file
         /// </param>
         /// <param name="lang">
         /// the language of the file, check documentation for all the supported filetypes
@@ -37,9 +40,9 @@ namespace ProcessActivity
 
         public AllScores Scores { get; set; }
 
-        private string Path { get; set; }
+        private string Path { get; }
 
-        public string Lang { get; private set; }
+        public string Lang { get; }
 
         private void AppendScore(Score score = null)
         {
@@ -52,17 +55,18 @@ namespace ProcessActivity
             }
         }
 
+        /// <summary>
+        /// Create a Location and add it to the local 
+        /// </summary>
+        /// <param name="name"></param>
         public void CreateLocation(string name)
         {
-            _localLocation = new Location(name, _localScores);
-            foreach (var location in Scores.Locations.Where(location => location.Name == name))
+            if (_localLocation == null)
             {
-                location.AddScore(_localScores);
-                return;
+                throw  new EmptyLocationException();
             }
-
-            // if no match was found make new location
-            Scores.AddLocation(_localLocation);
+            Scores.AddLocation(new Location(name, _localScores));
+            _localScores = null;
         }
 
         public void CreateScore(string name, int age, string nationality, bool submitted, DateTime dateTime,
@@ -95,6 +99,9 @@ namespace ProcessActivity
             ClearLocalSplit();
         }
 
+        /// <summary>
+        /// Clears the local location
+        /// </summary>
         public void ClearLocalLocation()
         {
             _localLocation = new Location(null);
@@ -128,12 +135,22 @@ namespace ProcessActivity
             _localSplits    = new List<Score.Split>();
             _localSplit     = new Score.Split();
         }
-
+        
+        /// <summary>
+        /// Removes a score
+        /// </summary>
+        /// <param name="index">
+        /// the index of the Score to be removed
+        /// </param>
         public void RemoveScore(int index)
         {
             _localScores.RemoveAt(index);
         }
 
+        /// <summary>
+        /// Save Scoores to the desired Language type
+        /// </summary>
+        //  TODO Add a overide to cop"y to different filetype
         public void SaveFile()
         {
             switch (Lang)
@@ -147,10 +164,16 @@ namespace ProcessActivity
             }
         }
 
+        /// <summary>
+        /// Save the Scores to txt
+        /// </summary>
         private void SaveToTxt()
         {
         }
 
+        /// <summary>
+        /// Save the Scores to xml
+        /// </summary>
         private void SaveToXml()
         {
             var reader = new XmlWriter(Path);
