@@ -105,6 +105,12 @@ namespace Scores
                 Scores.Add(score);
             }
         }
+        public Location(string name, Score score = null)
+        {
+            Name = name;
+            if (score == null) return;
+            Scores.Add(score);
+        }
 
         public string Name { get; set; }
 

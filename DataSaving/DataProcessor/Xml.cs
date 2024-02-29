@@ -47,7 +47,7 @@ namespace Commands.DataProcessor
             foreach (XmlNode location in tracksNode)
             {
                 // add location
-                var newLocation = new Location(location.Name);
+                var newLocation = new Location(location.Name, new List<Score>());
                 allScores.AddLocation(newLocation);
 
                 var newScores = new List<Score>();
