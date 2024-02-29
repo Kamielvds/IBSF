@@ -6,7 +6,7 @@ namespace ConsoleApplication
     public class Settings
     {
         private static string[] UserInputSplit => Program.UserInputSplit;
-        
+
         /// <summary>
         /// process the settings command, wheather to list a value or to edit one
         /// </summary>
@@ -43,7 +43,16 @@ namespace ConsoleApplication
 
                     break;
                 default:
-                    Console.WriteLine(UserSettings.Settings[setting]);
+                    try
+                    {
+                        Console.WriteLine(UserSettings.Settings[setting]);
+                    }
+                    catch (Exception)
+                    {
+                        Errors.ElementNotFound();
+                        throw;
+                    }
+
                     break;
             }
         }
