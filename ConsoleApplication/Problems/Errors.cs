@@ -48,5 +48,10 @@ namespace ConsoleApplication.Problems
         {
             if (UserSettings.ShowErrors) Console.WriteLine("not enough arguments");
         }
+
+        public static void ElementNotFound()
+        {
+            if (UserSettings.ShowErrors) Console.WriteLine("The element in List was not found");
+        }
     }
 }
