@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Net;
+using System.Threading;
 using Scores;
 
 namespace Commands.DataProcessor
@@ -122,8 +124,9 @@ namespace Commands.DataProcessor
 
         public void RewriteText(AllScores allScores)
         {
-            
-            var streamWriter = new StreamWriter(FilePath,false);
+            CopyFile();
+            File.Delete(FilePath);
+            var streamWriter = new StreamWriter(FilePath);
 
             foreach (var location in allScores.Locations)
             {
@@ -132,22 +135,25 @@ namespace Commands.DataProcessor
                 {
                     foreach (var item in score.AllObjects)
                     {
-                        if (item.Value is string) streamWriter.WriteLine($"{item.Key}:{item.Value}");
+                        if (item.Value == null) streamWriter.WriteLine($"{item.Key}:");
+                        else if (item.Value is string) streamWriter.WriteLine($"{item.Key}:{item.Value}");
                         else
                         {
                             streamWriter.WriteLine("splits:*");
                             foreach (Score.Split split in (List<Score.Split>)item.Value)
                             {
-                                streamWriter.WriteLine("splits:*");
+                                streamWriter.WriteLine("split:-");
                                 streamWriter.WriteLine($"distance:{split.Distance}");
                                 streamWriter.WriteLine($"time:{split.Time}");
-                                streamWriter.WriteLine("splits:*");
+                                streamWriter.WriteLine("split:-");
                             }
                             streamWriter.WriteLine("splits:*");
                         }
                     }
+                    streamWriter.WriteLine("act:endl");
                 }
             }
+            streamWriter.Close();
         }
     }
 }
