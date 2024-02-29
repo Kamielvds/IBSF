@@ -9,7 +9,6 @@ using static ConsoleApplication.Saving;
 
 namespace ConsoleApplication
 {
-    //TODO refactor by using more classes in Project
     internal class Program
     {
         private static bool _running = true;
@@ -20,7 +19,10 @@ namespace ConsoleApplication
 
         public static int InputLength => UserInputSplit.Length;
 
-        public static void Main(string[] args)
+        /// <summary>
+        /// Entry point
+        /// </summary>
+        public static void Main()
         {
             LoadUserSettings();
             while (_running)
