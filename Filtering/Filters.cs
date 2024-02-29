@@ -365,6 +365,12 @@ namespace Filtering
 
         #region Sort
 
+        /// <summary>
+        /// Sorting Decending, the List will be changed
+        /// </summary>
+        /// <param name="list">
+        /// the list in which the value's should be sorted
+        /// </param>
         public static void SortDescending(ref List<int> list)
         {
             for (var i = 0; i < list.Count; i++)
@@ -381,7 +387,33 @@ namespace Filtering
                 list[index] = list[i];
                 list[i] = lowestvalue;
             }
+        } 
+        /// <summary>
+        /// Sorting Decending, the List will be returned
+        /// </summary>
+        /// <param name="list">
+        /// The list with integers that should be sorted
+        /// </param>
+        public static List<int> SortDescending(List<int> list)
+        {
+            for (var i = 0; i < list.Count; i++)
+            {
+                int lowestvalue = list[i];
+                int index = i;
+                for (var j = i; j < list.Count; j++)
+                {
+                    if (list[j] >= lowestvalue) continue;
+                    lowestvalue = list[j];
+                    index = j;
+                }
+                if (index == i) continue;
+                list[index] = list[i];
+                list[i] = lowestvalue;
+            }
+
+            return list;
         }
+        
         public static void SortAscending(ref List<int> list)
         {
             for (var i = 0; i < list.Count; i++)
@@ -398,6 +430,25 @@ namespace Filtering
                 list[index] = list[i];
                 list[i] = lowestvalue;
             }
+        }
+        public static List<int> SortAscending(List<int> list)
+        {
+            for (var i = 0; i < list.Count; i++)
+            {
+                int lowestvalue = list[i];
+                int index = i;
+                for (var j = i; j < list.Count; j++)
+                {
+                    if (list[j] <= lowestvalue) continue;
+                    lowestvalue = list[j];
+                    index = j;
+                }
+                if (index == i) continue;
+                list[index] = list[i];
+                list[i] = lowestvalue;
+            }
+
+            return list;
         }
 
         #endregion
