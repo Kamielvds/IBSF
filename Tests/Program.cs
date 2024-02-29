@@ -12,6 +12,7 @@ namespace Tests
         public static void Main(string[] args)
         {
             var act = new Activitys("TextFile/text.txt","txt");
+            act.SaveFile();
         }
     }
 }
