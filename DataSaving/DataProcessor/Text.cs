@@ -40,39 +40,34 @@ namespace Commands.DataProcessor
 
             var allScores       = new AllScores();
             var streamReader    = new StreamReader(FilePath);
-            var scores          = new List<Score>();
+            var score           = new Score();
 
             string locationName = null;
+            // this is kept in this scope, so we can save a cycle by not always reading the same locations in a row
 
             while ((_line = streamReader.ReadLine()) != null)
             {
-                var score = new Score();
-
                 switch (Command)
                 {
                     // to speed up could use :: so the size of the array will be 3, resulting in easier access to instructions such as :end or :split*
                     case "splits":
                         while ((_line = streamReader.ReadLine()) != "splits:*")
                         {
-                            var splits = new List<Score.Split>();
-                            if (_line == "split:-")
+                            var split = new Score.Split();
+                            while ((_line = streamReader.ReadLine()) != "split:-")
                             {
-                                var split = new Score.Split();
-                                while ((_line = streamReader.ReadLine()) != "split:-")
+                                switch (Command)
                                 {
-                                    switch (Command)
-                                    {
-                                        case "time":
-                                            split.Time = Convert.ToInt64(Value);
-                                            break;
-                                        case "distance":
-                                            split.Distance = Convert.ToDouble(Value, CultureInfo.InvariantCulture);
-                                            break;
-                                    }
+                                    case "time":
+                                        split.Time = Convert.ToInt64(Value);
+                                        break;
+                                    case "distance":
+                                        split.Distance = Convert.ToDouble(Value, CultureInfo.InvariantCulture);
+                                        break;
                                 }
-
-                                score.Splits.Add(split);
                             }
+
+                            score.Splits.Add(split);
                         }
 
                         break;
@@ -97,11 +92,20 @@ namespace Commands.DataProcessor
                     case "track":
                         locationName = Value;
                         break;
-                    
-                }
-                allScores.AddLocation(new Location(locationName,scores));
-            }
+                    case "act":
+                        switch (Value)
+                        {
+                            // Activity fixes
+                            case "endl":
+                                allScores.AddLocation(new Location(locationName, score));
+                                score = new Score();        // renew after activity is ended
+                                break;
+                        }
 
+                        break;
+                }
+            }
+            streamReader.Close();
             return allScores;
         }
     }
@@ -114,6 +118,36 @@ namespace Commands.DataProcessor
         public TextWriter(string filePath) : base(filePath, "txt")
         {
             SetPath(filePath);
+        }
+
+        public void RewriteText(AllScores allScores)
+        {
+            
+            var streamWriter = new StreamWriter(FilePath,false);
+
+            foreach (var location in allScores.Locations)
+            {
+                streamWriter.WriteLine($"track:{location.Name}");
+                foreach (var score in location.Scores)
+                {
+                    foreach (var item in score.AllObjects)
+                    {
+                        if (item.Value is string) streamWriter.WriteLine($"{item.Key}:{item.Value}");
+                        else
+                        {
+                            streamWriter.WriteLine("splits:*");
+                            foreach (Score.Split split in (List<Score.Split>)item.Value)
+                            {
+                                streamWriter.WriteLine("splits:*");
+                                streamWriter.WriteLine($"distance:{split.Distance}");
+                                streamWriter.WriteLine($"time:{split.Time}");
+                                streamWriter.WriteLine("splits:*");
+                            }
+                            streamWriter.WriteLine("splits:*");
+                        }
+                    }
+                }
+            }
         }
     }
 }
