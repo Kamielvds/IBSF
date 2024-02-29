@@ -65,7 +65,7 @@ namespace Commands
         /// <summary>
         /// used to backup userdata
         /// </summary>
-        public void CopyFile()
+        protected void CopyFile()
         {
             if(File.Exists(FilePath+"Copy"))
                 File.Delete(FilePath+"Copy");
