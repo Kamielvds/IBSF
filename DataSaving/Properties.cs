@@ -67,9 +67,9 @@ namespace Commands
         /// </summary>
         protected void CopyFile()
         {
-            if(File.Exists(FilePath+"Copy"))
-                File.Delete(FilePath+"Copy");
-            File.Copy(FilePath, FilePath + "Copy");
+            if(File.Exists(FilePath.Substring(0,FilePath.Length-4)+"Copy.txt"))
+                File.Delete(FilePath.Substring(0,FilePath.Length-4)+"Copy.txt");
+            File.Copy(FilePath, FilePath.Substring(0,FilePath.Length-4)+"Copy.txt");
         }
     }
 }

@@ -120,10 +120,20 @@ namespace Commands.DataProcessor
             SetPath(filePath);
         }
 
-        public void RewriteText(AllScores allScores)
+        /// <summary>
+        /// Rewrites all scores inside of a text file. This is the safest but slowest method.
+        /// </summary>
+        /// <param name="allScores">
+        /// the scores that need to be written to the file
+        /// </param>
+        /// <param name="copy">
+        /// copy the old file (safest)
+        /// </param>
+        public void RewriteText(AllScores allScores, bool copy = true)
         {
-            
-            var streamWriter = new StreamWriter(FilePath,false);
+            CopyFile();
+            File.Delete(FilePath);
+            var streamWriter = new StreamWriter(FilePath);
 
             foreach (var location in allScores.Locations)
             {
@@ -132,22 +142,33 @@ namespace Commands.DataProcessor
                 {
                     foreach (var item in score.AllObjects)
                     {
-                        if (item.Value is string) streamWriter.WriteLine($"{item.Key}:{item.Value}");
-                        else
+                        switch (item.Value)
                         {
-                            streamWriter.WriteLine("splits:*");
-                            foreach (Score.Split split in (List<Score.Split>)item.Value)
+                            case null:
+                                streamWriter.WriteLine($"{item.Key}:");
+                                break;
+                            case string _:
+                                streamWriter.WriteLine($"{item.Key}:{item.Value}");
+                                break;
+                            default:
                             {
                                 streamWriter.WriteLine("splits:*");
-                                streamWriter.WriteLine($"distance:{split.Distance}");
-                                streamWriter.WriteLine($"time:{split.Time}");
+                                foreach (Score.Split split in (List<Score.Split>)item.Value)
+                                {
+                                    streamWriter.WriteLine("split:-");
+                                    streamWriter.WriteLine($"distance:{split.Distance}");
+                                    streamWriter.WriteLine($"time:{split.Time}");
+                                    streamWriter.WriteLine("split:-");
+                                }
                                 streamWriter.WriteLine("splits:*");
+                                break;
                             }
-                            streamWriter.WriteLine("splits:*");
                         }
                     }
+                    streamWriter.WriteLine("act:endl");
                 }
             }
+            streamWriter.Close();
         }
     }
 }
