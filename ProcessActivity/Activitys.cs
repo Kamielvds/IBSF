@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Linq;
-using Commands;
 using Commands.DataProcessor;
 using Exceptions;
 using Scores;
@@ -28,10 +24,11 @@ namespace ProcessActivity
         {
             Path = fileLocation;
             Scores = new AllScores();
+            ClearAllLocal();    // so all vars are initialised
             Lang = lang;
             LoadAll();
         }
-
+        
         private Location            _localLocation;
         private List<Score>         _localScores;
         private Score               _localScore;
@@ -44,36 +41,34 @@ namespace ProcessActivity
 
         public string Lang { get; }
 
-        private void AppendScore(Score score = null)
+        private void AppendScore()
         {
-            if (score != null)
-                _localScores.Add(score);
-            else
-            {
-                _localScores.Add(_localScore);
-                ClearLocalScore();
-            }
+            _localScores.Add(_localScore);
+            ClearLocalScore();
         }
 
-        /// <summary>
-        /// Create a Location and add it to the local 
-        /// </summary>
-        /// <param name="name"></param>
+        private void AppendLocation()
+        {
+            Scores.AddLocation(_localLocation);
+            ClearAllLocal();
+        }
+        
+        private void AppendSplit()
+        {
+            _localSplits.Add(_localSplit);
+            ClearLocalSplit();
+        }
+
         public void CreateLocation(string name)
         {
-            if (_localLocation == null)
-            {
-                throw  new EmptyLocationException();
-            }
-            Scores.AddLocation(new Location(name, _localScores));
-            _localScores = null;
+            _localLocation = new Location(name, _localScores);
+            AppendLocation();
         }
-
+        
         public void CreateScore(string name, int age, string nationality, bool submitted, DateTime dateTime,
             char gender, string note, List<Score.Split> splits = null)
         {
-            ClearLocalScore();
-            _localScore.Splits      = splits ?? _localSplits;    // null check 
+            _localScore.Splits      = splits ?? _localSplits;    // null check -> local splits
             _localScore.Name        = name;
             _localScore.Age         = age;
             _localScore.Nationality = nationality;
@@ -88,15 +83,34 @@ namespace ProcessActivity
             return;
 
             argumentException:
-            throw new ArgumentException("Not all fields entred correctly.");
+            throw new InvalidScoreException("Not all fields entred correctly.");
         }
-
+        
+        /// <summary>
+        /// Creating a split and appending it to the local list of all the splits.
+        /// </summary>
+        /// <param name="time">
+        /// The time of the split in ms
+        /// </param>
+        /// <param name="distance">
+        /// the distance of the split in a double precision 
+        /// </param>
         public void CreateSplit(long time, double distance)
         {
             _localSplit.Time = time;
             _localSplit.Distance = distance;
-            _localSplits.Add(_localSplit);
-            ClearLocalSplit();
+            AppendSplit();
+        }
+        
+        /// <summary>
+        /// Removes a score
+        /// </summary>
+        /// <param name="index">
+        /// the index of the Score to be removed
+        /// </param>
+        public void RemoveScore(int index)
+        {
+            _localScores.RemoveAt(index);
         }
 
         /// <summary>
@@ -104,7 +118,7 @@ namespace ProcessActivity
         /// </summary>
         public void ClearLocalLocation()
         {
-            _localLocation = new Location(null);
+            _localLocation = new Location(null, new List<Score>());
         }
 
         public void ClearLocalScores()
@@ -127,30 +141,22 @@ namespace ProcessActivity
             _localSplit = new Score.Split();
         }
 
-        public void ClearAllLocal()
+        /// <summary>
+        /// used fot thr constructor and when a score is added to the all scores, as a extra precaution
+        /// </summary>
+        private void ClearAllLocal()
         {
-            _localLocation  = new Location(null);
+            _localLocation  = new Location(null,new List<Score>());
             _localScores    = new List<Score>();
             _localScore     = new Score();
             _localSplits    = new List<Score.Split>();
             _localSplit     = new Score.Split();
         }
-        
-        /// <summary>
-        /// Removes a score
-        /// </summary>
-        /// <param name="index">
-        /// the index of the Score to be removed
-        /// </param>
-        public void RemoveScore(int index)
-        {
-            _localScores.RemoveAt(index);
-        }
 
         /// <summary>
         /// Save Scoores to the desired Language type
         /// </summary>
-        //  TODO Add a overide to cop"y to different filetype
+        //  TODO Add a overide to copy to different filetype
         public void SaveFile()
         {
             switch (Lang)
@@ -169,6 +175,8 @@ namespace ProcessActivity
         /// </summary>
         private void SaveToTxt()
         {
+            var writer = new TextWriter(Path);
+            writer.RewriteText(Scores);
         }
 
         /// <summary>
@@ -176,12 +184,12 @@ namespace ProcessActivity
         /// </summary>
         private void SaveToXml()
         {
-            var reader = new XmlWriter(Path);
-            reader.RewriteXml(Scores);
+            var writer = new XmlWriter(Path);
+            writer.RewriteXml(Scores);
         }
 
         /// <summary>
-        /// Loads all the scores using the properties file
+        /// Loads all the scores using the properties class
         /// </summary>
         private void LoadAll()
         {
