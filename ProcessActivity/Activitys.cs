@@ -39,7 +39,7 @@ namespace ProcessActivity
 
         private string Path { get; }
 
-        public string Lang { get; }
+        private string Lang { get; }
 
         private void AppendScore()
         {
@@ -154,9 +154,9 @@ namespace ProcessActivity
         }
 
         /// <summary>
-        /// Save Scoores to the desired Language type
+        /// Save Scores to the desired Language type
         /// </summary>
-        //  TODO Add a overide to copy to different filetype
+        //  TODO Add a override to copy to different filetype
         public void SaveFile()
         {
             switch (Lang)
