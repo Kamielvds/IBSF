@@ -156,7 +156,6 @@ namespace ProcessActivity
         /// <summary>
         /// Save Scores to the desired Language type
         /// </summary>
-        //  TODO Add a override to copy to different filetype
         public void SaveFile(string lang = null)
         {
             if (lang == null) lang = Lang;
