@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using ConsoleApplication.Problems;
 using ProcessActivity;
@@ -6,14 +7,19 @@ namespace ConsoleApplication
 {
     public abstract class Loading
     {
-        
         private static int InputLength => Program.InputLength;
         private static string [] UserInputSplit => Program.UserInputSplit;
 
+        private static string Path
+        {
+            get => Program.Path;
+            set => Program.Path = value;
+        }
+
         private static Activitys Activitys
         {
-            get => Program._activitys;
-            set => Program._activitys = value;
+            get => Program.Activitys;
+            set => Program.Activitys = value;
         }
 
         /// <summary>
@@ -24,20 +30,57 @@ namespace ConsoleApplication
         /// </exception>
         public static void LoadFile()
         {
-            string path = null;
-            if (InputLength > 1) path = UserInputSplit[1];
-            if (path == null) throw new InvalidDataException();
-            if (File.Exists(path))
-            {
-                Activitys = InputLength > 2 ? new Activitys(path, UserInputSplit[2]) : new Activitys(path);
-            }
+            if (InputLength > 1) Path = UserInputSplit[1];
+
+            if (Path == null) throw new InvalidDataException();
+
+            if (File.Exists(Path))
+                Activitys = InputLength > 2 ? new Activitys(Path, UserInputSplit[2]) : new Activitys(Path);
             else
-                Warnings.FileNotFound(path);
+                Warnings.FileNotFound(Path);
         }
-        
-        public static void LoadUserSettings()
+
+       public static void LoadUserSettings(string path)
         {
-            // TODO make reader 
+            var sr = new StreamReader(path);
+            string ln;
+            while ((ln = sr.ReadLine()) != null)
+            {
+                var lnSplit = ln.Split(' ');
+                switch (lnSplit[0].ToLower())
+                {
+                    case "showwarnings":
+                        if (lnSplit[1] == "0") UserSettings.ShowWarnings = false;
+                        if (lnSplit[1] == "1") UserSettings.ShowWarnings = true; 
+                        else Warnings.SettingValueNotValid(lnSplit[1], lnSplit[0]);
+                        break;
+                    case "showerrors":
+                        if (lnSplit[1] == "0") UserSettings.ShowErrors = false;
+                        if (lnSplit[1] == "1") UserSettings.ShowErrors = true; 
+                        else Warnings.SettingValueNotValid(lnSplit[1], lnSplit[0]);
+                        break;
+                    case "linesbeforeuser":
+                    case "linesafteruser":
+                        try
+                        {
+                            if (lnSplit[0] == "linesbeforeuser")
+                                UserSettings.LinesBeforeUser = Convert.ToInt32(lnSplit[1]);
+                            else
+                                UserSettings.LinesAfterUser = Convert.ToInt32(lnSplit[1]);
+                        }
+                        catch (Exception)
+                        {
+                            if (lnSplit.Length > 1)
+                                Warnings.SettingValueNotValid(lnSplit[1], lnSplit[0]);
+                            else
+                                Errors.InvalidParameter(lnSplit[0]);
+                        }
+                        break; 
+                    case "default":
+                        Warnings.SettingNotValid(lnSplit[0]);
+                        break;
+                }
+            }
         }
     }
 }
