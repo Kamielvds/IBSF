@@ -47,12 +47,17 @@
         <Compile Include="Program.cs"/>
         <Compile Include="Properties\AssemblyInfo.cs"/>
         <Compile Include="Saving.cs" />
+        <Compile Include="Score.cs" />
         <Compile Include="Settings.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\DataSaving\DataSaving.csproj">
         <Project>{fe0b0290-7550-45bf-bf07-a9e9ac971061}</Project>
         <Name>DataSaving</Name>
+      </ProjectReference>
+      <ProjectReference Include="..\Exceptions\Exceptions.csproj">
+        <Project>{dfcd9049-9a01-408e-92e5-eeb873a50800}</Project>
+        <Name>Exceptions</Name>
       </ProjectReference>
       <ProjectReference Include="..\Filtering\Filtering.csproj">
         <Project>{4af70572-b3a0-4265-b19c-13a3edd796b5}</Project>
@@ -66,6 +71,14 @@
         <Project>{b68ee9ee-f6d2-43f8-a9dc-aa440f2b5e9e}</Project>
         <Name>ScoreHandeling</Name>
       </ProjectReference>
+    </ItemGroup>
+    <ItemGroup>
+      <Content Include="TXT\text.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="userSettings.amlo">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
