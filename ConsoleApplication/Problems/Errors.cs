@@ -53,5 +53,17 @@ namespace ConsoleApplication.Problems
         {
             if (UserSettings.ShowErrors) Console.WriteLine("The element in List was not found");
         }
+        public static void InvalidScore()
+        {
+            if (UserSettings.ShowErrors) Console.WriteLine("The score is invalid");
+        }
+        public static void EmptyLocation()
+        {
+            if (UserSettings.ShowErrors) Console.WriteLine("The location is empty, initialise list first");
+        }
+        public static void EmptyActivity()
+        {
+            if (UserSettings.ShowErrors) Console.WriteLine("The activity's are empty.");
+        }
     }
 }
