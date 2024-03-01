@@ -2,20 +2,22 @@
 using System.IO;
 using ConsoleApplication.Problems;
 using ProcessActivity;
+using Exceptions;
 // static Classes inside project
 using static ConsoleApplication.Settings;
 using static ConsoleApplication.Loading;
 using static ConsoleApplication.Saving;
+using static ConsoleApplication.ScoreCommand;
 
 namespace ConsoleApplication
 {
-    internal class Program
+    internal abstract class Program
     {
         private static bool _running = true;
-        public static string userInput;
-        public static string _path;
-        public static Activitys _activitys;
-        public static string[] UserInputSplit => userInput.Split(' ');
+        public static string UserInput;
+        public static string Path;
+        public static Activitys Activitys;
+        public static string[] UserInputSplit => UserInput.Split(' ');
 
         public static int InputLength => UserInputSplit.Length;
 
@@ -24,10 +26,14 @@ namespace ConsoleApplication
         /// </summary>
         public static void Main()
         {
-            LoadUserSettings();
+            LoadUserSettings("userSettings.amlo");
             while (_running)
             {
+                for (var i = 0; i < UserSettings.LinesBeforeUser; i++)
+                    Console.WriteLine(Environment.NewLine);
                 RequestUserInput();
+                for (var i = 0; i < UserSettings.LinesAfterUser; i++)
+                    Console.WriteLine(Environment.NewLine);
             }
         }
 
@@ -36,8 +42,8 @@ namespace ConsoleApplication
         /// </summary>
         private static void RequestUserInput()
         {
-            userInput = Console.ReadLine();
-            if (userInput == null) return;
+            UserInput = Console.ReadLine();
+            if (UserInput == null) return;
             try
             {
                 switch (UserInputSplit[0].ToLower())
@@ -51,6 +57,9 @@ namespace ConsoleApplication
                     case "setting":
                     case "--s":
                         ProcessSettingCommand();
+                        break;
+                    case "score":
+                        ProcessScoreCommand();
                         break;
                     case "quit":
                     case "q":
@@ -68,6 +77,27 @@ namespace ConsoleApplication
             catch (InvalidDataException)
             {
                 Errors.InvalidDatatype();
+            }
+            catch (InvalidScoreException)
+            {
+                Errors.InvalidScore();
+            }
+            catch (EmptyLocationException)
+            {
+                Errors.EmptyLocation();
+            }
+            catch (NotEnoughArguments)
+            {
+                Errors.NotEnoughArguments();
+            }
+            catch (InvalidArguments s)
+            {
+                string[] exceptionSplit = s.Message.Split(':');
+                Errors.InvalidParameter(exceptionSplit[0], exceptionSplit[1]);
+            }
+            catch (EmptyActivityException)
+            {
+                Errors.EmptyActivity();
             }
         }
     }
