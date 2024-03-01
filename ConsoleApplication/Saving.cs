@@ -5,8 +5,8 @@ namespace ConsoleApplication
 {
     public class Saving
     {
-        private static string Path => Program._path;
-        private static Activitys Activitys => Program._activitys;
+        private static string Path => Program.Path;
+        private static Activitys Activitys => Program.Activitys;
         
         
         /// <summary>
