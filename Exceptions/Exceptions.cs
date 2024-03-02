@@ -96,4 +96,23 @@ namespace Exceptions
             HResult = -6675453;
         }
     }
+
+    [Serializable]
+    public class UnequalSizeException : Exception
+    {
+        public UnequalSizeException() : base("the argument is invalid.")
+        {
+            HResult = -6675452;
+        }
+
+        public UnequalSizeException(string s) : base(s)
+        {
+            HResult = -6675452;
+        }
+
+        public UnequalSizeException(string s, Exception innerException) : base(s, innerException)
+        {
+            HResult = -6675452;
+        }
+    }
 }
