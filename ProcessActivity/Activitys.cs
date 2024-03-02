@@ -59,6 +59,12 @@ namespace ProcessActivity
             ClearLocalSplit();
         }
 
+        /// <summary>
+        /// uses the loacl scores to add scores to the list.
+        /// </summary>
+        /// <param name="name">
+        /// the name of the location
+        /// </param>
         public void CreateLocation(string name)
         {
             _localLocation = new Location(name, _localScores);
@@ -100,6 +106,27 @@ namespace ProcessActivity
             _localSplit.Time = time;
             _localSplit.Distance = distance;
             AppendSplit();
+        }
+
+        /// <summary>
+        /// Creates splits and appends them
+        /// </summary>
+        /// <param name="times">
+        /// all the times inside of a list
+        /// </param>
+        /// <param name="distances">
+        /// all the distances inside of a list
+        /// </param>
+        /// <exception cref="UnequalSizeException">
+        /// when the sizes of the two lists don't match
+        /// </exception>
+        public void CreateSplit(List<long> times, List<double> distances)
+        {
+            if (times.Count != distances.Count) throw new UnequalSizeException();
+            for (var i = 0; i < times.Count; i++)
+            {
+                CreateSplit(times[i],distances[i]);
+            }
         }
         
         /// <summary>
