@@ -19,6 +19,7 @@ namespace ConsoleApplication
                 Errors.NoFileLoaded();
                 return;
             }
+            //TODO add a check for differnt language.
 
             Activitys.SaveFile();
         }

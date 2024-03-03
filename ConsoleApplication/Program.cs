@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Xml;
 using ConsoleApplication.Problems;
 using ProcessActivity;
 using Exceptions;
@@ -13,7 +14,11 @@ namespace ConsoleApplication
 {
     internal abstract class Program
     {
+        /// <summary>
+        /// if this var changes to false, the program will terminate. check: 35:20, changed in 71:25
+        /// </summary>
         private static bool _running = true;
+        
         public static string UserInput;
         public static string Path;
         public static Activitys Activitys;
@@ -30,10 +35,10 @@ namespace ConsoleApplication
             while (_running)
             {
                 for (var i = 0; i < UserSettings.LinesBeforeUser; i++)
-                    Console.WriteLine(Environment.NewLine);
+                    Console.WriteLine("\n");
                 RequestUserInput();
                 for (var i = 0; i < UserSettings.LinesAfterUser; i++)
-                    Console.WriteLine(Environment.NewLine);
+                    Console.WriteLine('\n');
             }
         }
 
@@ -98,6 +103,18 @@ namespace ConsoleApplication
             catch (EmptyActivityException)
             {
                 Errors.EmptyActivity();
+            }
+            catch (XmlException)
+            {
+                Errors.WrongFile("xml",UserInputSplit[1].Split('.')[1]);
+            }
+            catch (ScoreNotFound)
+            {
+                Errors.NotFound("score");
+            }
+            catch (LocationNotFound)
+            {
+                Errors.NotFound("location");
             }
         }
     }

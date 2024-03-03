@@ -182,7 +182,8 @@ namespace ConsoleApplication
                     }
                     return;
                 }
-                Console.WriteLine("Score was not found.");
+
+                throw new LocationNotFound();
             }
             catch (Exception e)
             {

@@ -115,4 +115,42 @@ namespace Exceptions
             HResult = -6675452;
         }
     }
+
+    [Serializable]
+    public class ScoreNotFound : Exception
+    {
+        public ScoreNotFound() : base("the argument is invalid.")
+        {
+            HResult = -6675451;
+        }
+
+        public ScoreNotFound(string s) : base(s)
+        {
+            HResult = -6675451;
+        }
+
+        public ScoreNotFound(string s, Exception innerException) : base(s, innerException)
+        {
+            HResult = -6675451;
+        }
+    }
+
+    [Serializable]
+    public class LocationNotFound : Exception
+    {
+        public LocationNotFound() : base("the argument is invalid.")
+        {
+            HResult = -6675451;
+        }
+
+        public LocationNotFound(string s) : base(s)
+        {
+            HResult = -6675451;
+        }
+
+        public LocationNotFound(string s, Exception innerException) : base(s, innerException)
+        {
+            HResult = -6675451;
+        }
+    }
 }

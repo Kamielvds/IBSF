@@ -65,5 +65,15 @@ namespace ConsoleApplication.Problems
         {
             if (UserSettings.ShowErrors) Console.WriteLine("The activity's are empty.");
         }
+
+        public static void NotFound(string s)
+        {
+            if (UserSettings.ShowErrors) Console.WriteLine($"The {s} was not found.");
+        }
+
+        public static void WrongFile(string targetLang, string actualLang)
+        {
+            if (UserSettings.ShowErrors) Console.WriteLine($"The given file is {actualLang}, not {targetLang}");
+        }
     }
 }
