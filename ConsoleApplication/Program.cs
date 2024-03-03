@@ -71,7 +71,7 @@ namespace ConsoleApplication
                         _running = false;
                         break;
                     default:
-                        Warnings.CommandNotFound();
+                        Warnings.CommandNotFound(UserInputSplit[0]);
                         break;
                 }
             }
@@ -106,7 +106,9 @@ namespace ConsoleApplication
             }
             catch (XmlException)
             {
-                Errors.WrongFile("xml",UserInputSplit[1].Split('.')[1]);
+                if (UserInputSplit[1].Split('.').Length > 1)
+                    Errors.WrongFile("xml", UserInputSplit[1].Split('.')[1]);
+                Errors.WrongFile("xml", "none");
             }
             catch (ScoreNotFound)
             {
@@ -115,6 +117,10 @@ namespace ConsoleApplication
             catch (LocationNotFound)
             {
                 Errors.NotFound("location");
+            }
+            catch (FormatException)
+            {
+                Errors.InvalidDatatype();
             }
         }
     }

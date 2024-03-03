@@ -36,10 +36,12 @@ namespace ConsoleApplication
             {
                 case "*":
                 case "all":
+                    Console.WriteLine("-------------------------------------------");
                     foreach (var kvp in UserSettings.Settings)
                     {
                         Console.WriteLine($"{kvp.Key}: {kvp.Value}");
                     }
+                    Console.WriteLine("-------------------------------------------");
 
                     break;
                 default:
@@ -49,8 +51,8 @@ namespace ConsoleApplication
                     }
                     catch (Exception)
                     {
+                        // move to "catch row"
                         Errors.ElementNotFound();
-                        throw;
                     }
 
                     break;
@@ -66,10 +68,10 @@ namespace ConsoleApplication
             switch (setting)
             {
                 case "ShowWarnings":
-                    UserSettings.ShowWarnings = Convert.ToBoolean(UserInputSplit[3]);
+                    UserSettings.ShowWarnings = CheckBoolean(UserInputSplit[3]);
                     break;
                 case "ShowErrors":
-                    UserSettings.ShowErrors = Convert.ToBoolean(UserInputSplit[3]);
+                    UserSettings.ShowErrors = CheckBoolean(UserInputSplit[3]);
                     break;
                 case "LinesBeforeUser":
                     UserSettings.LinesBeforeUser = Convert.ToInt32(UserInputSplit[3]);
@@ -80,6 +82,28 @@ namespace ConsoleApplication
                 default:
                     Warnings.SettingNotValid(setting);
                     break;
+            }
+        }
+
+        /// <summary>
+        /// support for 0-1 as a valid "falsy" or "truey" type.
+        /// </summary>
+        /// <param name="s">
+        /// the string that needs to be converted
+        /// </param>
+        /// <returns>
+        /// wheather the value is true or false.
+        /// </returns>
+        private static bool CheckBoolean(string s)
+        {
+            switch (s)
+            {
+                case "0":
+                    return false;
+                case "1":
+                    return true;
+                default:
+                    return Convert.ToBoolean(s);
             }
         }
     }
