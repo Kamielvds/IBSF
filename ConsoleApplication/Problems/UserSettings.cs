@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace ConsoleApplication.Problems
 {
-    public class UserSettings
+    public static class UserSettings
     {
         // bool
         public static bool ShowErrors = true;

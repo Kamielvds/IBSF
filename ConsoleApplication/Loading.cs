@@ -5,7 +5,7 @@ using ProcessActivity;
 
 namespace ConsoleApplication
 {
-    public abstract class Loading
+    public static class Loading
     {
         private static int InputLength => Program.InputLength;
         private static string [] UserInputSplit => Program.UserInputSplit;

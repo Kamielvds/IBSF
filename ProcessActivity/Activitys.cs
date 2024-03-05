@@ -169,7 +169,7 @@ namespace ProcessActivity
         }
 
         /// <summary>
-        /// used fot thr constructor and when a score is added to the all scores, as a extra precaution
+        /// used for the constructor and when a score is added to the all scores, as a extra precaution
         /// </summary>
         private void ClearAllLocal()
         {

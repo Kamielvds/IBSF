@@ -3,7 +3,7 @@ using ProcessActivity;
 
 namespace ConsoleApplication
 {
-    public class Saving
+    public static class Saving
     {
         private static string Path => Program.Path;
         private static Activitys Activitys => Program.Activitys;
@@ -19,7 +19,6 @@ namespace ConsoleApplication
                 Errors.NoFileLoaded();
                 return;
             }
-            //TODO add a check for differnt language.
 
             Activitys.SaveFile();
         }

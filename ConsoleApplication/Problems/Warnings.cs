@@ -2,7 +2,7 @@ using System;
 
 namespace ConsoleApplication.Problems
 {
-    public abstract class Warnings
+    public static class Warnings
     {
         public static void CreatedFile(string file = "null")
         {

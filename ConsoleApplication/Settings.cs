@@ -3,7 +3,7 @@ using ConsoleApplication.Problems;
 
 namespace ConsoleApplication
 {
-    public class Settings
+    public static class Settings
     {
         private static string[] UserInputSplit => Program.UserInputSplit;
 
@@ -86,7 +86,7 @@ namespace ConsoleApplication
         }
 
         /// <summary>
-        /// support for 0-1 as a valid "falsy" or "truey" type.
+        /// support for 0-1 as a valid "falsy" or "truey" type. since default convert doesn't 
         /// </summary>
         /// <param name="s">
         /// the string that needs to be converted

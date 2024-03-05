@@ -6,7 +6,7 @@ using Scores;
 
 namespace ConsoleApplication
 {
-    public class ScoreCommand
+    public static class ScoreCommand
     {
         private static string[] UserInputSplit => Program.UserInputSplit;
         private static Activitys Activitys => Program.Activitys;

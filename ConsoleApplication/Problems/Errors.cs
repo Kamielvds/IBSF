@@ -2,7 +2,7 @@ using System;
 
 namespace ConsoleApplication.Problems
 {
-    public abstract class Errors
+    public static class Errors
     {
         public static void NoFileLoaded()
         {
