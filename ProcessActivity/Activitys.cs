@@ -14,13 +14,15 @@ namespace ProcessActivity
         /// <param name="fileLocation">
         /// the location of the file
         /// </param>
-        /// <param name="lang">
-        /// the language of the file, check documentation for all the supported filetypes
-        ///     <default value="xml">
-        ///     The default value is xml
-        ///     </default>
-        /// </param>
-        public Activitys(string fileLocation, string lang = "xml")
+        public Activitys(string fileLocation)
+        {
+            Path = fileLocation;
+            Scores = new AllScores();
+            ClearAllLocal();    // so all vars are initialised
+            Lang = fileLocation.Split('.')[1];
+            LoadAll();
+        }
+        public Activitys(string fileLocation, string lang)
         {
             Path = fileLocation;
             Scores = new AllScores();
@@ -196,7 +198,7 @@ namespace ProcessActivity
                     break;
             }
         }
-
+        
         /// <summary>
         /// Save the Scores to txt
         /// </summary>
@@ -231,6 +233,29 @@ namespace ProcessActivity
                     var textReader = new TextReader(Path);
                     Scores = textReader.ReadFile();
                     break;
+            }
+
+            SetPace();
+        }
+
+        private void SetPace()
+        {
+            foreach (var location in Scores.Locations)
+            {
+                foreach (var score in location.Scores)
+                {
+                    long    splitTime = 0;
+                    double  splitDistance = 0;
+
+                    foreach (var split in score.Splits)
+                    {
+                        splitTime += split.Time;
+                        splitDistance += split.Distance;
+                    }
+
+                    // km/h
+                    score.Pace = (splitDistance / 1000) / splitTime / 3600000;
+                }
             }
         }
     }
