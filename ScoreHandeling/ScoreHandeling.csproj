@@ -42,6 +42,12 @@
         <Compile Include="ScoreHandeling.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Exceptions\Exceptions.csproj">
+        <Project>{dfcd9049-9a01-408e-92e5-eeb873a50800}</Project>
+        <Name>Exceptions</Name>
+      </ProjectReference>
+    </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.
