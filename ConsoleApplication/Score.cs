@@ -1,17 +1,24 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Exceptions;
 using ProcessActivity;
 using Scores;
+using Filtering;
+//static 
+using static ConsoleApplication.CustomMethods;
 
 namespace ConsoleApplication
 {
     public static class ScoreCommand
     {
+
+        private static Score LocalScore { get; set; }
+        
         private static string[] UserInputSplit => Program.UserInputSplit;
         private static Activitys Activitys => Program.Activitys;
         private static AllScores AllScores => Activitys.Scores;
-        
+
         /// <summary>
         /// Processes the given Score input
         /// </summary>
@@ -22,15 +29,102 @@ namespace ConsoleApplication
             switch (UserInputSplit[1])
             {
                 case "list":
-                case "-l":
                     ListScores();
                     break;
+                case "load":
+                case "-l":
+                    LoadScore();
+                case "compare":
+                case "-c":
+                    CompareScore();
+                    break;
                 case "add":
+                case "-a":
                     AddScore();
                     break;
                 default:
                     throw new InvalidArguments($"score:{UserInputSplit[1]}");
             }
+        }
+
+        /// <summary>
+        /// used for loading in the local score.
+        /// </summary>
+        private static void LoadLocation()
+        {
+            if (UserInputSplit.Length > 3) LoadScore();
+
+            Console.WriteLine("id:");
+            for (var i = 0; i < AllScores.Locations.Count; i++)
+            {
+                var location = AllScores.Locations[i];
+                Console.WriteLine($"{i}: {location.Name}");
+            }
+            
+            LoadScore(Console.ReadLine());
+        }
+
+        /// <summary>
+        /// used to load in the score
+        /// </summary>
+        /// <param name="location">
+        /// the location by default is null, if remained null will use the UserInputSplit.
+        /// </param>
+        private static void LoadScore(string location = null)
+        {
+            if (location == null) location = UserInputSplit[2];
+            if (!AllScores.LocationExists(location)) throw new LocationNotFound(location);
+            
+            // todo list scores and check input split
+        }
+
+        private static void CompareScore()
+        {
+            if (UserInputSplit.Length < 3) throw new NotEnoughArguments();
+            switch (UserInputSplit[2])
+            {
+                case "in":
+                    CompareFrom();
+                    break;
+            }
+        }
+
+        private static void CompareFrom()
+        {
+            if (UserInputSplit.Length < 4) throw new NotEnoughArguments();
+            switch (UserInputSplit[3])
+            {
+                case "location":
+                    CompareLocation();
+                    break;
+            }
+        }
+
+        private static void CompareLocation()
+        {
+            if (UserInputSplit.Length < 5)
+                CompareInLocation();
+            else
+                foreach (var location in AllScores.Locations)
+                {
+                    if (location.Name  != UserInputSplit[4]) continue;
+
+                    List<double> paces = location.Scores.Select(score => score.Pace).ToList();
+
+                    List<int> filtredlist = Filters.SortAscendingIndex(paces);
+
+                    foreach (var t in filtredlist)
+                    {
+                        Console.WriteLine($"Pace: {paces[t]} km/h");
+                    }
+
+                    return;
+                }
+        }
+
+        private static void CompareInLocation()
+        {
+            // todo
         }
 
         /// <summary>
@@ -40,7 +134,7 @@ namespace ConsoleApplication
         {
             Console.WriteLine("location name:");
             var location = Console.ReadLine();
-            
+
             // score
             Console.WriteLine("name:");
             var name = Console.ReadLine();
@@ -59,27 +153,25 @@ namespace ConsoleApplication
 
             var times       = new List<long>();
             var distances   = new List<double>();
-            
+
             Console.WriteLine("How many splits?");
             for (int i = Convert.ToInt32(Console.ReadLine()); i > 0 ; i--)
             {
-                
                 Console.WriteLine("time:");
                 times.Add(Convert.ToInt32(Console.ReadLine()));
                 Console.WriteLine("distance:");
                 distances.Add(Convert.ToDouble(Console.ReadLine()));
             }
-            
-            
-            
+
             // added last so if a convert issue happens it isn't all bad.
             try
             {
                 Activitys.CreateSplit(times, distances);
                 if (gender != null)
-                    Activitys.CreateScore(name, Convert.ToInt32(age), nationality, Convert.ToBoolean(submitted),
+                    Activitys.CreateScore(name, Convert.ToInt32(age), nationality, CheckBoolean(submitted),
                         Convert.ToDateTime(date), Convert.ToChar(gender), note);
-                else throw new NullReferenceException();
+                else
+                    throw new NullReferenceException();
                 Activitys.CreateLocation(location);
             }
             catch (NullReferenceException)
@@ -144,52 +236,55 @@ namespace ConsoleApplication
             }
         }
 
+        /// <summary>
+        /// finds location and lists all the scores inside 
+        /// </summary>
+        /// <exception cref="NotEnoughArguments">
+        /// throw when not enough arguments are given.
+        /// </exception>
+        /// <exception cref="LocationNotFound">
+        /// throw when location is not found
+        /// </exception>
         private static void ListLocation()
         {
             if (UserInputSplit.Length < 5) throw new NotEnoughArguments();
-            try
-            {
-                foreach (var location in AllScores.Locations)
-                {
-                    if (location.Name  != UserInputSplit[4]) continue;
-                    for (var j = 0; j < location.Scores.Count; j++)
-                    {
-                        var score = location.Scores[j];
-                        Console.WriteLine($"Activity {j + 1}:");
-                        foreach (var item in score.AllObjects)
-                        {
-                            switch (item.Value)
-                            {
-                                case null:
-                                    Console.WriteLine($"\t {item.Key}:");
-                                    break;
-                                case string _:
-                                    Console.WriteLine($"\t {item.Key}: {item.Value}");
-                                    break;
-                                default:
-                                    Console.WriteLine($"\t splits:");
-                                    for (var i = 0; i < ((List<Score.Split>)item.Value).Count; i++)
-                                    {
-                                        var split = ((List<Score.Split>)item.Value)[i];
-                                        Console.WriteLine($"\t \t split {i + 1}:");
-                                        Console.WriteLine($"\t \t \t distance: {split.Distance}:");
-                                        Console.WriteLine($"\t \t \t time: {split.Time + 1}:");
-                                    }
 
-                                    break;
-                            }
+            foreach (var location in AllScores.Locations)
+            {
+                if (location.Name  != UserInputSplit[4]) continue;
+                for (var j = 0; j < location.Scores.Count; j++)
+                {
+                    var score = location.Scores[j];
+                    Console.WriteLine($"Activity {j + 1}:");
+                    foreach (var item in score.AllObjects)
+                    {
+                        switch (item.Value)
+                        {
+                            case null:
+                                Console.WriteLine($"\t {item.Key}:");
+                                break;
+                            case string _:
+                                Console.WriteLine($"\t {item.Key}: {item.Value}");
+                                break;
+                            default:
+                                Console.WriteLine($"\t splits:");
+                                for (var i = 0; i < ((List<Score.Split>)item.Value).Count; i++)
+                                {
+                                    var split = ((List<Score.Split>)item.Value)[i];
+                                    Console.WriteLine($"\t \t split {i + 1}:");
+                                    Console.WriteLine($"\t \t \t distance: {split.Distance}:");
+                                    Console.WriteLine($"\t \t \t time: {split.Time + 1}:");
+                                }
+
+                                break;
                         }
                     }
-                    return;
                 }
 
-                throw new LocationNotFound();
+                return;
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+
+            throw new LocationNotFound();
         }
 
         /// <summary>
@@ -197,7 +292,6 @@ namespace ConsoleApplication
         /// </summary>
         private static void ListAllScores()
         {
-            
             foreach (var location in AllScores.Locations)
             {
                 Console.WriteLine($"Location: {location.Name}:");
