@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Exceptions;
 
 namespace Scores
 {
@@ -14,6 +15,16 @@ namespace Scores
             return Locations.Any(loc => loc.Name == location);
         }
 
+        public int Find(string locationName)
+        {
+            for (var i = 0; i < Locations.Count; i++)
+            {
+                if (Locations[i].Name == locationName) return i;
+            }
+
+            throw new LocationNotFoundException();
+        }
+        
         public void AddLocation(Location location)
         {
             if (LocationExists(location.Name))
