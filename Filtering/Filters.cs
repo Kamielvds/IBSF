@@ -4,38 +4,8 @@ using System.Linq;
 
 namespace Filtering
 {
-    public class Filters
+    public abstract class Filters
     {
-        #region unregistred
-
-        /*
-         * used for filtering a List, without indexes
-         *      returns => List<t_var>
-         */
-
-        public static List<string> FilterList(List<string> unfilteredArray, string criteria)
-        {
-            return unfilteredArray.Where(str => str == criteria).ToList();
-        }
-
-        public static List<int> FilterList(List<int> unfilteredArray, int criteria)
-        {
-            return unfilteredArray.Where(i => i == criteria).ToList();
-        }
-
-        public static List<double> FilterList(List<double> unfilteredArray, int criteria)
-        {
-            return unfilteredArray.Where(i => Math.Abs(i - criteria) < 0.00001)
-                .ToList(); // using tolerance of 5 digits  
-        }
-
-        public static List<char> FilterList(List<char> unfilteredArray, char criteria)
-        {
-            return unfilteredArray.Where(i => i == criteria).ToList();
-        }
-
-        #endregion
-
         #region registerd
 
         /*
@@ -44,7 +14,7 @@ namespace Filtering
          */
 
         // filter string
-        public static List<int> IndexFilterList(List<string> unfilteredArray, string criteria)
+            public static List<int> IndexFilterList(List<string> unfilteredArray, string criteria)
         {
             var indexList = new List<int>();
             for (var i = 0; i < unfilteredArray.Count; i++)
@@ -262,11 +232,11 @@ namespace Filtering
          *      returns => List<int>
          */
 
-        public static List<int> Compare(string[] unfiltered, string[] filtered)
+        public static List<int> Compare(List<string> unfiltered, List<string> filtered)
         {
             var indexList = new List<int>();
             var item = 0;
-            for (var i = 0; i < unfiltered.Length; i++)
+            for (var i = 0; i < unfiltered.Count; i++)
             {
                 if (unfiltered[i] != filtered[item]) continue;
                 indexList.Add(i);
@@ -276,11 +246,11 @@ namespace Filtering
             return indexList;
         }
 
-        public static List<int> Compare(int[] unfiltered, int[] filtered)
+        public static List<int> Compare(List<int> unfiltered, List<int> filtered)
         {
             var indexList = new List<int>();
             var item = 0;
-            for (var i = 0; i < unfiltered.Length; i++)
+            for (var i = 0; i < unfiltered.Count; i++)
             {
                 if (unfiltered[i] != filtered[item]) continue;
                 indexList.Add(i);
@@ -412,6 +382,50 @@ namespace Filtering
             }
 
             return list;
+        }
+
+        public static List<int> SortAscendingIndex(List<int> list)
+        {
+            var highest = 0;
+            var highestIndex = 0;
+
+            List<int> indexList = new List<int>();
+            
+            for (var j = 0; j < list.Count; j++)
+            {
+                for (var i = 0; i < list.Count; i++)
+                {
+                    var value = list[i];
+                    if (value <= highest) continue;
+                    highest = value;
+                    highestIndex = i;
+                }
+
+                list[highestIndex] = 0;
+                indexList.Add(highestIndex);
+            }
+
+            return indexList;
+        }
+        public static List<int> SortAscendingIndex(List<double> list)
+        {
+            // double lowest = 0; make it so that the elements become lowest - 1
+            List<int> indexList = new List<int>();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                double highestValue = list[i];
+                int index = i;
+                for (var j = i; j < list.Count; j++)
+                {
+                    if (list[j] <= highestValue) continue;
+                    highestValue = list[j];
+                    index = j;
+                }
+                indexList.Add(index);
+            }
+
+            return indexList;
         }
         
         public static void SortAscending(ref List<int> list)
