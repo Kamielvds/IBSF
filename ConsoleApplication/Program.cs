@@ -91,11 +91,11 @@ namespace ConsoleApplication
             {
                 Errors.EmptyLocation();
             }
-            catch (NotEnoughArguments)
+            catch (NotEnoughArgumentsException)
             {
                 Errors.NotEnoughArguments();
             }
-            catch (InvalidArguments s)
+            catch (InvalidArgumentsException s)
             {
                 string[] exceptionSplit = s.Message.Split(':');
                 Errors.InvalidParameter(exceptionSplit[0], exceptionSplit[1]);
@@ -110,17 +110,21 @@ namespace ConsoleApplication
                     Errors.WrongFile("xml", UserInputSplit[1].Split('.')[1]);
                 Errors.WrongFile("xml", "none");
             }
-            catch (ScoreNotFound)
+            catch (ScoreNotFoundException)
             {
                 Errors.NotFound("score");
             }
-            catch (LocationNotFound)
+            catch (LocationNotFoundException)
             {
                 Errors.NotFound("location");
             }
             catch (FormatException)
             {
                 Errors.InvalidDatatype();
+            }
+            catch (EmptyScoreException)
+            {
+                // todo
             }
         }
     }
