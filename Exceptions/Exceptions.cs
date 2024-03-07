@@ -60,38 +60,38 @@ namespace Exceptions
     }
 
     [Serializable]
-    public class NotEnoughArguments : Exception
+    public class NotEnoughArgumentsException : Exception
     {
-        public NotEnoughArguments() : base("Not enough arguments were given")
+        public NotEnoughArgumentsException() : base("Not enough arguments were given")
         {
             HResult = -6675454;
         }
 
-        public NotEnoughArguments(string s) : base(s)
+        public NotEnoughArgumentsException(string s) : base(s)
         {
             HResult = -6675454;
         }
 
-        public NotEnoughArguments(string s, Exception innerException) : base(s, innerException)
+        public NotEnoughArgumentsException(string s, Exception innerException) : base(s, innerException)
         {
             HResult = -6675454;
         }
     }
 
     [Serializable]
-    public class InvalidArguments : Exception
+    public class InvalidArgumentsException : Exception
     {
-        public InvalidArguments() : base("the argument is invalid.")
+        public InvalidArgumentsException() : base("the argument is invalid.")
         {
             HResult = -6675453;
         }
 
-        public InvalidArguments(string s) : base(s)
+        public InvalidArgumentsException(string s) : base(s)
         {
             HResult = -6675453;
         }
 
-        public InvalidArguments(string s, Exception innerException) : base(s, innerException)
+        public InvalidArgumentsException(string s, Exception innerException) : base(s, innerException)
         {
             HResult = -6675453;
         }
@@ -117,40 +117,59 @@ namespace Exceptions
     }
 
     [Serializable]
-    public class ScoreNotFound : Exception
+    public class ScoreNotFoundException : Exception
     {
-        public ScoreNotFound() : base("the argument is invalid.")
+        public ScoreNotFoundException() : base("the argument is invalid.")
         {
             HResult = -6675451;
         }
 
-        public ScoreNotFound(string s) : base(s)
+        public ScoreNotFoundException(string s) : base(s)
         {
             HResult = -6675451;
         }
 
-        public ScoreNotFound(string s, Exception innerException) : base(s, innerException)
+        public ScoreNotFoundException(string s, Exception innerException) : base(s, innerException)
         {
             HResult = -6675451;
         }
     }
 
     [Serializable]
-    public class LocationNotFound : Exception
+    public class LocationNotFoundException : Exception
     {
-        public LocationNotFound() : base("the argument is invalid.")
+        public LocationNotFoundException() : base("the argument is invalid.")
         {
             HResult = -6675451;
         }
 
-        public LocationNotFound(string s) : base(s)
+        public LocationNotFoundException(string s) : base(s)
         {
             HResult = -6675451;
         }
 
-        public LocationNotFound(string s, Exception innerException) : base(s, innerException)
+        public LocationNotFoundException(string s, Exception innerException) : base(s, innerException)
         {
             HResult = -6675451;
+        }
+    }
+    
+    [Serializable]
+    public class EmptyScoreException : Exception
+    {
+        public EmptyScoreException() : base("the argument is invalid.")
+        {
+            HResult = -6675450;
+        }
+
+        public EmptyScoreException(string s) : base(s)
+        {
+            HResult = -6675450;
+        }
+
+        public EmptyScoreException(string s, Exception innerException) : base(s, innerException)
+        {
+            HResult = -6675450;
         }
     }
 }
