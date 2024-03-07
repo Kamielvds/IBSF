@@ -9,14 +9,14 @@ namespace Scores
     {
         public List<Location> Locations { get; set; } = new List<Location>();
 
-        private bool LocationExists(string location)
+        public bool LocationExists(string location)
         {
             return Locations.Any(loc => loc.Name == location);
         }
 
         public void AddLocation(Location location)
         {
-            if(LocationExists(location.Name))
+            if (LocationExists(location.Name))
             {
                 // ckeck if location exists
                 foreach (var loc in Locations.Where(loc => loc.Name == location.Name))
@@ -32,19 +32,18 @@ namespace Scores
 
     public class Score
     {
-        private DateTime    _date;
-
         public Dictionary<string, object> AllObjects =>
             new Dictionary<string, object>
             {
                 { "note", Note },
                 { "nationality", Nationality },
                 { "name", Name },
-                { "date", _date.ToString(CultureInfo.CurrentCulture) },
+                { "date", Date.ToString(CultureInfo.CurrentCulture) },
                 { "gender", Gender.ToString() },
                 { "age", Age.ToString() },
                 { "submitted", Submitted.ToString() },
-                { "splits", Splits }
+                { "splits", Splits },
+                { "Pace", Pace.ToString(CultureInfo.CurrentCulture) }
             };
 
         public string Note { get; set; }
@@ -53,11 +52,7 @@ namespace Scores
 
         public string Name { get; set; }
 
-        public DateTime Date
-        {
-            get => _date;
-            set => _date = value;
-        }
+        public DateTime Date { get; set; }
 
         public char Gender { get; set; }
 
@@ -66,6 +61,8 @@ namespace Scores
         public bool Submitted { get; set; }
 
         public List<Split> Splits { get; set; } = new List<Split>();
+        
+        public double Pace { get; set; }
 
         public class Split
         {
@@ -105,6 +102,7 @@ namespace Scores
                 Scores.Add(score);
             }
         }
+
         public Location(string name, Score score = null)
         {
             Name = name;
