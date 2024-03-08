@@ -82,9 +82,62 @@ namespace ConsoleApplication
                     LocalScore.Submitted = CheckBoolean(value);
                     break;
                 case "splits":
-                    //todo
+                    if (UserInputSplit.Length == 3)
+                    {
+                        ListSplitsDetails(LocalScore.Splits);
+                        EditSplit(Console.ReadLine());
+                    }
+                    EditSplit();
                     break;
             }
+        }
+
+        private static void EditSplit(string split = null)
+        {
+            int splitId; 
+            string splitItem;
+            
+            if (split == null)
+            {
+                // exc 
+                if (UserInputSplit.Length < 5)
+                    throw new NotEnoughArgumentsException();
+                
+                splitId = Convert.ToInt32(UserInputSplit[3]);
+                // between 0-1, otherwise IOoR Ex
+                splitItem = UserInputSplit[4];
+            }
+            else
+            {
+                splitId = Convert.ToInt32(split.Split(' ')[0]);
+                splitItem = split.Split(' ')[1];
+            }
+            
+           
+
+            string value;
+            if (UserInputSplit.Length < 6) value = UserInputSplit[5];
+            else
+            {
+                Console.WriteLine("give value: ");
+                value = Console.ReadLine();
+            }
+            
+            // saved inst by using string 
+            /*
+             * 0 -> time
+             * 1 -> distance
+             */
+            switch (splitItem)
+            {
+                case "0":
+                    LocalScore.Splits[splitId].Time = Convert.ToInt64(value);
+                    break;
+                case "1":
+                    LocalScore.Splits[splitId].Distance = Convert.ToDouble(value);
+                    break;
+            }
+            
         }
 
         /// <summary>
@@ -121,6 +174,7 @@ namespace ConsoleApplication
             int locationIndex = AllScores.Find(location);
 
             if (UserInputSplit.Length > 4)
+                // :( 
                 LocalScore = AllScores.Locations[locationIndex].Scores[Convert.ToInt32(UserInputSplit[3])];
             else
             {
@@ -384,6 +438,17 @@ namespace ConsoleApplication
 
                         break;
                 }
+            }
+        }
+
+        private static void ListSplitsDetails(List<Score.Split> splits)
+        {
+            Console.WriteLine("id:");
+            for (var i = 0; i < splits.Count; i++)
+            {
+                var split = splits[i];
+                
+                Console.WriteLine($"{i}: 0: time: {split.Time} 1: distance {split.Distance}");
             }
         }
     }
