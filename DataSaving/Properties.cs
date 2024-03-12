@@ -35,7 +35,7 @@ namespace Commands
         /// <param name="path">
         /// the path of the file
         /// </param>
-        public void SetPath(string path)
+        protected void SetPath(string path)
         {
             if (SetFilePath(path))
             {

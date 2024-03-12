@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Filtering
 {
-    public abstract class Filters
+    public static class Filters
     {
         #region registerd
 
