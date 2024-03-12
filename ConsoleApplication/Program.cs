@@ -108,7 +108,7 @@ namespace ConsoleApplication
             {
                 if (UserInputSplit[1].Split('.').Length > 1)
                     Errors.WrongFile("xml", UserInputSplit[1].Split('.')[1]);
-                Errors.WrongFile("xml", "none");
+                Errors.WrongFile("xml");
             }
             catch (ScoreNotFoundException)
             {
@@ -124,7 +124,7 @@ namespace ConsoleApplication
             }
             catch (EmptyScoreException)
             {
-                // todo
+                Errors.EmptyScore();
             }
         }
     }

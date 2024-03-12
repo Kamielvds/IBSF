@@ -71,9 +71,14 @@ namespace ConsoleApplication.Problems
             if (UserSettings.ShowErrors) Console.WriteLine($"The {s} was not found.");
         }
 
-        public static void WrongFile(string targetLang, string actualLang)
+        public static void WrongFile(string targetLang, string actualLang = "none")
         {
             if (UserSettings.ShowErrors) Console.WriteLine($"The given file is {actualLang}, not {targetLang}");
+        }
+        
+        public static void EmptyScore()
+        {
+            if (UserSettings.ShowErrors) Console.WriteLine($"the score is empty");
         }
     }
 }
