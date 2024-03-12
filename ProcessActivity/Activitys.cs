@@ -91,7 +91,7 @@ namespace ProcessActivity
             return;
 
             argumentException:
-            throw new InvalidScoreException("Not all fields entred correctly.");
+            throw new InvalidScoreException("Not all fields entered correctly.");
         }
         
         /// <summary>

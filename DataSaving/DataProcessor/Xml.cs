@@ -36,7 +36,7 @@ namespace Commands.DataProcessor
             var xmlDoc = new XmlDocument();
             xmlDoc.Load(FilePath);
             
-            // tries to find rootnode and move to track node if not null
+            // tries to find root-node and move to track node if not null
             var root = xmlDoc.SelectSingleNode("/root");
             var tracksNode = root?.SelectSingleNode("tracks");
             if (tracksNode == null) return null;

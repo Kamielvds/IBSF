@@ -33,7 +33,6 @@ namespace Commands.DataProcessor
         /// <returns>
         /// returns the data in the AllScores class, for more info on how data is stored, check documentation
         /// </returns>
-        //TODO Fix reader
         public AllScores ReadFile()
         {
             if (ValidPath == false) return new AllScores();
