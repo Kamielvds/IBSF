@@ -34,10 +34,10 @@ namespace ConsoleApplication.Problems
             if (UserSettings.ShowWarnings)
                 Console.WriteLine($"the directory at path {file} doesn't exists, no changes were made.");
         }
-        public static void DepricatedMemoryType(string type = "null")
+        public static void DeprecatedMemoryType(string type = "null")
         {
             if (UserSettings.ShowWarnings)
-                Console.WriteLine($"the current program is a {type}, which is depricated, please consider using ");
+                Console.WriteLine($"the current program is a {type}, which is deprecated, please consider using ");
         }
 
         public static void CommandNotFound(string command = "null")

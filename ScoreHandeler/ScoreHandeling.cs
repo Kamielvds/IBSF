@@ -29,7 +29,7 @@ namespace Scores
         {
             if (LocationExists(location.Name))
             {
-                // ckeck if location exists
+                // check if location exists
                 foreach (var loc in Locations.Where(loc => loc.Name == location.Name))
                 {
                     loc.AddScore(location.Scores);
@@ -75,6 +75,15 @@ namespace Scores
         
         public double Pace { get; set; }
 
+        // used for calculating the pace :)
+        public enum TimeSeparator
+        {
+            Hours = 1,
+            Minutes = 60,
+            Seconds = 3600,
+            Milliseconds = 3600000
+        }
+        
         public class Split
         {
             public Split()

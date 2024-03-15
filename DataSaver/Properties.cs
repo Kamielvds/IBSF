@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace Commands
@@ -18,9 +17,9 @@ namespace Commands
 
         protected string FilePath { get; private set; }
 
-        public string Lang { get; set; }
+        private string Lang { get; set; }
 
-        public bool ValidPath { get; private set; }
+        protected bool ValidPath { get; private set; }
         
         private bool CheckPath()
         {
@@ -68,9 +67,14 @@ namespace Commands
         /// </summary>
         protected void CopyFile()
         {
-            if(File.Exists(FilePath.Substring(0,FilePath.Length-4)+"Copy.txt"))
-                File.Delete(FilePath.Substring(0,FilePath.Length-4)+"Copy.txt");
-            File.Copy(FilePath, FilePath.Substring(0,FilePath.Length-4)+"Copy.txt");
+            if(File.Exists(FilePath.Substring(0,FilePath.Length-4)+$"Copy.{Lang}"))
+                File.Delete(FilePath.Substring(0,FilePath.Length-4)+$"Copy.{Lang}");
+            File.Copy(FilePath, FilePath.Substring(0,FilePath.Length-4)+$"Copy.{Lang}");
+        }
+
+        public void LoadBackup()
+        {
+            throw new NotImplementedException();
         }
     }
 }

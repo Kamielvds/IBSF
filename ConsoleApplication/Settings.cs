@@ -10,7 +10,7 @@ namespace ConsoleApplication
         private static string[] UserInputSplit => Program.UserInputSplit;
 
         /// <summary>
-        /// process the settings command, wheather to list a value or to edit one
+        /// process the settings command, whether to list a value or to edit one
         /// </summary>
         public static void ProcessSettingCommand()
         {
@@ -31,7 +31,7 @@ namespace ConsoleApplication
         /// <summary>
         /// Listing the settings
         /// </summary>
-        public static void ListSetting()
+        private static void ListSetting()
         {
             var setting = UserInputSplit[2];
             switch (setting)
@@ -62,7 +62,7 @@ namespace ConsoleApplication
         }
 
         /// <summary>
-        /// Editting a setting
+        /// Editing a setting
         /// </summary>
         private static void EditSetting()
         {

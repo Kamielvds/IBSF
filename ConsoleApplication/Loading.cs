@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ConsoleApplication.Problems;
 using ProcessActivity;
@@ -16,10 +17,10 @@ namespace ConsoleApplication
             set => Program.Path = value;
         }
 
-        private static Activitys Activitys
+        private static Activities Activities
         {
-            get => Program.Activitys;
-            set => Program.Activitys = value;
+            get => Program.Activities;
+            set => Program.Activities = value;
         }
 
         /// <summary>
@@ -35,11 +36,12 @@ namespace ConsoleApplication
             if (Path == null) throw new InvalidDataException();
 
             if (File.Exists(Path))
-                Activitys = InputLength > 2 ? new Activitys(Path, UserInputSplit[2]) : new Activitys(Path);
+                Activities = InputLength > 2 ? new Activities(Path, UserInputSplit[2]) : new Activities(Path);
             else
                 Warnings.FileNotFound(Path);
         }
 
+       [SuppressMessage("ReSharper", "StringLiteralTypo")]
        public static void LoadUserSettings(string path)
         {
             var sr = new StreamReader(path);

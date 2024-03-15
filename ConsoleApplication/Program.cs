@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Xml;
 using ConsoleApplication.Problems;
@@ -21,7 +22,7 @@ namespace ConsoleApplication
         
         public static string UserInput;
         public static string Path;
-        public static Activitys Activitys;
+        public static Activities Activities;
         public static string[] UserInputSplit => UserInput.Split(' ');
 
         public static int InputLength => UserInputSplit.Length;
@@ -29,6 +30,7 @@ namespace ConsoleApplication
         /// <summary>
         /// Entry point
         /// </summary>
+        [SuppressMessage("ReSharper", "StringLiteralTypo")]
         public static void Main()
         {
             LoadUserSettings("userSettings.amlo");
@@ -43,7 +45,7 @@ namespace ConsoleApplication
         }
 
         /// <summary>
-        /// This is the Main cylce of the program, this will be fired everytime a operation completes.
+        /// This is the Main cycle of the program, this will be fired everytime a operation completes.
         /// </summary>
         private static void RequestUserInput()
         {

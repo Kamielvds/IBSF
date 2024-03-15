@@ -6,7 +6,7 @@ namespace ConsoleApplication
     public static class Saving
     {
         private static string Path => Program.Path;
-        private static Activitys Activitys => Program.Activitys;
+        private static Activities Activities => Program.Activities;
         
         
         /// <summary>
@@ -20,7 +20,7 @@ namespace ConsoleApplication
                 return;
             }
 
-            Activitys.SaveFile();
+            Activities.SaveFile();
         }
     }
 }

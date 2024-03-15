@@ -100,7 +100,7 @@ namespace Exceptions
     [Serializable]
     public class UnequalSizeException : Exception
     {
-        public UnequalSizeException() : base("the argument is invalid.")
+        public UnequalSizeException() : base("the sizes are unequal.")
         {
             HResult = -6675452;
         }
@@ -119,7 +119,7 @@ namespace Exceptions
     [Serializable]
     public class ScoreNotFoundException : Exception
     {
-        public ScoreNotFoundException() : base("the argument is invalid.")
+        public ScoreNotFoundException() : base("the score was not found.")
         {
             HResult = -6675451;
         }
@@ -138,7 +138,7 @@ namespace Exceptions
     [Serializable]
     public class LocationNotFoundException : Exception
     {
-        public LocationNotFoundException() : base("the argument is invalid.")
+        public LocationNotFoundException() : base("the location was not found.")
         {
             HResult = -6675451;
         }
@@ -157,7 +157,7 @@ namespace Exceptions
     [Serializable]
     public class EmptyScoreException : Exception
     {
-        public EmptyScoreException() : base("the argument is invalid.")
+        public EmptyScoreException() : base("the score is empty.")
         {
             HResult = -6675450;
         }

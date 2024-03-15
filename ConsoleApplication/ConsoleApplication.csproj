@@ -52,9 +52,9 @@
         <Compile Include="Settings.cs" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\DataSaving\DataSaving.csproj">
+      <ProjectReference Include="..\DataSaver\DataSaver.csproj">
         <Project>{fe0b0290-7550-45bf-bf07-a9e9ac971061}</Project>
-        <Name>DataSaving</Name>
+        <Name>DataSaver</Name>
       </ProjectReference>
       <ProjectReference Include="..\Exceptions\Exceptions.csproj">
         <Project>{dfcd9049-9a01-408e-92e5-eeb873a50800}</Project>
@@ -64,13 +64,13 @@
         <Project>{4af70572-b3a0-4265-b19c-13a3edd796b5}</Project>
         <Name>Filtering</Name>
       </ProjectReference>
-      <ProjectReference Include="..\ProcessActivity\ProcessActivity.csproj">
+      <ProjectReference Include="..\ActivityProcessor\ActivityProcessor.csproj">
         <Project>{2dfe9672-3311-41d0-9ef1-e0bb5bb481f9}</Project>
-        <Name>ProcessActivity</Name>
+        <Name>ActivityProcessor</Name>
       </ProjectReference>
-      <ProjectReference Include="..\ScoreHandeling\ScoreHandeling.csproj">
+      <ProjectReference Include="..\ScoreHandeler\ScoreHandeler.csproj">
         <Project>{b68ee9ee-f6d2-43f8-a9dc-aa440f2b5e9e}</Project>
-        <Name>ScoreHandeling</Name>
+        <Name>ScoreHandeler</Name>
       </ProjectReference>
     </ItemGroup>
     <ItemGroup>

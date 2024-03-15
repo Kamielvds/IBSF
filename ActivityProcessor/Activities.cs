@@ -6,15 +6,15 @@ using Scores;
 
 namespace ProcessActivity
 {
-    public class Activitys
+    public class Activities
     {
         /// <summary>
-        /// sets the location of the file, aswe"ll as loads all the scores
+        /// sets the location of the file, as well as loads all the scores
         /// </summary>
         /// <param name="fileLocation">
         /// the location of the file
         /// </param>
-        public Activitys(string fileLocation)
+        public Activities(string fileLocation)
         {
             Path = fileLocation;
             Scores = new AllScores();
@@ -22,7 +22,7 @@ namespace ProcessActivity
             Lang = fileLocation.Split('.')[1];
             LoadAll();
         }
-        public Activitys(string fileLocation, string lang)
+        public Activities(string fileLocation, string lang)
         {
             Path = fileLocation;
             Scores = new AllScores();
@@ -37,7 +37,7 @@ namespace ProcessActivity
         private List<Score.Split>   _localSplits;
         private Score.Split         _localSplit;
 
-        public AllScores Scores { get; set; }
+        public AllScores Scores { get; private set; }
 
         private string Path { get; }
 
@@ -62,7 +62,7 @@ namespace ProcessActivity
         }
 
         /// <summary>
-        /// uses the loacl scores to add scores to the list.
+        /// uses the local scores to add scores to the list.
         /// </summary>
         /// <param name="name">
         /// the name of the location
@@ -249,12 +249,12 @@ namespace ProcessActivity
 
                     foreach (var split in score.Splits)
                     {
-                        splitTime += split.Time;
-                        splitDistance += split.Distance;
+                        splitTime += split.Time / (int)Score.TimeSeparator.Seconds;
+                        splitDistance += split.Distance / 1000;
                     }
 
                     // km/h
-                    score.Pace = (splitDistance / 1000) / splitTime / 3600000;
+                    score.Pace = splitDistance / splitTime;
                 }
             }
         }

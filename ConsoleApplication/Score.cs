@@ -15,15 +15,15 @@ namespace ConsoleApplication
         private static Score LocalScore { get; set; }
 
         private static string[] UserInputSplit => Program.UserInputSplit;
-        private static Activitys Activitys => Program.Activitys;
-        private static AllScores AllScores => Activitys.Scores;
+        private static Activities Activities => Program.Activities;
+        private static AllScores AllScores => Activities.Scores;
 
         /// <summary>
         /// Processes the given Score input
         /// </summary>
         public static void ProcessScoreCommand()
         {
-            if (Activitys == null) throw new EmptyActivityException();
+            if (Activities == null) throw new EmptyActivityException();
             if (UserInputSplit.Length < 2) throw new NotEnoughArgumentsException();
             switch (UserInputSplit[1])
             {
@@ -113,8 +113,6 @@ namespace ConsoleApplication
                 splitItem = split.Split(' ')[1];
             }
             
-           
-
             string value;
             if (UserInputSplit.Length < 6) value = UserInputSplit[5];
             else
@@ -220,9 +218,9 @@ namespace ConsoleApplication
 
                     List<double> paces = location.Scores.Select(score => score.Pace).ToList();
 
-                    List<int> filtredlist = Filters.SortAscendingIndex(paces);
+                    List<int> filteredList = Filters.SortAscendingIndex(paces);
 
-                    foreach (var t in filtredlist)
+                    foreach (var t in filteredList)
                     {
                         Console.WriteLine($"Pace: {paces[t]} km/h");
                     }
@@ -275,13 +273,13 @@ namespace ConsoleApplication
             // added last so if a convert issue happens it isn't all bad. (could be moved to try-catch branch :)) )
             try
             {
-                Activitys.CreateSplit(times, distances);
+                Activities.CreateSplit(times, distances);
                 if (gender != null)
-                    Activitys.CreateScore(name, Convert.ToInt32(age), nationality, CheckBoolean(submitted),
+                    Activities.CreateScore(name, Convert.ToInt32(age), nationality, CheckBoolean(submitted),
                         Convert.ToDateTime(date), Convert.ToChar(gender), note);
                 else
                     throw new NullReferenceException();
-                Activitys.CreateLocation(location);
+                Activities.CreateLocation(location);
             }
             catch (NullReferenceException)
             {
@@ -289,7 +287,7 @@ namespace ConsoleApplication
             }
             catch (Exception)
             {
-                Console.WriteLine("the score coudn't be created because one of the parameters was wrong. " +
+                Console.WriteLine("the score couldn't be created because one of the parameters was wrong. " +
                                   "Please check all the arguments and try again.");
                 throw;
             }
