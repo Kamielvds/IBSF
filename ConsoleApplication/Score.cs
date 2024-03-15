@@ -422,7 +422,9 @@ namespace ConsoleApplication
                         Console.WriteLine($"\t \t {item.Key}:");
                         break;
                     case string _:
-                        Console.WriteLine($"\t \t {item.Key}: {item.Value}");
+                        Console.WriteLine(item.Key == "pace"
+                            ? $"\t \t {item.Key}: {item.Value} km/h"
+                            : $"\t \t {item.Key}: {item.Value}");
                         break;
                     default:
                         Console.WriteLine($"\t \t splits:");

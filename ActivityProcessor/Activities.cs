@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Commands.DataProcessor;
 using Exceptions;
 using Scores;
@@ -18,24 +19,25 @@ namespace ProcessActivity
         {
             Path = fileLocation;
             Scores = new AllScores();
-            ClearAllLocal();    // so all vars are initialised
+            ClearAllLocal(); // so all vars are initialised
             Lang = fileLocation.Split('.')[1];
             LoadAll();
         }
+
         public Activities(string fileLocation, string lang)
         {
             Path = fileLocation;
             Scores = new AllScores();
-            ClearAllLocal();    // so all vars are initialised
+            ClearAllLocal(); // so all vars are initialised
             Lang = lang;
             LoadAll();
         }
-        
-        private Location            _localLocation;
-        private List<Score>         _localScores;
-        private Score               _localScore;
-        private List<Score.Split>   _localSplits;
-        private Score.Split         _localSplit;
+
+        private Location _localLocation;
+        private List<Score> _localScores;
+        private Score _localScore;
+        private List<Score.Split> _localSplits;
+        private Score.Split _localSplit;
 
         public AllScores Scores { get; private set; }
 
@@ -54,7 +56,7 @@ namespace ProcessActivity
             Scores.AddLocation(_localLocation);
             ClearAllLocal();
         }
-        
+
         private void AppendSplit()
         {
             _localSplits.Add(_localSplit);
@@ -72,18 +74,18 @@ namespace ProcessActivity
             _localLocation = new Location(name, _localScores);
             AppendLocation();
         }
-        
+
         public void CreateScore(string name, int age, string nationality, bool submitted, DateTime dateTime,
             char gender, string note, List<Score.Split> splits = null)
         {
-            _localScore.Splits      = splits ?? _localSplits;    // null check -> local splits
-            _localScore.Name        = name;
-            _localScore.Age         = age;
+            _localScore.Splits = splits ?? _localSplits; // null check -> local splits
+            _localScore.Name = name;
+            _localScore.Age = age;
             _localScore.Nationality = nationality;
-            _localScore.Submitted   = submitted;
-            _localScore.Date        = dateTime;
-            _localScore.Gender      = gender;
-            _localScore.Note        = note;
+            _localScore.Submitted = submitted;
+            _localScore.Date = dateTime;
+            _localScore.Gender = gender;
+            _localScore.Note = note;
             if (_localScore.CheckValid())
                 AppendScore();
             else
@@ -93,7 +95,7 @@ namespace ProcessActivity
             argumentException:
             throw new InvalidScoreException("Not all fields entered correctly.");
         }
-        
+
         /// <summary>
         /// Creating a split and appending it to the local list of all the splits.
         /// </summary>
@@ -127,10 +129,10 @@ namespace ProcessActivity
             if (times.Count != distances.Count) throw new UnequalSizeException();
             for (var i = 0; i < times.Count; i++)
             {
-                CreateSplit(times[i],distances[i]);
+                CreateSplit(times[i], distances[i]);
             }
         }
-        
+
         /// <summary>
         /// Removes a score
         /// </summary>
@@ -175,11 +177,11 @@ namespace ProcessActivity
         /// </summary>
         private void ClearAllLocal()
         {
-            _localLocation  = new Location(null,new List<Score>());
-            _localScores    = new List<Score>();
-            _localScore     = new Score();
-            _localSplits    = new List<Score.Split>();
-            _localSplit     = new Score.Split();
+            _localLocation = new Location(null, new List<Score>());
+            _localScores = new List<Score>();
+            _localScore = new Score();
+            _localSplits = new List<Score.Split>();
+            _localSplit = new Score.Split();
         }
 
         /// <summary>
@@ -198,7 +200,7 @@ namespace ProcessActivity
                     break;
             }
         }
-        
+
         /// <summary>
         /// Save the Scores to txt
         /// </summary>
@@ -244,13 +246,15 @@ namespace ProcessActivity
             {
                 foreach (var score in location.Scores)
                 {
-                    long    splitTime = 0;
-                    double  splitDistance = 0;
+                    double splitTime = 0;
+                    double splitDistance = 0;
 
                     foreach (var split in score.Splits)
                     {
-                        splitTime += split.Time / (int)Score.TimeSeparator.Seconds;
-                        splitDistance += split.Distance / 1000;
+                        // TODO make a possibility for different precisions
+                        if (split == null) continue; 
+                        splitTime += (double)split.Time / (double)Score.TimeSeparator.Minutes; 
+                        splitDistance += split.Distance / 1000; 
                     }
 
                     // km/h

@@ -9,7 +9,7 @@ namespace ConsoleApplication
     public static class Loading
     {
         private static int InputLength => Program.InputLength;
-        private static string [] UserInputSplit => Program.UserInputSplit;
+        private static string[] UserInputSplit => Program.UserInputSplit;
 
         private static string Path
         {
@@ -36,13 +36,17 @@ namespace ConsoleApplication
             if (Path == null) throw new InvalidDataException();
 
             if (File.Exists(Path))
+            {
                 Activities = InputLength > 2 ? new Activities(Path, UserInputSplit[2]) : new Activities(Path);
+            }
             else
                 Warnings.FileNotFound(Path);
+            
+            
         }
 
-       [SuppressMessage("ReSharper", "StringLiteralTypo")]
-       public static void LoadUserSettings(string path)
+        [SuppressMessage("ReSharper", "StringLiteralTypo")]
+        public static void LoadUserSettings(string path)
         {
             var sr = new StreamReader(path);
             string ln;
@@ -53,31 +57,24 @@ namespace ConsoleApplication
                 {
                     case "showwarnings":
                         if (lnSplit[1] == "0") UserSettings.ShowWarnings = false;
-                        if (lnSplit[1] == "1") UserSettings.ShowWarnings = true; 
-                        else Warnings.SettingValueNotValid(lnSplit[1], lnSplit[0]);
+                        if (lnSplit[1] == "1")
+                            UserSettings.ShowWarnings = true;
+                        else
+                            Warnings.SettingValueNotValid(lnSplit[1], lnSplit[0]);
                         break;
                     case "showerrors":
                         if (lnSplit[1] == "0") UserSettings.ShowErrors = false;
-                        if (lnSplit[1] == "1") UserSettings.ShowErrors = true; 
-                        else Warnings.SettingValueNotValid(lnSplit[1], lnSplit[0]);
+                        if (lnSplit[1] == "1")
+                            UserSettings.ShowErrors = true;
+                        else
+                            Warnings.SettingValueNotValid(lnSplit[1], lnSplit[0]);
                         break;
                     case "linesbeforeuser":
+                        UserSettings.LinesBeforeUser = Convert.ToInt32(lnSplit[1]);
+                        break;
                     case "linesafteruser":
-                        try
-                        {
-                            if (lnSplit[0] == "linesbeforeuser")
-                                UserSettings.LinesBeforeUser = Convert.ToInt32(lnSplit[1]);
-                            else
-                                UserSettings.LinesAfterUser = Convert.ToInt32(lnSplit[1]);
-                        }
-                        catch (Exception)
-                        {
-                            if (lnSplit.Length > 1)
-                                Warnings.SettingValueNotValid(lnSplit[1], lnSplit[0]);
-                            else
-                                Errors.InvalidParameter(lnSplit[0]);
-                        }
-                        break; 
+                        UserSettings.LinesAfterUser = Convert.ToInt32(lnSplit[1]);
+                        break;
                     case "default":
                         Warnings.SettingNotValid(lnSplit[0]);
                         break;

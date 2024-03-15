@@ -36,11 +36,7 @@ namespace ConsoleApplication
             LoadUserSettings("userSettings.amlo");
             while (_running)
             {
-                for (var i = 0; i < UserSettings.LinesBeforeUser; i++)
-                    Console.WriteLine("\n");
                 RequestUserInput();
-                for (var i = 0; i < UserSettings.LinesAfterUser; i++)
-                    Console.WriteLine('\n');
             }
         }
 
@@ -50,6 +46,10 @@ namespace ConsoleApplication
         private static void RequestUserInput()
         {
             UserInput = Console.ReadLine();
+            
+            for (var i = 0; i < UserSettings.LinesAfterUser; i++)
+                Console.WriteLine(Environment.NewLine);
+            
             if (UserInput == null) return;
             try
             {
@@ -128,6 +128,9 @@ namespace ConsoleApplication
             {
                 Errors.EmptyScore();
             }
+            
+            for (var i = 0; i < UserSettings.LinesBeforeUser; i++)
+                Console.WriteLine(Environment.NewLine);
         }
     }
 }
