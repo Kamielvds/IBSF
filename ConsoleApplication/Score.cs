@@ -51,13 +51,22 @@ namespace ConsoleApplication
             }
         }
 
+        /// <summary>
+        /// edit a score
+        /// </summary>
+        /// <exception cref="EmptyScoreException">
+        /// thrown when a score is not loaded into the localScore
+        /// </exception>
+        /// <exception cref="NotEnoughArgumentsException">
+        /// thrown when not enough arguments are given
+        /// </exception>
         private static void EditScore()
         {
             if (LocalScore == null) throw new EmptyScoreException();
             if (UserInputSplit.Length < 3) throw new NotEnoughArgumentsException();
 
             string value = UserInputSplit[2];
-            
+
             switch (UserInputSplit[2].ToLower())
             {
                 case "name":
@@ -84,25 +93,32 @@ namespace ConsoleApplication
                 case "splits":
                     if (UserInputSplit.Length == 3)
                     {
-                        ListSplitsDetails(LocalScore.Splits);
+                        ListSplitDetails(LocalScore.Splits);
                         EditSplit(Console.ReadLine());
                     }
+
                     EditSplit();
                     break;
             }
         }
 
+        /// <summary>
+        /// edit the split
+        /// </summary>
+        /// <param name="split">
+        /// the split which should be edited
+        /// </param>
+        /// <exception cref="NotEnoughArgumentsException"></exception>
         private static void EditSplit(string split = null)
         {
-            int splitId; 
+            int splitId;
             string splitItem;
-            
+
             if (split == null)
             {
                 // exc 
-                if (UserInputSplit.Length < 5)
-                    throw new NotEnoughArgumentsException();
-                
+                if (UserInputSplit.Length < 5) throw new NotEnoughArgumentsException();
+
                 splitId = Convert.ToInt32(UserInputSplit[3]);
                 // between 0-1, otherwise IOoR Ex
                 splitItem = UserInputSplit[4];
@@ -112,15 +128,16 @@ namespace ConsoleApplication
                 splitId = Convert.ToInt32(split.Split(' ')[0]);
                 splitItem = split.Split(' ')[1];
             }
-            
+
             string value;
-            if (UserInputSplit.Length < 6) value = UserInputSplit[5];
+            if (UserInputSplit.Length < 6)
+                value = UserInputSplit[5];
             else
             {
                 Console.WriteLine("give value: ");
                 value = Console.ReadLine();
             }
-            
+
             // saved inst by using string 
             /*
              * 0 -> time
@@ -135,7 +152,6 @@ namespace ConsoleApplication
                     LocalScore.Splits[splitId].Distance = Convert.ToDouble(value);
                     break;
             }
-            
         }
 
         /// <summary>
@@ -185,6 +201,12 @@ namespace ConsoleApplication
             }
         }
 
+        /// <summary>
+        /// how to compare the score
+        /// </summary>
+        /// <exception cref="NotEnoughArgumentsException">
+        /// throw when not enough arguments are given
+        /// </exception>
         private static void CompareScore()
         {
             if (UserInputSplit.Length < 3) throw new NotEnoughArgumentsException();
@@ -196,6 +218,12 @@ namespace ConsoleApplication
             }
         }
 
+        /// <summary>
+        /// gets from which type the score should be compared
+        /// </summary>
+        /// <exception cref="NotEnoughArgumentsException">
+        /// throw when not enough arguments are given
+        /// </exception>
         private static void CompareFrom()
         {
             if (UserInputSplit.Length < 4) throw new NotEnoughArgumentsException();
@@ -207,14 +235,17 @@ namespace ConsoleApplication
             }
         }
 
+        /// <summary>
+        /// compare the location based on the length of the user input, when greater than five, compare inside of the location, else compare all the average paces inside of all locations
+        /// </summary>
         private static void CompareLocation()
         {
-            if (UserInputSplit.Length < 5)
+            if (UserInputSplit.Length > 5)
                 CompareInLocation();
             else
                 foreach (var location in AllScores.Locations)
                 {
-                    if (location.Name  != UserInputSplit[4]) continue;
+                    if (location.Name != UserInputSplit[4]) continue;
 
                     List<double> paces = location.Scores.Select(score => score.Pace).ToList();
 
@@ -258,11 +289,11 @@ namespace ConsoleApplication
             Console.WriteLine("submitted:");
             var submitted = Console.ReadLine();
 
-            var times       = new List<long>();
-            var distances   = new List<double>();
+            var times = new List<long>();
+            var distances = new List<double>();
 
             Console.WriteLine("How many splits?");
-            for (int i = Convert.ToInt32(Console.ReadLine()); i > 0 ; i--)
+            for (int i = Convert.ToInt32(Console.ReadLine()); i > 0; i--)
             {
                 Console.WriteLine("time:");
                 times.Add(Convert.ToInt32(Console.ReadLine()));
@@ -321,7 +352,7 @@ namespace ConsoleApplication
         /// </summary>
         private static void ListAllLocations()
         {
-            Console.WriteLine("id:");   // used as indicator
+            Console.WriteLine("id:"); // used as indicator
             for (var i = 0; i < AllScores.Locations.Count; i++)
             {
                 var location = AllScores.Locations[i];
@@ -358,7 +389,7 @@ namespace ConsoleApplication
 
             foreach (var location in AllScores.Locations)
             {
-                if (location.Name  != UserInputSplit[4]) continue;
+                if (location.Name != UserInputSplit[4]) continue;
                 for (var j = 0; j < location.Scores.Count; j++)
                 {
                     var score = location.Scores[j];
@@ -412,6 +443,12 @@ namespace ConsoleApplication
             }
         }
 
+        /// <summary>
+        /// lists all the details about a score
+        /// </summary>
+        /// <param name="score">
+        /// the score of which the details should be displayed
+        /// </param>
         private static void ListScoreDetails(Score score)
         {
             foreach (var item in score.AllObjects)
@@ -430,6 +467,7 @@ namespace ConsoleApplication
                         Console.WriteLine($"\t \t splits:");
                         for (var i = 0; i < ((List<Score.Split>)item.Value).Count; i++)
                         {
+                            // todo use list-splits-details function
                             var split = ((List<Score.Split>)item.Value)[i];
                             Console.WriteLine($"\t \t \t split {i + 1}:");
                             Console.WriteLine($"\t \t \t \t distance: {split.Distance}:");
@@ -441,15 +479,33 @@ namespace ConsoleApplication
             }
         }
 
-        private static void ListSplitsDetails(List<Score.Split> splits)
+        /// <summary>
+        /// lists all the info inside of the splits
+        /// </summary>
+        /// <param name="splits">
+        /// the list of the splits to be listed
+        /// </param>
+        private static void ListSplitDetails(List<Score.Split> splits)
         {
             Console.WriteLine("id:");
             for (var i = 0; i < splits.Count; i++)
             {
                 var split = splits[i];
-                
+
                 Console.WriteLine($"{i}: 0: time: {split.Time} 1: distance {split.Distance}");
             }
+        }
+
+        /// <summary>
+        /// lists all the info inside of the split
+        /// </summary>
+        /// <param name="split">
+        /// the split to be listed
+        /// </param>
+        private static void ListSplitDetails(Score.Split split)
+        {
+            Console.WriteLine("id:");
+            Console.WriteLine($" 0: time: {split.Time} 1: distance {split.Distance}");
         }
     }
 }

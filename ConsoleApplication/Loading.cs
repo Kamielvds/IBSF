@@ -45,6 +45,12 @@ namespace ConsoleApplication
             
         }
 
+        /// <summary>
+        /// load the settings from the user
+        /// </summary>
+        /// <param name="path">
+        /// the path of the settings file
+        /// </param>
         [SuppressMessage("ReSharper", "StringLiteralTypo")]
         public static void LoadUserSettings(string path)
         {
