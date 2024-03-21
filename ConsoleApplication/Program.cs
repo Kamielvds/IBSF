@@ -128,6 +128,10 @@ namespace ConsoleApplication
             {
                 Errors.EmptyScore();
             }
+            catch (FileNotFoundException ex)
+            {
+                Errors.DependentError(ex.Message);
+            }
             
             for (var i = 0; i < UserSettings.LinesBeforeUser; i++)
                 Console.WriteLine(Environment.NewLine);

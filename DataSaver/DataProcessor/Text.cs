@@ -37,11 +37,13 @@ namespace Commands.DataProcessor
         {
             if (ValidPath == false) return new AllScores();
 
-            var allScores       = new AllScores();
-            var streamReader    = new StreamReader(FilePath);
-            var score           = new Score();
+            var allScores = new AllScores();
+            var streamReader = new StreamReader(FilePath);
+            var score = new Score();
 
             string locationName = null;
+            var timeSeparator = "hour";
+            var distanceType = "kilometer";
             // this is kept in this scope, so we can save a cycle by not always reading the same locations in a row
 
             while ((_line = streamReader.ReadLine()) != null)
@@ -63,9 +65,17 @@ namespace Commands.DataProcessor
                                     case "distance":
                                         split.Distance = Convert.ToDouble(Value, CultureInfo.InvariantCulture);
                                         break;
+                                    case "timeseparator":
+                                        timeSeparator = Value;
+                                        break;
+                                    case "distancetype":
+                                        distanceType = Value;
+                                        break;
                                 }
                             }
 
+                            split.DistanceUnit = distanceType;
+                            split.TimeUnit = timeSeparator;
                             score.Splits.Add(split);
                         }
 
@@ -97,13 +107,14 @@ namespace Commands.DataProcessor
                             // Activity fixes
                             case "endl":
                                 allScores.AddLocation(new Location(locationName, score));
-                                score = new Score();        // renew after activity is ended
+                                score = new Score(); // renew after activity is ended
                                 break;
                         }
 
                         break;
                 }
             }
+
             streamReader.Close();
             return allScores;
         }
@@ -157,16 +168,21 @@ namespace Commands.DataProcessor
                                     streamWriter.WriteLine("split:-");
                                     streamWriter.WriteLine($"distance:{split.Distance}");
                                     streamWriter.WriteLine($"time:{split.Time}");
+                                    streamWriter.WriteLine($"distancetype:{split.DistanceUnit}");
+                                    streamWriter.WriteLine($"distanceSeparator:{split.TimeUnit}");
                                     streamWriter.WriteLine("split:-");
                                 }
+
                                 streamWriter.WriteLine("splits:*");
                                 break;
                             }
                         }
                     }
+
                     streamWriter.WriteLine("act:endl");
                 }
             }
+
             streamWriter.Close();
         }
     }

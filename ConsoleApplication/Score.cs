@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Commands;
 using Exceptions;
 using ProcessActivity;
 using Scores;
@@ -45,6 +46,10 @@ namespace ConsoleApplication
                 case "edit":
                 case "-e":
                     EditScore();
+                    break;
+                case "backup":
+                    
+                    Activities.LoadBackup();
                     break;
                 default:
                     throw new InvalidArgumentsException($"score:{UserInputSplit[1]}");
@@ -215,6 +220,31 @@ namespace ConsoleApplication
                 case "in":
                     CompareFrom();
                     break;
+                case "location":
+                    CompareLocations();
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// displays the average pace of every score.
+        /// </summary>
+        private static void CompareLocations()
+        {
+            foreach (var location in AllScores.Locations)
+            {
+                if (location.Name != UserInputSplit[4]) continue;
+
+                List<double> paces = location.Scores.Select(score => score.Pace).ToList();
+
+                List<int> filteredList = Filters.SortAscendingIndex(paces);
+
+                foreach (var t in filteredList)
+                {
+                    Console.WriteLine($"Pace: {paces[t]} km/h");
+                }
+
+                return;
             }
         }
 
@@ -240,29 +270,28 @@ namespace ConsoleApplication
         /// </summary>
         private static void CompareLocation()
         {
-            if (UserInputSplit.Length > 5)
+            if (UserInputSplit.Length > 4)
                 CompareInLocation();
-            else
-                foreach (var location in AllScores.Locations)
-                {
-                    if (location.Name != UserInputSplit[4]) continue;
-
-                    List<double> paces = location.Scores.Select(score => score.Pace).ToList();
-
-                    List<int> filteredList = Filters.SortAscendingIndex(paces);
-
-                    foreach (var t in filteredList)
-                    {
-                        Console.WriteLine($"Pace: {paces[t]} km/h");
-                    }
-
-                    return;
-                }
+            else throw new NotEnoughArgumentsException();
         }
 
         private static void CompareInLocation()
         {
-            // todo
+            List<double> paces = new List<double>();
+            foreach (var score in AllScores.Locations[AllScores.Find(UserInputSplit[4])].Scores)
+            {
+                paces.Add(score.Pace);
+            }
+
+            List<int> filteredPaces = Filters.SortAscendingIndex(paces);
+
+            foreach (var paceIndex in filteredPaces)
+            {
+                Console.Write($"{paceIndex}: ");
+                Console.Write(AllScores.Locations[AllScores.Find(UserInputSplit[4])].Scores[paceIndex].Name);
+                Console.Write(AllScores.Locations[AllScores.Find(UserInputSplit[4])].Scores[paceIndex].Date);
+                Console.Write(AllScores.Locations[AllScores.Find(UserInputSplit[4])].Scores[paceIndex].Pace);
+            }
         }
 
         /// <summary>
@@ -467,7 +496,6 @@ namespace ConsoleApplication
                         Console.WriteLine($"\t \t splits:");
                         for (var i = 0; i < ((List<Score.Split>)item.Value).Count; i++)
                         {
-                            // todo use list-splits-details function
                             var split = ((List<Score.Split>)item.Value)[i];
                             Console.WriteLine($"\t \t \t split {i + 1}:");
                             Console.WriteLine($"\t \t \t \t distance: {split.Distance}:");

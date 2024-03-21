@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.IO;
 using Commands.DataProcessor;
 using Exceptions;
 using Scores;
+using TextReader = Commands.DataProcessor.TextReader;
+using TextWriter = Commands.DataProcessor.TextWriter;
 
 namespace ProcessActivity
 {
@@ -251,16 +253,61 @@ namespace ProcessActivity
 
                     foreach (var split in score.Splits)
                     {
-                        // TODO make a possibility for different precisions
                         if (split == null) continue; 
-                        splitTime += (double)split.Time / (double)Score.TimeSeparator.Minutes; 
-                        splitDistance += split.Distance / 1000; 
+                        double[] types = ReadTimeSeparator(split);
+                        splitTime += split.Time / types[0];
+                        splitDistance += split.Distance / types[1]; 
                     }
 
                     // km/h
                     score.Pace = splitDistance / splitTime;
                 }
             }
+        }
+
+        private double[] ReadTimeSeparator(Score.Split split)
+        {
+            var types = new double[2];
+            switch (split.TimeUnit)
+            {
+                case "minute":
+                    types[0] = (double)Score.TimeSeparator.Minutes;
+                    break;
+                case "hour":
+                    types[0] = (double)Score.TimeSeparator.Hours;
+                    break;
+                case "milliseconds":
+                    types[0] = (double)Score.TimeSeparator.Milliseconds;
+                    break;
+                case "seconds":
+                    types[0] = (double)Score.TimeSeparator.Seconds;
+                    break;
+            }
+
+            switch (split.DistanceUnit)
+            {
+                case "kilometer":
+                    types[1] = (double)Score.DistanceSeparator.Kilometer;
+                    break;
+                case "meter":
+                    types[1] = (double)Score.DistanceSeparator.Meter;
+                    break;
+            }
+
+            return types;
+        }
+        
+        public void LoadBackup()
+        {
+            if (File.Exists(Path.Substring(0,Path.Length-4)+$"Copy.{Lang}"))
+            {
+                throw new FileNotFoundException("There is no backup");
+            }
+
+            if (!File.Exists(Path)) throw new FileNotFoundException("There is no files loaded");
+            File.Copy(Path.Substring(0,Path.Length-4)+$".{Lang}",Path, true);
+            
+            LoadAll();
         }
     }
 }

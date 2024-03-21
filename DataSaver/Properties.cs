@@ -71,10 +71,5 @@ namespace Commands
                 File.Delete(FilePath.Substring(0,FilePath.Length-4)+$"Copy.{Lang}");
             File.Copy(FilePath, FilePath.Substring(0,FilePath.Length-4)+$"Copy.{Lang}");
         }
-
-        public void LoadBackup()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

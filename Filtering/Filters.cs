@@ -445,6 +445,23 @@ namespace Filtering
                 list[i] = lowestValue;
             }
         }
+        public static void SortAscending(ref List<double> list)
+        {
+            for (var i = 0; i < list.Count; i++)
+            {
+                double lowestValue = list[i];
+                int index = i;
+                for (var j = i; j < list.Count; j++)
+                {
+                    if (list[j] <= lowestValue) continue;
+                    lowestValue = list[j];
+                    index = j;
+                }
+                if (index == i) continue;
+                list[index] = list[i];
+                list[i] = lowestValue;
+            }
+        }
         public static List<int> SortAscending(List<int> list)
         {
             for (var i = 0; i < list.Count; i++)

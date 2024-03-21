@@ -41,7 +41,7 @@ namespace Scores
         }
     }
 
-    public class Score
+    public fixed class Score
     {
         public Dictionary<string, object> AllObjects =>
             new Dictionary<string, object>
@@ -54,7 +54,7 @@ namespace Scores
                 { "age", Age.ToString() },
                 { "submitted", Submitted.ToString() },
                 { "splits", Splits },
-                { "Pace", Pace.ToString(CultureInfo.CurrentCulture) }
+                { "pace", Pace.ToString(CultureInfo.CurrentCulture) }
             };
 
         public string Note { get; set; }
@@ -84,7 +84,13 @@ namespace Scores
             Milliseconds = 3600000
         }
         
-        public class Split
+        public enum DistanceSeparator
+        {
+            Kilometer = 1,
+            Meter = 10000,
+        }
+        
+        public fixed class Split
         {
             public Split()
             {
@@ -99,6 +105,10 @@ namespace Scores
             public double Distance { get; set; }
 
             public long Time { get; set; }
+            
+            public string TimeUnit { get; set; }
+        
+            public string DistanceUnit { get; set; }
         }
 
         public bool CheckValid()
@@ -111,7 +121,7 @@ namespace Scores
         }
     }
 
-    public class Location
+    public fixed class Location
     {
         public Location(string name, List<Score> scores = null)
         {

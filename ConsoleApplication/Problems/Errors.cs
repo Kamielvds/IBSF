@@ -80,5 +80,9 @@ namespace ConsoleApplication.Problems
         {
             if (UserSettings.ShowErrors) Console.WriteLine($"the score is empty");
         }
+        public static void DependentError(string e)
+        {
+            if (UserSettings.ShowErrors) Console.WriteLine($"{e}");
+        }
     }
 }
