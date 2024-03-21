@@ -5,8 +5,9 @@ namespace ConsoleApplication.Problems
     public static class UserSettings
     {
         // bool
-        public static bool ShowErrors = true;
-        public static bool ShowWarnings = true;
+        public static bool ShowErrors          = true;
+        public static bool ShowWarnings        = true;
+        public static bool Debug               = false;
 
         // int
         public static int LinesBeforeUser = 0;
@@ -15,10 +16,11 @@ namespace ConsoleApplication.Problems
         public static Dictionary<string, object> Settings =>
             new Dictionary<string, object>
             {
-                { "ShowErrors", ShowErrors },
-                { "ShowWarnings", ShowWarnings },
+                { "ShowErrors",      ShowErrors },
+                { "ShowWarnings",    ShowWarnings },
                 { "LinesBeforeUser", LinesBeforeUser },
-                { "LinesAfterUser", LinesAfterUser }
+                { "LinesAfterUser",  LinesAfterUser },
+                { "debugMode",       Debug}
             };
     }
 }

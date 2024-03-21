@@ -81,6 +81,9 @@ namespace ConsoleApplication
                     case "linesafteruser":
                         UserSettings.LinesAfterUser = Convert.ToInt32(lnSplit[1]);
                         break;
+                    case "debug":
+                        UserSettings.Debug = Convert.ToBoolean(lnSplit[1]);
+                        break;
                     case "default":
                         Warnings.SettingNotValid(lnSplit[0]);
                         break;

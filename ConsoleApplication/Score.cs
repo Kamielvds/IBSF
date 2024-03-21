@@ -1,13 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Commands;
+using ConsoleApplication.Problems;
 using Exceptions;
 using ProcessActivity;
 using Scores;
 using Filtering;
 //static 
 using static ConsoleApplication.CustomMethods;
+using TextWriter = Commands.DataProcessor.TextWriter;
 
 namespace ConsoleApplication
 {
@@ -35,6 +38,10 @@ namespace ConsoleApplication
                 case "-l":
                     LoadLocation();
                     break;
+                case "create":
+                case "new":
+                    CreateScoreFile();
+                    break;
                 case "compare":
                 case "-c":
                     CompareScore();
@@ -48,12 +55,72 @@ namespace ConsoleApplication
                     EditScore();
                     break;
                 case "backup":
-                    
+
                     Activities.LoadBackup();
                     break;
                 default:
                     throw new InvalidArgumentsException($"score:{UserInputSplit[1]}");
             }
+        }
+
+        private static void CreateScoreFile()
+        {
+            const string fileWarning = "The File already exists; do you wish to override it? (y/N)";
+            
+            Console.WriteLine("please give a lang:");
+            var lang = Console.ReadLine();
+            if (lang == null) throw new NullReferenceException();
+            switch (lang.ToLower())
+            {
+                case "txt":
+                    if (File.Exists("Scores.txt"))
+                    {
+                        Console.WriteLine(fileWarning);
+
+                        switch (Console.ReadLine()?.ToLower())
+                        {
+                            case "y":
+                            case "yes":
+                                break;
+                            case "no":
+                            case "n":
+                                // break out of the function
+                                return;
+                            default:
+                                throw new InvalidArgumentsException();
+                        }
+                    }
+
+                    File.Create("Scores.txt");
+                    break;
+                case "xml":
+                    if (File.Exists("Scores.xml"))
+                    {
+                        Console.WriteLine(fileWarning);
+
+                        switch (Console.ReadLine()?.ToLower())
+                        {
+                            case "y":
+                            case "yes":
+                                break;
+                            case "no":
+                            case "n":
+                                // break out of the function
+                                return;
+                            default:
+                                throw new InvalidArgumentsException();
+                        }
+                    }
+                    File.Create("Scores.xml");
+                    break;
+                default:
+                    throw new InvalidArgumentsException();
+            }
+
+            if (!UserSettings.Debug) return;
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("the file was successfully generated");
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         /// <summary>
@@ -272,7 +339,8 @@ namespace ConsoleApplication
         {
             if (UserInputSplit.Length > 4)
                 CompareInLocation();
-            else throw new NotEnoughArgumentsException();
+            else
+                throw new NotEnoughArgumentsException();
         }
 
         private static void CompareInLocation()

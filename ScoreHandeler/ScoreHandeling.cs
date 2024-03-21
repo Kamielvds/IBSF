@@ -41,7 +41,7 @@ namespace Scores
         }
     }
 
-    public fixed class Score
+    public class Score
     {
         public Dictionary<string, object> AllObjects =>
             new Dictionary<string, object>
@@ -90,7 +90,7 @@ namespace Scores
             Meter = 10000,
         }
         
-        public fixed class Split
+        public class Split
         {
             public Split()
             {
@@ -121,7 +121,7 @@ namespace Scores
         }
     }
 
-    public fixed class Location
+    public class Location
     {
         public Location(string name, List<Score> scores = null)
         {
