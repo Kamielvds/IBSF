@@ -82,9 +82,12 @@ namespace ConsoleApplication
                         UserSettings.LinesAfterUser = Convert.ToInt32(lnSplit[1]);
                         break;
                     case "debug":
-                        UserSettings.Debug = Convert.ToBoolean(lnSplit[1]);
+                        if (lnSplit[1] == "0") UserSettings.Debug = false;
+                        if (lnSplit[1] == "1") UserSettings.Debug = true;
+                        else
+                            Warnings.SettingValueNotValid(lnSplit[1], lnSplit[0]);
                         break;
-                    case "default":
+                    default:
                         Warnings.SettingNotValid(lnSplit[0]);
                         break;
                 }

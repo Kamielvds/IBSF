@@ -27,7 +27,6 @@ namespace ConsoleApplication
         /// </summary>
         public static void ProcessScoreCommand()
         {
-            if (Activities == null) throw new EmptyActivityException();
             if (UserInputSplit.Length < 2) throw new NotEnoughArgumentsException();
             switch (UserInputSplit[1])
             {
@@ -91,7 +90,8 @@ namespace ConsoleApplication
                         }
                     }
 
-                    File.Create("Scores.txt");
+                    var streamReader = new StreamWriter("Scores.txt");
+                    streamReader.Close();
                     break;
                 case "xml":
                     if (File.Exists("Scores.xml"))
@@ -111,7 +111,8 @@ namespace ConsoleApplication
                                 throw new InvalidArgumentsException();
                         }
                     }
-                    File.Create("Scores.xml");
+                    var xmlReader = new StreamWriter("Scores.txt");
+                    xmlReader.Close();
                     break;
                 default:
                     throw new InvalidArgumentsException();

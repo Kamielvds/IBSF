@@ -79,62 +79,78 @@ namespace ConsoleApplication
             }
             catch (IndexOutOfRangeException)
             {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Errors.NotEnoughArguments();
             }
             catch (InvalidDataException)
             {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Errors.InvalidDatatype();
             }
             catch (InvalidScoreException)
             {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Errors.InvalidScore();
             }
             catch (EmptyLocationException)
             {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Errors.EmptyLocation();
             }
             catch (NotEnoughArgumentsException)
             {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Errors.NotEnoughArguments();
             }
             catch (InvalidArgumentsException s)
             {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 string[] exceptionSplit = s.Message.Split(':');
-                Errors.InvalidParameter(exceptionSplit[0], exceptionSplit[1]);
+                if (exceptionSplit.Length > 1)
+                    Errors.InvalidParameter(exceptionSplit[0], exceptionSplit[1]);
             }
             catch (EmptyActivityException)
             {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Errors.EmptyActivity();
             }
             catch (XmlException)
             {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 if (UserInputSplit[1].Split('.').Length > 1)
                     Errors.WrongFile("xml", UserInputSplit[1].Split('.')[1]);
-                Errors.WrongFile("xml");
+                else Errors.WrongFile("none");
             }
             catch (ScoreNotFoundException)
             {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Errors.NotFound("score");
             }
             catch (LocationNotFoundException)
             {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Errors.NotFound("location");
             }
             catch (FormatException)
             {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Errors.InvalidDatatype();
             }
             catch (EmptyScoreException)
             {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Errors.EmptyScore();
             }
             catch (FileNotFoundException ex)
             {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Errors.DependentError(ex.Message);
             }
-            
+
+            Console.ForegroundColor = ConsoleColor.White;
             for (var i = 0; i < UserSettings.LinesBeforeUser; i++)
                 Console.WriteLine(Environment.NewLine);
+            
         }
     }
 }
