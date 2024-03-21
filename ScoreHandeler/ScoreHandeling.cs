@@ -9,7 +9,8 @@ namespace Scores
     public class AllScores
     {
         public List<Location> Locations { get; set; } = new List<Location>();
-
+        
+        
         public bool LocationExists(string location)
         {
             return Locations.Any(loc => loc.Name == location);
@@ -63,7 +64,7 @@ namespace Scores
 
         public string Name { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
         public char Gender { get; set; }
 

@@ -153,7 +153,7 @@ namespace ConsoleApplication
                LocalScore.Nationality = value;
                break;
             case "date":
-               LocalScore.Date = Convert.ToDateTime(value);
+               LocalScore.Date = value;
                break;
             case "gender":
                LocalScore.Gender = Convert.ToChar(value);
@@ -456,7 +456,7 @@ namespace ConsoleApplication
          {
             if (gender != null)
                Activities.CreateScore(name, Convert.ToInt32(age), nationality, CheckBoolean(submitted),
-                  Convert.ToDateTime(date), Convert.ToChar(gender), note);
+                  date, Convert.ToChar(gender), note);
             else
                throw new NullReferenceException();
             Activities.CreateLocation(location);

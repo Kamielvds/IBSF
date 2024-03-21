@@ -68,7 +68,7 @@ namespace Commands.DataProcessor
                                     case "timeseparator":
                                         timeSeparator = Value;
                                         break;
-                                    case "distancetype":
+                                    case "distanceunit":
                                         distanceType = Value;
                                         break;
                                 }
@@ -90,7 +90,7 @@ namespace Commands.DataProcessor
                         score.Nationality = Value;
                         break;
                     case "date":
-                        score.Date = Convert.ToDateTime(Value);
+                        score.Date = Value;
                         break;
                     case "submitted":
                         score.Submitted = Convert.ToBoolean(Value);
@@ -158,7 +158,8 @@ namespace Commands.DataProcessor
                                 streamWriter.WriteLine($"{item.Key}:");
                                 break;
                             case string _:
-                                streamWriter.WriteLine($"{item.Key}:{item.Value}");
+                                if(item.Key != "pace")
+                                    streamWriter.WriteLine($"{item.Key}:{item.Value}");
                                 break;
                             default:
                             {
@@ -168,8 +169,8 @@ namespace Commands.DataProcessor
                                     streamWriter.WriteLine("split:-");
                                     streamWriter.WriteLine($"distance:{split.Distance}");
                                     streamWriter.WriteLine($"time:{split.Time}");
-                                    streamWriter.WriteLine($"distancetype:{split.DistanceUnit}");
-                                    streamWriter.WriteLine($"distanceSeparator:{split.TimeUnit}");
+                                    streamWriter.WriteLine($"distanceunit:{split.DistanceUnit}");
+                                    streamWriter.WriteLine($"timeseparator:{split.TimeUnit}");
                                     streamWriter.WriteLine("split:-");
                                 }
 

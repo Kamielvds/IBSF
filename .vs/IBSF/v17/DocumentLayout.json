@@ -1,0 +1,173 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Kamiel\\RiderProjects\\IBSF\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9E8F16FC-20A6-43AC-A381-8A5E79E19357}|FormsApplication\\FormsApplication.csproj|C:\\Users\\Kamiel\\RiderProjects\\IBSF\\formsapplication\\popups\\addscore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E8F16FC-20A6-43AC-A381-8A5E79E19357}|FormsApplication\\FormsApplication.csproj|solutionrelative:formsapplication\\popups\\addscore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E8F16FC-20A6-43AC-A381-8A5E79E19357}|FormsApplication\\FormsApplication.csproj|c:\\users\\kamiel\\riderprojects\\ibsf\\formsapplication\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E8F16FC-20A6-43AC-A381-8A5E79E19357}|FormsApplication\\FormsApplication.csproj|solutionrelative:formsapplication\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B52E56B-4DAA-4C05-A3AF-2F577CE8ACC8}|ConsoleApplication\\ConsoleApplication.csproj|C:\\Users\\Kamiel\\RiderProjects\\IBSF\\consoleapplication\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B52E56B-4DAA-4C05-A3AF-2F577CE8ACC8}|ConsoleApplication\\ConsoleApplication.csproj|solutionrelative:consoleapplication\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E8F16FC-20A6-43AC-A381-8A5E79E19357}|FormsApplication\\FormsApplication.csproj|C:\\Users\\Kamiel\\RiderProjects\\IBSF\\formsapplication\\popups\\addscore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{9E8F16FC-20A6-43AC-A381-8A5E79E19357}|FormsApplication\\FormsApplication.csproj|solutionrelative:formsapplication\\popups\\addscore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E8F16FC-20A6-43AC-A381-8A5E79E19357}|FormsApplication\\FormsApplication.csproj|c:\\users\\kamiel\\riderprojects\\ibsf\\formsapplication\\popups\\addscore.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E8F16FC-20A6-43AC-A381-8A5E79E19357}|FormsApplication\\FormsApplication.csproj|solutionrelative:formsapplication\\popups\\addscore.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2DFE9672-3311-41D0-9EF1-E0BB5BB481F9}|ActivityProcessor\\ActivityProcessor.csproj|c:\\users\\kamiel\\riderprojects\\ibsf\\activityprocessor\\activities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2DFE9672-3311-41D0-9EF1-E0BB5BB481F9}|ActivityProcessor\\ActivityProcessor.csproj|solutionrelative:activityprocessor\\activities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B68EE9EE-F6D2-43F8-A9DC-AA440F2B5E9E}|ScoreHandeler\\ScoreHandeler.csproj|C:\\Users\\Kamiel\\RiderProjects\\IBSF\\scorehandeler\\scorehandeling.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B68EE9EE-F6D2-43F8-A9DC-AA440F2B5E9E}|ScoreHandeler\\ScoreHandeler.csproj|solutionrelative:scorehandeler\\scorehandeling.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E8F16FC-20A6-43AC-A381-8A5E79E19357}|FormsApplication\\FormsApplication.csproj|C:\\Users\\Kamiel\\RiderProjects\\IBSF\\formsapplication\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{9E8F16FC-20A6-43AC-A381-8A5E79E19357}|FormsApplication\\FormsApplication.csproj|solutionrelative:formsapplication\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AddScore.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\Kamiel\\RiderProjects\\IBSF\\FormsApplication\\PopUps\\AddScore.Designer.cs",
+              "RelativeDocumentMoniker": "FormsApplication\\PopUps\\AddScore.Designer.cs",
+              "ToolTip": "C:\\Users\\Kamiel\\RiderProjects\\IBSF\\FormsApplication\\PopUps\\AddScore.Designer.cs",
+              "RelativeToolTip": "FormsApplication\\PopUps\\AddScore.Designer.cs",
+              "ViewState": "AQIAAAoBAAAAAAAAAAAiwBEBAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-21T17:26:37.214Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Kamiel\\RiderProjects\\IBSF\\ConsoleApplication\\Program.cs",
+              "RelativeDocumentMoniker": "ConsoleApplication\\Program.cs",
+              "ToolTip": "C:\\Users\\Kamiel\\RiderProjects\\IBSF\\ConsoleApplication\\Program.cs",
+              "RelativeToolTip": "ConsoleApplication\\Program.cs",
+              "ViewState": "AQIAAFMAAAAAAAAAAAAIwDoAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-21T17:09:07.531Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Users\\Kamiel\\RiderProjects\\IBSF\\FormsApplication\\Form1.cs",
+              "RelativeDocumentMoniker": "FormsApplication\\Form1.cs",
+              "ToolTip": "C:\\Users\\Kamiel\\RiderProjects\\IBSF\\FormsApplication\\Form1.cs",
+              "RelativeToolTip": "FormsApplication\\Form1.cs",
+              "ViewState": "AQIAAC8AAAAAAAAAAAAIwEIAAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-21T17:18:04.217Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AddScore.cs",
+              "DocumentMoniker": "C:\\Users\\Kamiel\\RiderProjects\\IBSF\\FormsApplication\\PopUps\\AddScore.cs",
+              "RelativeDocumentMoniker": "FormsApplication\\PopUps\\AddScore.cs",
+              "ToolTip": "C:\\Users\\Kamiel\\RiderProjects\\IBSF\\FormsApplication\\PopUps\\AddScore.cs",
+              "RelativeToolTip": "FormsApplication\\PopUps\\AddScore.cs",
+              "ViewState": "AQIAACoAAAAAAAAAAAAYwDQAAAAoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-21T17:56:39.542Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AddScore.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Kamiel\\RiderProjects\\IBSF\\FormsApplication\\PopUps\\AddScore.cs",
+              "RelativeDocumentMoniker": "FormsApplication\\PopUps\\AddScore.cs",
+              "ToolTip": "C:\\Users\\Kamiel\\RiderProjects\\IBSF\\FormsApplication\\PopUps\\AddScore.cs [Design]",
+              "RelativeToolTip": "FormsApplication\\PopUps\\AddScore.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-21T17:56:33.296Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Form1.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Kamiel\\RiderProjects\\IBSF\\FormsApplication\\Form1.cs",
+              "RelativeDocumentMoniker": "FormsApplication\\Form1.cs",
+              "ToolTip": "C:\\Users\\Kamiel\\RiderProjects\\IBSF\\FormsApplication\\Form1.cs [Design]",
+              "RelativeToolTip": "FormsApplication\\Form1.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-21T17:56:30.48Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "FloatingWindowState": {
+        "Id": "d79cec24-6cce-409f-8072-34b2d4cc15b8",
+        "Display": 1,
+        "X": 108,
+        "Y": 88,
+        "Width": 1571,
+        "Height": 792,
+        "WindowState": 2
+      },
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Activities.cs",
+              "DocumentMoniker": "C:\\Users\\Kamiel\\RiderProjects\\IBSF\\ActivityProcessor\\Activities.cs",
+              "RelativeDocumentMoniker": "ActivityProcessor\\Activities.cs",
+              "ToolTip": "C:\\Users\\Kamiel\\RiderProjects\\IBSF\\ActivityProcessor\\Activities.cs",
+              "RelativeToolTip": "ActivityProcessor\\Activities.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAQwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-21T17:51:37.853Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ScoreHandeling.cs",
+              "DocumentMoniker": "C:\\Users\\Kamiel\\RiderProjects\\IBSF\\ScoreHandeler\\ScoreHandeling.cs",
+              "RelativeDocumentMoniker": "ScoreHandeler\\ScoreHandeling.cs",
+              "ToolTip": "C:\\Users\\Kamiel\\RiderProjects\\IBSF\\ScoreHandeler\\ScoreHandeling.cs",
+              "RelativeToolTip": "ScoreHandeler\\ScoreHandeling.cs",
+              "ViewState": "AQIAADAAAAAAAAAAAAAmwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-21T17:57:29.544Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

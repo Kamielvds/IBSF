@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Commands.DataProcessor;
 using Exceptions;
 using Scores;
@@ -77,8 +78,8 @@ namespace ProcessActivity
             AppendLocation();
         }
 
-        public void CreateScore(string name, int age, string nationality, bool submitted, DateTime dateTime,
-            char gender, string note, List<Score.Split> splits = null)
+        public void CreateScore(string name, int age, string nationality, bool submitted, string dateTime,
+            char gender, string note, List<Score.Split> splits = null, string distanceUnit = "Meters", string timeUnit = "Minutes")
         {
             _localScore.Splits = splits ?? _localSplits; // null check -> local splits
             _localScore.Name = name;
@@ -274,19 +275,23 @@ namespace ProcessActivity
             {
                 foreach (var score in location.Scores)
                 {
-                    double splitTime = 0;
-                    double splitDistance = 0;
+                    
+                   
 
+                    var paces = new List<double>();
                     foreach (var split in score.Splits)
                     {
                         if (split == null) continue; 
                         double[] types = ReadTimeSeparator(split);
-                        splitTime += split.Time / types[0];
-                        splitDistance += split.Distance / types[1]; 
+                        double splitTime = split.Time / types[0];
+                        double splitDistance = split.Distance / types[1]; 
+                        
+                        paces.Add(splitDistance/splitTime);
                     }
 
                     // km/h
-                    score.Pace = splitDistance / splitTime;
+                    var total = paces.Sum();
+                    score.Pace = total/paces.Count;
                 }
             }
         }

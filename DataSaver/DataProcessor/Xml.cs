@@ -68,7 +68,7 @@ namespace Commands.DataProcessor
                                 newScore.Name = element.InnerText;
                                 break;
                             case "date":
-                                newScore.Date = Convert.ToDateTime(element.InnerText);
+                                newScore.Date = element.InnerText;
                                 break;
                             case "gender":
                                 newScore.Gender = Convert.ToChar(element.InnerText);
