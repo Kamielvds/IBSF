@@ -111,6 +111,32 @@ namespace ProcessActivity
         {
             _localSplit.Time = time;
             _localSplit.Distance = distance;
+            _localSplit.DistanceUnit = Score.DistanceSeparator.Meters.ToString();
+            _localSplit.TimeUnit = Score.TimeSeparator.Minutes.ToString();
+            AppendSplit();
+        }
+
+        /// <summary>
+        /// creates a local split and appends it to the localSplits 
+        /// </summary>
+        /// <param name="time">
+        /// the time of the split
+        /// </param>
+        /// <param name="distance">
+        /// the distance of the split
+        /// </param>
+        /// <param name="timeSeparator">
+        /// the time format of the split
+        /// </param>
+        /// <param name="distanceSeparator">
+        /// the distance format 
+        /// </param>
+        public void CreateSplit(long time, double distance, Score.TimeSeparator timeSeparator, Score.DistanceSeparator distanceSeparator)
+        {
+            _localSplit.Time = time;
+            _localSplit.Distance = distance;
+            _localSplit.DistanceUnit = distanceSeparator.ToString();
+            _localSplit.TimeUnit = timeSeparator.ToString();
             AppendSplit();
         }
 
@@ -270,27 +296,27 @@ namespace ProcessActivity
             var types = new double[2];
             switch (split.TimeUnit)
             {
-                case "minute":
+                case "Minutes":
                     types[0] = (double)Score.TimeSeparator.Minutes;
                     break;
-                case "hour":
+                case "Hours":
                     types[0] = (double)Score.TimeSeparator.Hours;
                     break;
-                case "milliseconds":
+                case "Milliseconds":
                     types[0] = (double)Score.TimeSeparator.Milliseconds;
                     break;
-                case "seconds":
+                case "Seconds":
                     types[0] = (double)Score.TimeSeparator.Seconds;
                     break;
             }
 
             switch (split.DistanceUnit)
             {
-                case "kilometer":
-                    types[1] = (double)Score.DistanceSeparator.Kilometer;
+                case "Kilometers":
+                    types[1] = (double)Score.DistanceSeparator.Kilometers;
                     break;
-                case "meter":
-                    types[1] = (double)Score.DistanceSeparator.Meter;
+                case "Meters":
+                    types[1] = (double)Score.DistanceSeparator.Meters;
                     break;
             }
 

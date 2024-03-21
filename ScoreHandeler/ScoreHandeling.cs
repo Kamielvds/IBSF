@@ -86,8 +86,8 @@ namespace Scores
         
         public enum DistanceSeparator
         {
-            Kilometer = 1,
-            Meter = 10000,
+            Kilometers = 1,
+            Meters = 10000,
         }
         
         public class Split
