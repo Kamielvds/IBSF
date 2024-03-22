@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filtering", "Filtering\Filtering.csproj", "{4AF70572-B3A0-4265-B19C-13A3EDD796B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSaver", "DataSaver\DataSaver.csproj", "{FE0B0290-7550-45BF-BF07-A9E9AC971061}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataManagement", "DataManagement\DataManagement.csproj", "{FE0B0290-7550-45BF-BF07-A9E9AC971061}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication", "ConsoleApplication\ConsoleApplication.csproj", "{4B52E56B-4DAA-4C05-A3AF-2F577CE8ACC8}"
 EndProject
@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{1A9D7F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{0213B89A-8265-44FD-BCA1-D7A3F1E63253}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivityProcessor", "ActivityProcessor\ActivityProcessor.csproj", "{2DFE9672-3311-41D0-9EF1-E0BB5BB481F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataHandler", "DataHandler\DataHandler.csproj", "{2DFE9672-3311-41D0-9EF1-E0BB5BB481F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exceptions", "Exceptions\Exceptions.csproj", "{DFCD9049-9A01-408E-92E5-EEB873A50800}"
 EndProject

@@ -95,17 +95,17 @@
         <None Include="App.config" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\ActivityProcessor\ActivityProcessor.csproj">
+      <ProjectReference Include="..\DataHandler\DataHandler.csproj">
         <Project>{2dfe9672-3311-41d0-9ef1-e0bb5bb481f9}</Project>
-        <Name>ActivityProcessor</Name>
+        <Name>DataHandler</Name>
       </ProjectReference>
       <ProjectReference Include="..\ConsoleApplication\ConsoleApplication.csproj">
         <Project>{4b52e56b-4daa-4c05-a3af-2f577ce8acc8}</Project>
         <Name>ConsoleApplication</Name>
       </ProjectReference>
-      <ProjectReference Include="..\DataSaver\DataSaver.csproj">
+      <ProjectReference Include="..\DataManagement\DataManagement.csproj">
         <Project>{fe0b0290-7550-45bf-bf07-a9e9ac971061}</Project>
-        <Name>DataSaver</Name>
+        <Name>DataManagement</Name>
       </ProjectReference>
       <ProjectReference Include="..\Exceptions\Exceptions.csproj">
         <Project>{dfcd9049-9a01-408e-92e5-eeb873a50800}</Project>

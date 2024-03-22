@@ -9,7 +9,7 @@
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>ProcessActivity</RootNamespace>
-        <AssemblyName>ActivityProcessor</AssemblyName>
+        <AssemblyName>DataHandler</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
@@ -43,9 +43,9 @@
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\DataSaver\DataSaver.csproj">
+      <ProjectReference Include="..\DataManagement\DataManagement.csproj">
         <Project>{fe0b0290-7550-45bf-bf07-a9e9ac971061}</Project>
-        <Name>DataSaver</Name>
+        <Name>DataManagement</Name>
       </ProjectReference>
       <ProjectReference Include="..\Exceptions\Exceptions.csproj">
         <Project>{dfcd9049-9a01-408e-92e5-eeb873a50800}</Project>
