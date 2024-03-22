@@ -119,10 +119,6 @@
         <Project>{b68ee9ee-f6d2-43f8-a9dc-aa440f2b5e9e}</Project>
         <Name>ScoreHandeler</Name>
       </ProjectReference>
-      <ProjectReference Include="..\Tests\Tests.csproj">
-        <Project>{1d33dc6f-b373-45c8-9b04-8b78730cddd4}</Project>
-        <Name>Tests</Name>
-      </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
 </Project>
