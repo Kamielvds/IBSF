@@ -107,11 +107,11 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(6, 322);
+            this.button2.Location = new System.Drawing.Point(6, 337);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(176, 45);
+            this.button2.Size = new System.Drawing.Size(176, 49);
             this.button2.TabIndex = 5;
-            this.button2.Text = "Compress File";
+            this.button2.Text = "Compress File / Reformat";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -124,9 +124,9 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(6, 273);
+            this.btnSave.Location = new System.Drawing.Point(6, 282);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(176, 43);
+            this.btnSave.Size = new System.Drawing.Size(176, 49);
             this.btnSave.TabIndex = 3;
             this.btnSave.Text = "Save Scores";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -136,7 +136,7 @@
             // 
             this.btnAddScore.Location = new System.Drawing.Point(6, 224);
             this.btnAddScore.Name = "btnAddScore";
-            this.btnAddScore.Size = new System.Drawing.Size(176, 43);
+            this.btnAddScore.Size = new System.Drawing.Size(176, 52);
             this.btnAddScore.TabIndex = 2;
             this.btnAddScore.Text = "Add Scores";
             this.btnAddScore.UseVisualStyleBackColor = true;

@@ -42,8 +42,8 @@ namespace Commands.DataProcessors
             var score = new Score();
 
             string locationName = null;
-            var timeSeparator = "hour";
-            var distanceType = "kilometer";
+            var timeSeparator = "Hours";
+            var distanceType = "Kilometers";
             // this is kept in this scope, so we can save a cycle by not always reading the same locations in a row
 
             while ((_line = streamReader.ReadLine()) != null)
@@ -60,7 +60,7 @@ namespace Commands.DataProcessors
                                 switch (Command)
                                 {
                                     case "time":
-                                        split.Time = Convert.ToInt64(Value);
+                                        split.Time = Convert.ToDouble(Value);
                                         break;
                                     case "distance":
                                         split.Distance = Convert.ToDouble(Value, CultureInfo.InvariantCulture);
@@ -147,7 +147,7 @@ namespace Commands.DataProcessors
         /// <param name="deleteOriginal">
         /// remove the currently loaded file 
         /// </param>
-        public void CompressText(AllScores allScores, bool deleteOriginal = false)
+        public string CompressText(AllScores allScores, bool deleteOriginal = false)
         {
             // could sort by date, which could remove a lot of lines, and separate the genders since there is only a possibility for 2 different 
             // genders.
@@ -178,8 +178,8 @@ namespace Commands.DataProcessors
                                 {
                                     double[] types = ReadTimeSeparator(split);
                                     streamWriter.WriteLine("split:-");
-                                    streamWriter.WriteLine($"distance:{split.Distance*types[0]}");
-                                    streamWriter.WriteLine($"time:{split.Time*types[1]}");
+                                    streamWriter.WriteLine($"time:{split.Time/types[0]}");
+                                    streamWriter.WriteLine($"distance:{split.Distance/types[1]}");
                                     streamWriter.WriteLine("split:-");
                                 }
 
@@ -194,6 +194,7 @@ namespace Commands.DataProcessors
             }
 
             streamWriter.Close();
+            return FilePath.Substring(0, FilePath.Length - 4) + "Compressed.txt";
         }
 
         /// <summary>
@@ -232,12 +233,12 @@ namespace Commands.DataProcessors
                                 foreach (Score.Split split in (List<Score.Split>)item.Value)
                                 {
                                     streamWriter.WriteLine("split:-");
-                                    streamWriter.WriteLine($"distance:{split.Distance}");
-                                    streamWriter.WriteLine($"time:{split.Time}");
                                     // ReSharper disable once StringLiteralTypo
                                     streamWriter.WriteLine($"distanceunit:{split.DistanceUnit}");
                                     // ReSharper disable once StringLiteralTypo
                                     streamWriter.WriteLine($"timeseparator:{split.TimeUnit}");
+                                    streamWriter.WriteLine($"distance:{split.Distance}");
+                                    streamWriter.WriteLine($"time:{split.Time}");
                                     streamWriter.WriteLine($"pace:{split.Pace}");
                                     streamWriter.WriteLine("split:-");
                                 }

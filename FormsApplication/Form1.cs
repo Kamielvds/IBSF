@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
-using Commands.DataProcessors;
 using FormsApplication.PopUps;
 using ProcessActivity;
 using Scores;
+using TextWriter = Commands.DataProcessors.TextWriter;
 
 namespace FormsApplication
 {
    public partial class Form1 : Form
    {
-      public string FilePath { get; set; }
+      private string FilePath { get; set; }
 
-      public Activities Activities;
+      private Activities _activities;
 
-      public AllScores AllScores
-      {
-         get => Activities.Scores;
-      }
+      private AllScores AllScores => _activities.Scores;
 
       public Form1()
       {
@@ -61,12 +59,10 @@ namespace FormsApplication
          switch (extension)
          {
             case "txt":
-               var textReader = new TextReader(FilePath);
-               Activities = new Activities(FilePath, "txt");
+               _activities = new Activities(FilePath, "txt");
                break;
             case "xml":
-               var xmlReader = new Commands.DataProcessor.XmlReader(FilePath);
-               Activities = new Activities(FilePath, "xml");
+               _activities = new Activities(FilePath, "xml");
                break;
          }
       }
@@ -116,7 +112,7 @@ namespace FormsApplication
          }
          else
          {
-            var addScore = new AddScore(Activities);
+            var addScore = new AddScore(_activities);
 
             addScore.ActivitiesChanged += addScore_Returned;
             addScore.Show();
@@ -136,7 +132,7 @@ namespace FormsApplication
       /// </param>
       private void addScore_Returned(object sender, Activities activities)
       {
-         Activities = activities;
+         _activities = activities;
          Enabled = true;
          UpdateListbox();
       }
@@ -175,7 +171,7 @@ namespace FormsApplication
       /// </param>
       private void btnSave_Click(object sender, EventArgs e)
       {
-         Activities.SaveFile();
+         _activities.SaveFile();
       }
 
       /// <summary>
@@ -240,10 +236,22 @@ namespace FormsApplication
          return text;
       }
 
+      /// <summary>
+      /// compresses the Score file and prints the saved bytes
+      /// </summary>
+      /// <param name="sender">
+      /// the object from which it's sent
+      /// </param>
+      /// <param name="e">
+      /// the eventArgs
+      /// </param>
       private void button2_Click(object sender, EventArgs e)
       {
          var textWriter = new TextWriter(FilePath);
-         textWriter.CompressText(AllScores);
+         string compressedText = textWriter.CompressText(AllScores);
+         var fileInfoOld = new FileInfo(FilePath);
+         var fileInfoNew = new FileInfo(compressedText);
+         lblScore.Text = $@"The file was compressed successfully; {fileInfoOld.Length - fileInfoNew.Length} bytes saved!";
       }
    }
 }

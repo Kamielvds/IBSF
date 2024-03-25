@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Exceptions;
@@ -97,7 +96,7 @@ namespace Scores
             {
             }
 
-            public Split(long time, double distance)
+            public Split(double time, double distance)
             {
                 Time = time;
                 Distance = distance;
@@ -105,7 +104,7 @@ namespace Scores
 
             public double Distance { get; set; }
 
-            public long Time { get; set; }
+            public double Time { get; set; }
             
             public string TimeUnit { get; set; }
         

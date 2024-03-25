@@ -232,7 +232,7 @@ namespace ConsoleApplication
          switch (splitItem)
          {
             case "0":
-               LocalScore.Splits[splitId].Time = Convert.ToInt64(value);
+               LocalScore.Splits[splitId].Time = Convert.ToDouble(value);
                break;
             case "1":
                LocalScore.Splits[splitId].Distance = Convert.ToDouble(value);

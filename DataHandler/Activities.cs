@@ -1,6 +1,4 @@
-﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Commands.DataProcessor;
@@ -109,7 +107,7 @@ namespace ProcessActivity
         /// <param name="distance">
         /// the distance of the split in a double precision 
         /// </param>
-        public void CreateSplit(long time, double distance)
+        private void CreateSplit(double time, double distance)
         {
             _localSplit.Time = time;
             _localSplit.Distance = distance;
@@ -133,7 +131,7 @@ namespace ProcessActivity
         /// <param name="distanceSeparator">
         /// the distance format 
         /// </param>
-        public void CreateSplit(long time, double distance, Score.TimeSeparator timeSeparator, Score.DistanceSeparator distanceSeparator)
+        public void CreateSplit(double time, double distance, Score.TimeSeparator timeSeparator, Score.DistanceSeparator distanceSeparator)
         {
             _localSplit.Time = time;
             _localSplit.Distance = distance;
@@ -280,21 +278,29 @@ namespace ProcessActivity
                 foreach (var score in location.Scores)
                 {
                     var paces = new List<double>();
-                    foreach (var split in score.Splits)
+                    bool scoreHasPace = score.Pace != 0; 
+                    foreach (var split in score.Splits.Where(split => split != null))
                     {
-                        if (split == null) continue;
-                        if (split.Pace != 0.0) continue;
-                        double[] types = ReadTimeSeparator(split);
-                        double splitTime = split.Time / types[0];
-                        double splitDistance = split.Distance / types[1];
-                        split.Pace = splitDistance / splitTime;
-                        
-                        paces.Add(splitDistance/splitTime);
+                        double pace;
+                        if (split.Pace == 0.0)
+                        {
+                            double[] types = ReadTimeSeparator(split);
+                            double splitTime = split.Time / types[0];
+                            double splitDistance = split.Distance / types[1];
+                            pace = splitDistance / splitTime;
+                            split.Pace = pace;
+                        }
+                        else
+                            pace = split.Pace;
+                        if(!scoreHasPace)
+                            paces.Add(pace);
                     }
 
                     // km/h
+                    if (scoreHasPace) continue;
                     var total = paces.Sum();
                     score.Pace = total/paces.Count;
+
                 }
             }
         }

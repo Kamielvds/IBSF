@@ -13,7 +13,7 @@ namespace FormsApplication.PopUps
 
         private List<Location> Locations => AllScores.Locations;
         private AllScores AllScores => Activities.Scores;
-        private Activities Activities { get; set; }
+        private Activities Activities { get; }
 
         private int _previousIndex = -1;
 
@@ -80,7 +80,7 @@ namespace FormsApplication.PopUps
         private void UpdateSplit(int index)
         {
             _splits[index].Distance = Convert.ToDouble(txtDistance.Text);
-            _splits[index].Time = Convert.ToInt64(txtTime.Text);
+            _splits[index].Time = Convert.ToDouble(txtTime.Text);
             _splits[index].TimeUnit = cboTime.Text;
             _splits[index].DistanceUnit = cboDistance.Text;
         }
