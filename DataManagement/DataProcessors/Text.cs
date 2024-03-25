@@ -130,6 +130,53 @@ namespace Commands.DataProcessor
             SetPath(filePath);
         }
 
+        public void CompressText(AllScores allScores, bool deleteOriginal = false)
+        {
+            File.Delete(FilePath);
+            var streamWriter = new StreamWriter(FilePath+"Compressed");
+            
+            foreach (var location in allScores.Locations)
+            {
+                streamWriter.WriteLine($"track:{location.Name}");
+                foreach (var score in location.Scores)
+                {
+                    foreach (var item in score.AllObjects)
+                    {
+                        switch (item.Value)
+                        {
+                            case null:
+                                streamWriter.WriteLine($"{item.Key}:");
+                                break;
+                            case string _:
+                                if(item.Key != "pace")
+                                    streamWriter.WriteLine($"{item.Key}:{item.Value}");
+                                break;
+                            default:
+                            {
+                                streamWriter.WriteLine("splits:*");
+                                foreach (Score.Split split in (List<Score.Split>)item.Value)
+                                {
+                                    streamWriter.WriteLine("split:-");
+                                    streamWriter.WriteLine($"distance:{split.Distance}");
+                                    streamWriter.WriteLine($"time:{split.Time*(int)split.TimeUnit}");
+                                    streamWriter.WriteLine($"distanceunit:{split.DistanceUnit}");
+                                    streamWriter.WriteLine($"timeseparator:{split.TimeUnit}");
+                                    streamWriter.WriteLine("split:-");
+                                }
+
+                                streamWriter.WriteLine("splits:*");
+                                break;
+                            }
+                        }
+                    }
+
+                    streamWriter.WriteLine("act:endl");
+                }
+            }
+
+            streamWriter.Close();
+        }
+
         /// <summary>
         /// Rewrites all scores inside of a text file. This is the safest but slowest method.
         /// </summary>
@@ -141,7 +188,7 @@ namespace Commands.DataProcessor
         /// </param>
         public void RewriteText(AllScores allScores, bool copy = true)
         {
-            CopyFile();
+            if (copy) CopyFile();
             File.Delete(FilePath);
             var streamWriter = new StreamWriter(FilePath);
 

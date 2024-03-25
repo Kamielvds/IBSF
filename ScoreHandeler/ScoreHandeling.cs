@@ -110,6 +110,8 @@ namespace Scores
             public string TimeUnit { get; set; }
         
             public string DistanceUnit { get; set; }
+            
+            public double Pace { get; set; }
         }
 
         public bool CheckValid()

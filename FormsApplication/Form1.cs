@@ -54,8 +54,9 @@ namespace FormsApplication
       /// </summary>
       private void LoadScores()
       {
-         var extension = FilePath.Split('.')[1];
-
+         var pathSplit = FilePath.Split('\\');
+         string extension = pathSplit[pathSplit.Length].Split('.')[1];
+         
          switch (extension)
          {
             case "txt":
@@ -110,7 +111,7 @@ namespace FormsApplication
       {
          if (AllScores == null)
          {
-            MessageBox.Show("There are no scores Loaded!");
+            MessageBox.Show(@"There are no scores Loaded!");
          }
          else
          {
@@ -218,7 +219,8 @@ namespace FormsApplication
                      var split = ((List<Score.Split>)item.Value)[i];
                      text += ($"\t \t \t split {i + 1}:\n");
                      text += ($"\t \t \t \t distance: {split.Distance}:\n");
-                     text += ($"\t \t \t \t time: {split.Time + 1}:\n");
+                     text += ($"\t \t \t \t time: {split.Time}:\n");
+                     text += ($"\t \t \t \t pace: {split.Pace}:\n");
                   }
 
                   break;

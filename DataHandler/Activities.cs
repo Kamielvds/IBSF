@@ -44,9 +44,9 @@ namespace ProcessActivity
 
         public AllScores Scores { get; private set; }
 
-        private string Path { get; }
+        public string Path { get; }
 
-        private string Lang { get; }
+        public string Lang { get; }
 
         private void AppendScore()
         {
@@ -284,7 +284,8 @@ namespace ProcessActivity
                         if (split == null) continue; 
                         double[] types = ReadTimeSeparator(split);
                         double splitTime = split.Time / types[0];
-                        double splitDistance = split.Distance / types[1]; 
+                        double splitDistance = split.Distance / types[1];
+                        split.Pace = splitDistance / splitTime;
                         
                         paces.Add(splitDistance/splitTime);
                     }
@@ -296,7 +297,7 @@ namespace ProcessActivity
             }
         }
 
-        private double[] ReadTimeSeparator(Score.Split split)
+        public double[] ReadTimeSeparator(Score.Split split)
         {
             var types = new double[2];
             switch (split.TimeUnit)

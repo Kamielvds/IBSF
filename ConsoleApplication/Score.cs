@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Commands;
 using ConsoleApplication.Problems;
 using Exceptions;
 using ProcessActivity;
@@ -28,7 +27,7 @@ namespace ConsoleApplication
       public static void ProcessScoreCommand()
       {
          if (UserInputSplit.Length < 2) throw new NotEnoughArgumentsException();
-         switch (UserInputSplit[1])
+         switch (UserInputSplit[1].ToLower())
          {
             case "list":
                ListScores();
@@ -54,11 +53,24 @@ namespace ConsoleApplication
                EditScore();
                break;
             case "backup":
-
                Activities.LoadBackup();
+               break;
+            case"compress":
+               CompressScoreFile();
                break;
             default:
                throw new InvalidArgumentsException($"score:{UserInputSplit[1]}");
+         }
+      }
+
+      private static void CompressScoreFile()
+      {
+         switch (Activities.Lang)
+         {
+            case "txt":
+               var textWriter = new TextWriter(Activities.Path);
+               textWriter.RewriteText(AllScores);
+               break;
          }
       }
 
