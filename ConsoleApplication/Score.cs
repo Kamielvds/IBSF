@@ -9,7 +9,7 @@ using Scores;
 using Filtering;
 //static 
 using static ConsoleApplication.CustomMethods;
-using TextWriter = Commands.DataProcessor.TextWriter;
+using TextWriter = Commands.DataProcessors.TextWriter;
 
 namespace ConsoleApplication
 {

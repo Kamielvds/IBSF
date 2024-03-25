@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Scores;
 
 namespace Commands
 {
@@ -70,6 +71,37 @@ namespace Commands
             if(File.Exists(FilePath.Substring(0,FilePath.Length-4)+$"Copy.{Lang}"))
                 File.Delete(FilePath.Substring(0,FilePath.Length-4)+$"Copy.{Lang}");
             File.Copy(FilePath, FilePath.Substring(0,FilePath.Length-4)+$"Copy.{Lang}");
+        }
+        protected double[] ReadTimeSeparator(Score.Split split)
+        {
+            var types = new double[2];
+            switch (split.TimeUnit)
+            {
+                case "Minutes":
+                    types[0] = (double)Score.TimeSeparator.Minutes;
+                    break;
+                case "Hours":
+                    types[0] = (double)Score.TimeSeparator.Hours;
+                    break;
+                case "Milliseconds":
+                    types[0] = (double)Score.TimeSeparator.Milliseconds;
+                    break;
+                case "Seconds":
+                    types[0] = (double)Score.TimeSeparator.Seconds;
+                    break;
+            }
+
+            switch (split.DistanceUnit)
+            {
+                case "Kilometers":
+                    types[1] = (double)Score.DistanceSeparator.Kilometers;
+                    break;
+                case "Meters":
+                    types[1] = (double)Score.DistanceSeparator.Meters;
+                    break;
+            }
+
+            return types;
         }
     }
 }

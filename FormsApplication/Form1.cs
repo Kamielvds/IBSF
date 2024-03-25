@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Commands.DataProcessors;
 using FormsApplication.PopUps;
 using ProcessActivity;
 using Scores;
@@ -55,12 +56,12 @@ namespace FormsApplication
       private void LoadScores()
       {
          var pathSplit = FilePath.Split('\\');
-         string extension = pathSplit[pathSplit.Length].Split('.')[1];
+         string extension = pathSplit[pathSplit.Length -1].Split('.')[1];
          
          switch (extension)
          {
             case "txt":
-               var textReader = new Commands.DataProcessor.TextReader(FilePath);
+               var textReader = new TextReader(FilePath);
                Activities = new Activities(FilePath, "txt");
                break;
             case "xml":
@@ -152,6 +153,10 @@ namespace FormsApplication
       private void lsbLocations_SelectedIndexChanged(object sender, EventArgs e)
       {
          lsbScores.Items.Clear();
+         if (lsbLocations.SelectedIndex == -1) {
+            lsbScores.Items.Clear(); // clears all the scores, because nothing is selected
+            return;
+         }
          for (var i = 0; i < AllScores.Locations[lsbLocations.SelectedIndex].Scores.Count; i++)
          {
             var score = AllScores.Locations[lsbLocations.SelectedIndex].Scores[i];
@@ -184,6 +189,11 @@ namespace FormsApplication
       /// </param>
       private void lsbScores_SelectedIndexChanged(object sender, EventArgs e)
       {
+         if (lsbScores.SelectedIndex == -1)
+         {
+            lblScore.Text = string.Empty;
+            return;
+         } 
          lblScore.Text =
             ListScoreDetails(AllScores.Locations[lsbLocations.SelectedIndex].Scores[lsbScores.SelectedIndex]);
       }
@@ -213,7 +223,7 @@ namespace FormsApplication
                      : $"\t \t {item.Key}: {item.Value}\n");
                   break;
                default:
-                  text += ($"\t \t splits:");
+                  text += ($"\t \t splits: \n");
                   for (var i = 0; i < ((List<Score.Split>)item.Value).Count; i++)
                   {
                      var split = ((List<Score.Split>)item.Value)[i];
@@ -228,6 +238,12 @@ namespace FormsApplication
          }
 
          return text;
+      }
+
+      private void button2_Click(object sender, EventArgs e)
+      {
+         var textWriter = new TextWriter(FilePath);
+         textWriter.CompressText(AllScores);
       }
    }
 }

@@ -1,12 +1,13 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Commands.DataProcessor;
 using Exceptions;
 using Scores;
-using TextReader = Commands.DataProcessor.TextReader;
-using TextWriter = Commands.DataProcessor.TextWriter;
+using TextReader = Commands.DataProcessors.TextReader;
+using TextWriter = Commands.DataProcessors.TextWriter;
 
 namespace ProcessActivity
 {
@@ -269,19 +270,20 @@ namespace ProcessActivity
             SetPace();
         }
 
+        /// <summary>
+        /// Calculates the Pace of all the scores if the pace is uninitialized
+        /// </summary>
         private void SetPace()
         {
             foreach (var location in Scores.Locations)
             {
                 foreach (var score in location.Scores)
                 {
-                    
-                   
-
                     var paces = new List<double>();
                     foreach (var split in score.Splits)
                     {
-                        if (split == null) continue; 
+                        if (split == null) continue;
+                        if (split.Pace != 0.0) continue;
                         double[] types = ReadTimeSeparator(split);
                         double splitTime = split.Time / types[0];
                         double splitDistance = split.Distance / types[1];
@@ -297,7 +299,7 @@ namespace ProcessActivity
             }
         }
 
-        public double[] ReadTimeSeparator(Score.Split split)
+        private static double[] ReadTimeSeparator(Score.Split split)
         {
             var types = new double[2];
             switch (split.TimeUnit)

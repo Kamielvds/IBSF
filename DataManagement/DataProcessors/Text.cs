@@ -4,7 +4,7 @@ using System.Globalization;
 using System.IO;
 using Scores;
 
-namespace Commands.DataProcessor
+namespace Commands.DataProcessors
 {
     /// <summary>
     /// Reader for text files.
@@ -65,11 +65,16 @@ namespace Commands.DataProcessor
                                     case "distance":
                                         split.Distance = Convert.ToDouble(Value, CultureInfo.InvariantCulture);
                                         break;
+                                    // ReSharper disable once StringLiteralTypo
                                     case "timeseparator":
                                         timeSeparator = Value;
                                         break;
+                                    // ReSharper disable once StringLiteralTypo
                                     case "distanceunit":
                                         distanceType = Value;
+                                        break;
+                                    case "pace":
+                                        split.Pace = Convert.ToDouble(Value);
                                         break;
                                 }
                             }
@@ -101,6 +106,9 @@ namespace Commands.DataProcessor
                     case "track":
                         locationName = Value;
                         break;
+                    case "pace":
+                        score.Pace = Convert.ToDouble(Value);
+                        break;
                     case "act":
                         switch (Value)
                         {
@@ -130,10 +138,22 @@ namespace Commands.DataProcessor
             SetPath(filePath);
         }
 
+        /// <summary>
+        /// removes pace, efficiently stores all scores
+        /// </summary>
+        /// <param name="allScores">
+        /// all the scores to be written to the stream
+        /// </param>
+        /// <param name="deleteOriginal">
+        /// remove the currently loaded file 
+        /// </param>
         public void CompressText(AllScores allScores, bool deleteOriginal = false)
         {
-            File.Delete(FilePath);
-            var streamWriter = new StreamWriter(FilePath+"Compressed");
+            // could sort by date, which could remove a lot of lines, and separate the genders since there is only a possibility for 2 different 
+            // genders.
+            if (deleteOriginal)
+                File.Delete(FilePath);
+            var streamWriter = new StreamWriter(FilePath.Substring(0,FilePath.Length-5)+"Compressed.txt");
             
             foreach (var location in allScores.Locations)
             {
@@ -156,11 +176,10 @@ namespace Commands.DataProcessor
                                 streamWriter.WriteLine("splits:*");
                                 foreach (Score.Split split in (List<Score.Split>)item.Value)
                                 {
+                                    double[] types = ReadTimeSeparator(split);
                                     streamWriter.WriteLine("split:-");
-                                    streamWriter.WriteLine($"distance:{split.Distance}");
-                                    streamWriter.WriteLine($"time:{split.Time*(int)split.TimeUnit}");
-                                    streamWriter.WriteLine($"distanceunit:{split.DistanceUnit}");
-                                    streamWriter.WriteLine($"timeseparator:{split.TimeUnit}");
+                                    streamWriter.WriteLine($"distance:{split.Distance*types[0]}");
+                                    streamWriter.WriteLine($"time:{split.Time*types[1]}");
                                     streamWriter.WriteLine("split:-");
                                 }
 
@@ -205,8 +224,7 @@ namespace Commands.DataProcessor
                                 streamWriter.WriteLine($"{item.Key}:");
                                 break;
                             case string _:
-                                if(item.Key != "pace")
-                                    streamWriter.WriteLine($"{item.Key}:{item.Value}");
+                                streamWriter.WriteLine($"{item.Key}:{item.Value}");
                                 break;
                             default:
                             {
@@ -216,8 +234,11 @@ namespace Commands.DataProcessor
                                     streamWriter.WriteLine("split:-");
                                     streamWriter.WriteLine($"distance:{split.Distance}");
                                     streamWriter.WriteLine($"time:{split.Time}");
+                                    // ReSharper disable once StringLiteralTypo
                                     streamWriter.WriteLine($"distanceunit:{split.DistanceUnit}");
+                                    // ReSharper disable once StringLiteralTypo
                                     streamWriter.WriteLine($"timeseparator:{split.TimeUnit}");
+                                    streamWriter.WriteLine($"pace:{split.Pace}");
                                     streamWriter.WriteLine("split:-");
                                 }
 

@@ -34,6 +34,7 @@
             this.btnSettings = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.tbpScores = new System.Windows.Forms.TabPage();
+            this.button2 = new System.Windows.Forms.Button();
             this.lblScore = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnAddScore = new System.Windows.Forms.Button();
@@ -90,6 +91,7 @@
             // 
             // tbpScores
             // 
+            this.tbpScores.Controls.Add(this.button2);
             this.tbpScores.Controls.Add(this.lblScore);
             this.tbpScores.Controls.Add(this.btnSave);
             this.tbpScores.Controls.Add(this.btnAddScore);
@@ -102,6 +104,16 @@
             this.tbpScores.TabIndex = 1;
             this.tbpScores.Text = "Scores";
             this.tbpScores.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(6, 322);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(176, 45);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "Compress File";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // lblScore
             // 
@@ -116,7 +128,7 @@
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(176, 43);
             this.btnSave.TabIndex = 3;
-            this.btnSave.Text = "SaveScores";
+            this.btnSave.Text = "Save Scores";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -126,7 +138,7 @@
             this.btnAddScore.Name = "btnAddScore";
             this.btnAddScore.Size = new System.Drawing.Size(176, 43);
             this.btnAddScore.TabIndex = 2;
-            this.btnAddScore.Text = "AddScore";
+            this.btnAddScore.Text = "Add Scores";
             this.btnAddScore.UseVisualStyleBackColor = true;
             this.btnAddScore.Click += new System.EventHandler(this.btnAddScore_Click);
             // 
@@ -161,6 +173,8 @@
             this.tbpScores.ResumeLayout(false);
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.Button button2;
 
         private System.Windows.Forms.Label lblScore;
 
