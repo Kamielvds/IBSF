@@ -341,6 +341,7 @@ namespace FormsApplication.PopUps
          this.Controls.Add(this.label1);
          this.Name = "AddScore";
          this.Text = "AddScore";
+         this.Leave += new System.EventHandler(this.AddScore_Leave);
          this.grbSplit.ResumeLayout(false);
          this.grbSplit.PerformLayout();
          this.grbUnits.ResumeLayout(false);

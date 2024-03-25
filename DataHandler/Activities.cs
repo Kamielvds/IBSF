@@ -304,7 +304,8 @@ namespace ProcessActivity
             var types = new double[2];
             switch (split.TimeUnit)
             {
-                case "Minutes":
+                // the default or uninitialized value, useful for compressing (Minutes)
+                default:
                     types[0] = (double)Score.TimeSeparator.Minutes;
                     break;
                 case "Hours":
@@ -323,7 +324,8 @@ namespace ProcessActivity
                 case "Kilometers":
                     types[1] = (double)Score.DistanceSeparator.Kilometers;
                     break;
-                case "Meters":
+                // the default or uninitialized value, useful for compressing (Meters)
+                default:
                     types[1] = (double)Score.DistanceSeparator.Meters;
                     break;
             }

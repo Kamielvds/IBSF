@@ -153,7 +153,7 @@ namespace Commands.DataProcessors
             // genders.
             if (deleteOriginal)
                 File.Delete(FilePath);
-            var streamWriter = new StreamWriter(FilePath.Substring(0,FilePath.Length-5)+"Compressed.txt");
+            var streamWriter = new StreamWriter(FilePath.Substring(0,FilePath.Length-4)+"Compressed.txt");
             
             foreach (var location in allScores.Locations)
             {
